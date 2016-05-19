@@ -1,6 +1,5 @@
-package com.company.calculator.aop;
+package com.company.restaurant.aop;
 
-import com.company.calculator.controllers.CalculationDataController;
 import com.company.util.Util;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -14,37 +13,20 @@ import java.util.HashMap;
 @Aspect
 public class LogAspect {
     private static final String RESOURCE_LOG_EXCLUDE_MASK =
-            "!(execution(* get*(..)) || execution(* set*(..)) || " +
-            "execution(* com.company.calculator.library.Operation.operatorType()))";
-    private static final String RESOURCE_LOG_CALCULATOR_LIBRARY_MASK =
-            "(execution (* com.company.calculator.library..*(..)))";
-    private static final String RESOURCE_LOG_CALCULATOR_LAUNCHER_MASK =
-            "(execution (* com.company.calculator.launcher..*(..)))";
-    private static final String RESOURCE_LOG_CALCULATOR_MODEL_MASK =
-            "(execution (* com.company.calculator.model..*(..)))";
-    private static final String RESOURCE_LOG_CALCULATOR_CONTROLLERS_MASK =
-            "(execution (* com.company.calculator.controllers..*(..)))";
-    private static final String RESOURCE_LOG_CALCULATOR_EXECUTE_MASK =
-            "(execution (* com.company.calculator.library.Calculator.execute(..)))";
-    private static final String RESOURCE_LOG_CALCULATOR_LAUNCHER_INTERACTIVE_CALCULATION_MASK =
-            "(execution (* com.company.calculator.launcher.CalculatorLauncher.interactiveCalculation()))";
+            "!(execution(* get*(..)) || execution(* set*(..))";
+    private static final String RESOURCE_LOG_MODEL_MASK =
+            "(execution (* com.company.restaurant.model..*(..)))";
+    private static final String RESOURCE_LOG_CONTROLLERS_MASK =
+            "(execution (* com.company.restaurant.controllers..*(..)))";
     private static final String RESOURCE_LOG_ALL_MASK =
             "(execution (* com.company..*(..)))" + " && " + RESOURCE_LOG_EXCLUDE_MASK;
     private static final String RESOURCE_LOG_INFO_MASK = "(" +
-            RESOURCE_LOG_CALCULATOR_LIBRARY_MASK + "||" +
-            RESOURCE_LOG_CALCULATOR_MODEL_MASK + "||" +
-            RESOURCE_LOG_CALCULATOR_CONTROLLERS_MASK + "||" +
-            RESOURCE_LOG_CALCULATOR_LAUNCHER_MASK + ")" +
-            " && " + RESOURCE_LOG_EXCLUDE_MASK;
+            RESOURCE_LOG_MODEL_MASK + "||" +
+            RESOURCE_LOG_CONTROLLERS_MASK +
+            ") && " + RESOURCE_LOG_EXCLUDE_MASK;
     private static final String RESOURCE_LOG_DEBUG_MASK = RESOURCE_LOG_ALL_MASK + "&& !(" + RESOURCE_LOG_INFO_MASK + ")";
 
     private HashMap<String, Long> executionTimeMap = new HashMap<>();
-
-    private CalculationDataController calculationDataController;
-
-    public void setCalculationDataController(CalculationDataController calculationDataController) {
-        this.calculationDataController = calculationDataController;
-    }
 
     private String methodFullName(JoinPoint joinPoint) {
         return AOPLogger.methodFullName(joinPoint);
@@ -89,31 +71,5 @@ public class LogAspect {
     @AfterThrowing(pointcut = RESOURCE_LOG_ALL_MASK, throwing = "throwable")
     public void onAfterThrowing(JoinPoint joinPoint, Throwable throwable) {
         AOPLogger.error(joinPoint, throwable, methodExecutionTime(joinPoint));
-    }
-
-    @AfterReturning(pointcut = RESOURCE_LOG_CALCULATOR_EXECUTE_MASK, returning = "result")
-    public void onAfterReturningCalculatorExecute(JoinPoint joinPoint, Object result) throws Throwable {
-        Object[] parameterValues = joinPoint.getArgs();
-
-        calculationDataController.storeCalculationSuccess(parameterValues[0].toString(), result.toString(),
-                Util.nanoToMicroTime(methodExecutionTime(joinPoint)));
-    }
-
-    @AfterThrowing(pointcut = RESOURCE_LOG_CALCULATOR_EXECUTE_MASK, throwing = "throwable")
-    public void onAfterThrowingCalculatorExecute(JoinPoint joinPoint, Throwable throwable) {
-        Object[] parameterValues = joinPoint.getArgs();
-
-        calculationDataController.storeCalculationError(parameterValues[0].toString(), throwable.getMessage(),
-                Util.nanoToMicroTime(methodExecutionTime(joinPoint)));
-    }
-
-    @Before(RESOURCE_LOG_CALCULATOR_LAUNCHER_INTERACTIVE_CALCULATION_MASK)
-    public void onBeforeInteractiveCalculation(JoinPoint joinPoint) throws Throwable {
-        calculationDataController.storeConnectEvent();
-    }
-
-    @After(RESOURCE_LOG_CALCULATOR_LAUNCHER_INTERACTIVE_CALCULATION_MASK)
-    public void onAfterInteractiveCalculation(JoinPoint joinPoint) throws Throwable {
-        calculationDataController.storeDisconnectEvent();
     }
 }

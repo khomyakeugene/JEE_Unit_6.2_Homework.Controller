@@ -10,10 +10,6 @@
 
     <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
 
-    <bean class="com.company.calculator.launcher.CalculatorLauncher" id="calculatorLauncher">
-        <property name="calculator" ref="simpleCalculator"/>
-    </bean>
-
     <!-- DB-CONTEXT, intentionally do not exclude from here and store in the separate context-file such as "db-context.xml" -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:jdbc.properties"/>
@@ -29,6 +25,10 @@
     </bean>
 
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.model.jdbc.JdbcEmployeeDao" id="employeeDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 

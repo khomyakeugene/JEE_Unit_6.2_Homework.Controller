@@ -1,4 +1,8 @@
-package com.company.calculator.aop;
+package com.company.restaurant.aop;
+
+/**
+ * Created by Yevhen on 19.05.2016.
+ */
 
 import com.company.util.Util;
 import org.apache.log4j.Logger;
@@ -8,9 +12,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 import java.util.Arrays;
 
-/**
- * Created by Yevhen on 27.04.2016.
- */
 public class AOPLogger {
     private static final String MESSAGE_EXECUTION_NANO_TIME_PATTERN = "%s (execution time: %d micro seconds)";
     private static Logger logger;
