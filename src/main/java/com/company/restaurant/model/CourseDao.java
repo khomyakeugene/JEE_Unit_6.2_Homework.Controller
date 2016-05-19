@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Yevhen on 19.05.2016.
  */
 public interface CourseDao {
-    int createCourse(int categoryId, String name, float weight, float cost);
+    int insertCourse(int categoryId, String name, float weight, float cost);
 
     void deleteCourse(int courseId);
 
