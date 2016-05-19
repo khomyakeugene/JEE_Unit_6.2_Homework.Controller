@@ -23,11 +23,15 @@ public class JdbcEmployeeDao extends JdbcDao implements EmployeeDao {
         this.tableName = EMPLOYEE_TABLE_NAME;
     }
 
-    private Employee createEmployee(ResultSet resultSet)throws SQLException {
-        return (resultSet == null) ? null : new Employee(resultSet.getInt(EMPLOYEE_ID_FIELD_NAME),
-                resultSet.getInt(POSITION_ID_FIELD_NAME), resultSet.getString(FIRST_NAME_FIELD_NAME),
-                resultSet.getString(SECOND_NAME_FIELD_NAME), resultSet.getString(PHONE_NUMBER_FIELD_NAME),
-                resultSet.getFloat(SALARY_FIELD_NAME));
+    private Employee createEmployee(ResultSet resultSet) {
+        try {
+            return (resultSet == null) ? null : new Employee(resultSet.getInt(EMPLOYEE_ID_FIELD_NAME),
+                    resultSet.getInt(POSITION_ID_FIELD_NAME), resultSet.getString(FIRST_NAME_FIELD_NAME),
+                    resultSet.getString(SECOND_NAME_FIELD_NAME), resultSet.getString(PHONE_NUMBER_FIELD_NAME),
+                    resultSet.getFloat(SALARY_FIELD_NAME));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -42,7 +46,7 @@ public class JdbcEmployeeDao extends JdbcDao implements EmployeeDao {
 
     @Override
     public Employee findEmployeeById(int employeeId) {
-        return null;
+        return createEmployee(findByInt(EMPLOYEE_ID_FIELD_NAME, employeeId, false));
     }
 
     @Override
