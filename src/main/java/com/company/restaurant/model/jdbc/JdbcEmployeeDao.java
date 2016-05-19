@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Yevhen on 19.05.2016.
  */
-public class JdbcEmployeeDao extends JdbcDao implements EmployeeDao {
+public class JdbcEmployeeDao extends JdbcDaoTable implements EmployeeDao {
     private static final String EMPLOYEE_TABLE_NAME = "employee";
     private static final String EMPLOYEE_ID_FIELD_NAME = "employee_id";
     private static final String POSITION_ID_FIELD_NAME = "position_id";
