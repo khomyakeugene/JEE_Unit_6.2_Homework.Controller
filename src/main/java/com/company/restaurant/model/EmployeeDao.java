@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Yevhen on 19.05.2016.
  */
 public interface EmployeeDao {
-    int insertEmployee(int positionId, String firstName, String lastName, String phoneNumber, float salary);
+    int insertEmployee(int positionId, String firstName, String secondName, String phoneNumber, float salary);
 
     void deleteEmployee(int employeeId);
 
@@ -14,9 +14,9 @@ public interface EmployeeDao {
 
     List<Employee> findEmployeeByFirstName(String firstName);
 
-    List<Employee> findEmployeeByLastName(String lastName);
+    List<Employee> findEmployeeBySecondName(String lastName);
 
-    List<Employee> findEmployeeByFirstAndLastName(String firstName, String lastName);
+    List<Employee> findEmployeeByFirstAndSecondName(String firstName, String secondName);
 
     List<Employee> findAllEmployees();
 
