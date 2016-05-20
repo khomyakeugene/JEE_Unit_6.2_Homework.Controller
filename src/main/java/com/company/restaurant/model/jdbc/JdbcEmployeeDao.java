@@ -36,12 +36,12 @@ public class JdbcEmployeeDao extends JdbcDaoTable<Employee> implements EmployeeD
     }
 
     @Override
-    public int insertEmployee(int positionId, String firstName, String secondName, String phoneNumber, float salary) {
+    public int addEmployee(int positionId, String firstName, String secondName, String phoneNumber, float salary) {
         return 0;
     }
 
     @Override
-    public void deleteEmployee(int employeeId) {
+    public void delEmployee(int employeeId) {
 
     }
 

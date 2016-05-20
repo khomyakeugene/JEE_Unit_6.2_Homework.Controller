@@ -34,12 +34,12 @@ public class JdbcCourseDao extends JdbcDaoTable<Course> implements CourseDao {
     }
 
     @Override
-    public int insertCourse(int categoryId, String name, float weight, float cost) {
+    public int addCourse(int categoryId, String name, float weight, float cost) {
         return 0;
     }
 
     @Override
-    public void deleteCourse(int courseId) {
+    public void delCourse(String name) {
 
     }
 

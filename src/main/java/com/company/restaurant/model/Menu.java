@@ -9,6 +9,6 @@ public class Menu {
 
     public Menu(int menuId, String name) {
         this.menuId = menuId;
-        this.name =  name;
+        this.name = name;
     }
 }

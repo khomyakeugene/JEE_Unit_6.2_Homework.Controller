@@ -6,9 +6,9 @@ import java.util.List;
  * Created by Yevhen on 19.05.2016.
  */
 public interface CourseDao {
-    int insertCourse(int categoryId, String name, float weight, float cost);
+    int addCourse(int categoryId, String name, float weight, float cost);
 
-    void deleteCourse(int courseId);
+    void delCourse(String name);
 
     Course findCourseByName(String name);
 
