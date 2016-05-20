@@ -22,29 +22,17 @@ public class JdbcEmployeeDao extends JdbcDaoTable<Employee> implements EmployeeD
 
     public JdbcEmployeeDao() {
         this.tableName = EMPLOYEE_TABLE_NAME;
+        this.idFieldName = EMPLOYEE_ID_FIELD_NAME;
+        this.nameFieldName = SECOND_NAME_FIELD_NAME;
         this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
     }
 
-    private Employee createEmployee(ResultSet resultSet) {
-        Employee result = null;
-
-        if (resultSet != null) {
-            try {
-                result = new Employee(resultSet.getInt(EMPLOYEE_ID_FIELD_NAME),
-                        resultSet.getInt(POSITION_ID_FIELD_NAME), resultSet.getString(FIRST_NAME_FIELD_NAME),
-                        resultSet.getString(SECOND_NAME_FIELD_NAME), resultSet.getString(PHONE_NUMBER_FIELD_NAME),
-                        resultSet.getFloat(SALARY_FIELD_NAME));
-            } catch (SQLException e) {
-                databaseError(e);
-            }
-        }
-
-        return result;
-    }
-
     @Override
-    protected Employee createObject(ResultSet resultSet) {
-        return createEmployee(resultSet);
+    protected Employee newObject(ResultSet resultSet) throws SQLException {
+        return new Employee(resultSet.getInt(EMPLOYEE_ID_FIELD_NAME),
+                resultSet.getInt(POSITION_ID_FIELD_NAME), resultSet.getString(FIRST_NAME_FIELD_NAME),
+                resultSet.getString(SECOND_NAME_FIELD_NAME), resultSet.getString(PHONE_NUMBER_FIELD_NAME),
+                resultSet.getFloat(SALARY_FIELD_NAME));
     }
 
     @Override
@@ -55,11 +43,6 @@ public class JdbcEmployeeDao extends JdbcDaoTable<Employee> implements EmployeeD
     @Override
     public void deleteEmployee(int employeeId) {
 
-    }
-
-    @Override
-    public Employee findEmployeeById(int employeeId) {
-        return findObjectByFieldCondition(EMPLOYEE_ID_FIELD_NAME, employeeId);
     }
 
     @Override

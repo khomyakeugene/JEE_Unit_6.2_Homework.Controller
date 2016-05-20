@@ -10,8 +10,6 @@ public interface EmployeeDao {
 
     void deleteEmployee(int employeeId);
 
-    Employee findEmployeeById(int employeeId);
-
     List<Employee> findEmployeeByFirstName(String firstName);
 
     List<Employee> findEmployeeBySecondName(String lastName);

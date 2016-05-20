@@ -13,6 +13,8 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     private static final String SQL_ALL_FIELD_BY_TWO_FIELD_VALUE = "SELECT * FROM %s WHERE (%s = %s) AND (%s = %s)";
 
     protected String tableName;
+    protected String idFieldName;
+    protected String nameFieldName;
     protected String orderByCondition;
 
     private String orderByCondition() {
@@ -51,5 +53,13 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
 
     protected List<T> findAllObjects() {
         return createObjectListFromQuery(allQueryCondition());
+    }
+
+    public T findObjectById(int id) {
+        return findObjectByFieldCondition(idFieldName, id);
+    }
+
+    public T findObjectByName(String name) {
+        return findObjectByFieldCondition(nameFieldName, name);
     }
 }

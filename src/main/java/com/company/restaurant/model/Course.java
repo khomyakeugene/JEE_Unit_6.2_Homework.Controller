@@ -9,4 +9,12 @@ public class Course {
     private String name;
     private float weight;
     private float cost;
+
+    public Course(int courseId, int categoryId, String name, float weight, float cost) {
+        this.courseId = courseId;
+        this.categoryId = categoryId;
+        this.name = name;
+        this.weight = weight;
+        this.cost = cost;
+    }
 }

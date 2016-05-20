@@ -4,6 +4,7 @@ import com.company.restaurant.model.Course;
 import com.company.restaurant.model.CourseDao;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -11,26 +12,25 @@ import java.util.List;
  */
 public class JdbcCourseDao extends JdbcDaoTable<Course> implements CourseDao {
     private static final String COURSE_TABLE_NAME = "course";
-    private static final String EMPLOYEE_ID_FIELD_NAME = "employee_id";
-    private static final String POSITION_ID_FIELD_NAME = "position_id";
-    private static final String FIRST_NAME_FIELD_NAME = "first_name";
-    private static final String SECOND_NAME_FIELD_NAME = "second_name";
-    private static final String PHONE_NUMBER_FIELD_NAME = "phone_number";
-    private static final String SALARY_FIELD_NAME = "salary";
+    private static final String COURSE_ID_FIELD_NAME = "course_id";
+    private static final String CATEGORY_ID_FIELD_NAME = "category_id";
+    private static final String NAME_FIELD_NAME = "name";
+    private static final String WEIGHT_FIELD_NAME = "weight";
+    private static final String COST_FIELD_NAME = "cost";
     private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY name";
 
     public JdbcCourseDao() {
         this.tableName = COURSE_TABLE_NAME;
+        this.idFieldName = COURSE_ID_FIELD_NAME;
+        this.nameFieldName = NAME_FIELD_NAME;
         this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
     }
 
-    private Course createCourse(ResultSet resultSet) {
-        return null;
-    }
-
     @Override
-    protected Course createObject(ResultSet resultSet) {
-        return createCourse(resultSet);
+    protected Course newObject(ResultSet resultSet) throws SQLException {
+        return new Course(resultSet.getInt(COURSE_ID_FIELD_NAME), resultSet.getInt(CATEGORY_ID_FIELD_NAME),
+                resultSet.getString(NAME_FIELD_NAME), resultSet.getFloat(WEIGHT_FIELD_NAME),
+                resultSet.getFloat(COST_FIELD_NAME));
     }
 
     @Override
@@ -45,11 +45,11 @@ public class JdbcCourseDao extends JdbcDaoTable<Course> implements CourseDao {
 
     @Override
     public Course findCourseByName(String name) {
-        return null;
+        return findObjectByName(name);
     }
 
     @Override
     public List<Course> findAllCourses() {
-        return null;
+        return findAllObjects();
     }
 }

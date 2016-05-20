@@ -25,7 +25,21 @@ public abstract class JdbcDao<T> {
         throw new RuntimeException(e);
     }
 
-    protected abstract T createObject(ResultSet resultSet);
+    protected abstract T newObject(ResultSet resultSet) throws SQLException;
+
+    protected T createObject(ResultSet resultSet) {
+        T result = null;
+
+        if (resultSet != null) {
+            try {
+                result = newObject(resultSet);
+            } catch (SQLException e) {
+                databaseError(e);
+            }
+        }
+
+        return result;
+    }
 
     private ResultSet executeQuery(String query) {
         ResultSet resultSet = null;
