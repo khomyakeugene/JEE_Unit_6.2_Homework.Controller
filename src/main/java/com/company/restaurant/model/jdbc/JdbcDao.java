@@ -25,6 +25,16 @@ public abstract class JdbcDao<T> {
         throw new RuntimeException(e);
     }
 
+    public static String toString(Object object) {
+        String result = object.toString();
+
+        if (object instanceof String) {
+            result =  "'" + result + "'";
+        }
+
+        return result;
+    }
+
     protected abstract T newObject(ResultSet resultSet) throws SQLException;
 
     private T createObject(ResultSet resultSet) {

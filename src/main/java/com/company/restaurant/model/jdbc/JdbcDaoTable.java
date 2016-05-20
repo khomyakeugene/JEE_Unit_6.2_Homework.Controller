@@ -35,13 +35,13 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     }
 
     private String fieldQueryCondition(String fieldName, Object value) {
-        return String.format(SQL_ALL_FIELD_BY_FIELD_VALUE, tableName, fieldName, Util.toString(value)) + " " +
+        return String.format(SQL_ALL_FIELD_BY_FIELD_VALUE, tableName, fieldName, JdbcDao.toString(value)) + " " +
                 orderByCondition();
     }
 
     private String twoFieldsQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2) {
-        return String.format(SQL_ALL_FIELD_BY_TWO_FIELD_VALUE, tableName, fieldName_1, Util.toString(value_1),
-                fieldName_2, Util.toString(value_2)) + " " + orderByCondition();
+        return String.format(SQL_ALL_FIELD_BY_TWO_FIELD_VALUE, tableName, fieldName_1, JdbcDao.toString(value_1),
+                fieldName_2, JdbcDao.toString(value_2)) + " " + orderByCondition();
     }
 
     public T findObjectByFieldCondition(String fieldName, Object value) {
@@ -80,7 +80,7 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
         String fieldSequence = String.join(",",
                 (CharSequence[])objectToDBMap.keySet().stream().toArray(String[]::new));
         String valueSequence = String.join(",",
-                (CharSequence[])objectToDBMap.values().stream().map(v -> (Util.toString(v))).toArray(String[]::new));
+                (CharSequence[])objectToDBMap.values().stream().map(v -> (JdbcDao.toString(v))).toArray(String[]::new));
 
         return String.format(SQL_INSERT_EXPRESSION_PATTERN, tableName, fieldSequence, valueSequence);
     }
@@ -107,7 +107,7 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     }
 
     private String buildDeleteExpression(String fieldName, Object value) {
-        return String.format(SQL_DELETE_EXPRESSION_PATTERN, tableName, fieldName, Util.toString(value));
+        return String.format(SQL_DELETE_EXPRESSION_PATTERN, tableName, fieldName, JdbcDao.toString(value));
     }
 
     public void delRecordByFieldCondition(String fieldName, Object value) {
