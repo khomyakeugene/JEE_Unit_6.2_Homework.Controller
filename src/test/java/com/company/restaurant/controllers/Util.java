@@ -1,3 +1,5 @@
+package com.company.restaurant.controllers;
+
 import java.util.Random;
 
 /**
@@ -10,18 +12,18 @@ public class Util {
 
     static private Random random = new Random();
 
-    private static double round(double value, int decimalPrecision) {
-        double decimalPower = Math.pow(10, decimalPrecision);
+    private static float round(float value, int decimalPrecision) {
+        float decimalPower = (float)Math.pow(10, decimalPrecision);
 
         return Math.round(value * decimalPower) / decimalPower;
     }
 
-    public static double getRandomDouble(int upperBoud) {
-        return round(random.nextDouble() * upperBoud, DECIMAL_PRECISION);
+    public static float getRandomFloat(int upperBoud) {
+        return round(random.nextFloat() * upperBoud, DECIMAL_PRECISION);
     }
 
-    public static double getRandomDouble() {
-        return getRandomDouble(DEFAULT_UPPER_BOUND);
+    public static float getRandomFloat() {
+        return getRandomFloat(DEFAULT_UPPER_BOUND);
     }
 
     public static int getRandomInteger() {

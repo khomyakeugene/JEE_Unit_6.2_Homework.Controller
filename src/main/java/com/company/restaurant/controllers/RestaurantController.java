@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Yevhen on 19.05.2016.
  */
-public class EmployeeController {
+public class RestaurantController {
     private final static String APPLICATION_CONTEXT_NAME = "application-context.xml";
 
     private PlatformTransactionManager txManager;
@@ -34,9 +34,9 @@ public class EmployeeController {
         this.menuDao = menuDao;
     }
 
-    public static EmployeeController getInstance() {
+    public static RestaurantController getInstance() {
         ApplicationContext context = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_NAME);
-        return context.getBean(EmployeeController.class);
+        return context.getBean(RestaurantController.class);
     }
 
     public int addEmployee(Employee employee) {

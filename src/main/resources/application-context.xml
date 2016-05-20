@@ -40,7 +40,7 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.controllers.EmployeeController" id="employeeController">
+    <bean class="com.company.restaurant.controllers.RestaurantController" id="employeeController">
         <property name="txManager" ref="txManager"/>
         <property name="employeeDao" ref="employeeDao"/>
         <property name="courseDao" ref="courseDao"/>
