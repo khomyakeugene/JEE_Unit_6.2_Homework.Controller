@@ -93,8 +93,7 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
             if (resultSet.next()) {
                 result = resultSet.getInt(idFieldName);
             } else  {
-                throw new SQLException(String.format(CANNOT_GET_LAST_GENERATED_ID_PATTERN,
-                        tableName, idFieldName));
+                throw new SQLException(String.format(CANNOT_GET_LAST_GENERATED_ID_PATTERN, tableName, idFieldName));
             }
 
         } catch (SQLException e) {

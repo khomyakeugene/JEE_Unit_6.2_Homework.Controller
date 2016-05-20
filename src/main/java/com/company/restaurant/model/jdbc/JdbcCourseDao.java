@@ -5,6 +5,7 @@ import com.company.restaurant.model.CourseDao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +46,14 @@ public class JdbcCourseDao extends JdbcDaoTable<Course> implements CourseDao {
     }
 
     @Override
-    protected Map<String, Object> objectToDBMap(Course object) {
-        return null;
+    protected Map<String, Object> objectToDBMap(Course course) {
+        HashMap<String, Object> result = new HashMap<>();
+
+        result.put(CATEGORY_ID_FIELD_NAME, course.getCategoryId());
+        result.put(NAME_FIELD_NAME, course.getName());
+        result.put(WEIGHT_FIELD_NAME, course.getCost());
+
+        return result;
     }
 
     @Override

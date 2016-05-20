@@ -5,6 +5,7 @@ import com.company.restaurant.model.EmployeeDao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,8 +58,16 @@ public class JdbcEmployeeDao extends JdbcDaoTable<Employee> implements EmployeeD
     }
 
     @Override
-    protected Map<String, Object> objectToDBMap(Employee object) {
-        return null;
+    protected Map<String, Object> objectToDBMap(Employee employee) {
+        HashMap<String, Object> result = new HashMap<>();
+
+        result.put(POSITION_ID_FIELD_NAME, employee.getPositionId());
+        result.put(FIRST_NAME_FIELD_NAME, employee.getFirstName());
+        result.put(SECOND_NAME_FIELD_NAME, employee.getSecondName());
+        result.put(PHONE_NUMBER_FIELD_NAME, employee.getPhoneNumber());
+        result.put(SALARY_FIELD_NAME, employee.getSalary());
+
+        return result;
     }
 
     @Override
