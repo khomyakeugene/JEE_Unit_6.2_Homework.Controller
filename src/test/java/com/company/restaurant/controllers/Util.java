@@ -13,13 +13,13 @@ public class Util {
     static private Random random = new Random();
 
     private static float round(float value, int decimalPrecision) {
-        float decimalPower = (float)Math.pow(10, decimalPrecision);
+        float decimalPower = (float) Math.pow(10, decimalPrecision);
 
         return Math.round(value * decimalPower) / decimalPower;
     }
 
-    public static float getRandomFloat(int upperBoud) {
-        return round(random.nextFloat() * upperBoud, DECIMAL_PRECISION);
+    public static float getRandomFloat(int upperBound) {
+        return round(random.nextFloat() * upperBound, DECIMAL_PRECISION);
     }
 
     public static float getRandomFloat() {
