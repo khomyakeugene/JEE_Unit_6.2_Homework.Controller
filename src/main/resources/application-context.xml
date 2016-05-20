@@ -40,6 +40,12 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean class="com.company.restaurant.controllers.EmployeeController" id="employeeController">
+        <property name="txManager" ref="txManager"/>
+        <property name="employeeDao" ref="employeeDao"/>
+        <property name="courseDao" ref="courseDao"/>
+        <property name="menuDao" ref="menuDao"/>
+    </bean>
     <!-- END OF DB-CONTEXT -->
 
     <!-- AOP-CONTEXT, , intentionally do not exclude from here and store in the separate context-file such as "aop-context.xml" -->
