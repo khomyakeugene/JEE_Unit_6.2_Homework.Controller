@@ -91,7 +91,7 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
         try(Connection connection = dataSource.getConnection();
             Statement statement = connection.createStatement()) {
 
-            statement.executeUpdate(buildInsertExpression(object));
+            statement.executeUpdate(buildInsertExpression(object), Statement.RETURN_GENERATED_KEYS);
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
                 result = resultSet.getInt(idFieldName);
