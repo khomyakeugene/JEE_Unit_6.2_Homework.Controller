@@ -139,5 +139,8 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
                 throw new RuntimeException(String.format(CANNOT_DELETE_RECORD_PATTERN, tableName, idFieldName, nameFieldName));
             }
         }
+
+        // Actually, delete teh record by suitable condition
+        delRecordByFieldCondition(fieldName, value);
     }
 }
