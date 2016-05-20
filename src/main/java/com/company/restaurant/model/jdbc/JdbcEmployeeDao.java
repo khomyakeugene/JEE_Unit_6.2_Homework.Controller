@@ -76,7 +76,12 @@ public class JdbcEmployeeDao extends JdbcDaoTable<Employee> implements EmployeeD
     }
 
     @Override
-    public void delEmployee(int employeeId) {
+    public void delEmployee(Employee employee) {
+        delRecord(employee);
+    }
 
+    @Override
+    public void delEmployee(int employeeId) {
+        delRecordById(employeeId);
     }
 }

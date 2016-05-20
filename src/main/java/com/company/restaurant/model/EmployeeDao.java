@@ -8,6 +8,8 @@ import java.util.List;
 public interface EmployeeDao {
     int addEmployee(Employee employee);
 
+    void delEmployee(Employee employee);
+
     void delEmployee(int employeeId);
 
     List<Employee> findEmployeeByFirstName(String firstName);

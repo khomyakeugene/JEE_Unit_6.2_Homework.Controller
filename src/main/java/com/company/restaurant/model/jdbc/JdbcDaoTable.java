@@ -12,11 +12,14 @@ import java.util.Map;
  */
 public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     private static final String CANNOT_GET_LAST_GENERATED_ID_PATTERN = "Add record problem: cannot get last generated %s.%s value";
+    private static final String CANNOT_DELETE_RECORD_PATTERN = "Cannot delete record in table <%s> because it is impossible " +
+            "to detect condition value for field <%s> nor for field <%s>";
 
     private static final String SQL_ALL_FIELD_OF_ALL_RECORDS = "SELECT * FROM %s";
     private static final String SQL_ALL_FIELD_BY_FIELD_VALUE = "SELECT * FROM %s WHERE (%s = %s)";
     private static final String SQL_ALL_FIELD_BY_TWO_FIELD_VALUE = "SELECT * FROM %s WHERE (%s = %s) AND (%s = %s)";
     private static final String SQL_INSERT_EXPRESSION_PATTERN = "INSERT INTO %s (%s) VALUES(%s)";
+    private static final String SQL_DELETE_EXPRESSION_PATTERN = "DELETE FROM %s WHERE (%s = %s)";
 
     protected String tableName;
     protected String idFieldName;
@@ -82,7 +85,7 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
         return String.format(SQL_INSERT_EXPRESSION_PATTERN, tableName, fieldSequence, valueSequence);
     }
 
-    protected int addRecord(T object) {
+    public int addRecord(T object) {
         int result = 0;
 
         try(Connection connection = dataSource.getConnection();
@@ -101,5 +104,40 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
         }
 
         return result;
+    }
+
+    private String buildDeleteExpression(String fieldName, Object value) {
+        return String.format(SQL_DELETE_EXPRESSION_PATTERN, tableName, fieldName, Util.toString(value));
+    }
+
+    public void delRecordByFieldCondition(String fieldName, Object value) {
+        try(Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement()) {
+            statement.executeUpdate(buildDeleteExpression(fieldName, value));
+        } catch (SQLException e) {
+            databaseError(e);
+        }
+    }
+
+    public void delRecordById(int id) {
+        delRecordByFieldCondition(idFieldName, id);
+    }
+
+    public void delRecordByName(String name) {
+        delRecordByFieldCondition(nameFieldName, name);
+    }
+
+    public void delRecord(T object) {
+        Map<String, Object> objectToDBMap = objectToDBMap(object);
+
+        String fieldName = idFieldName;
+        Object value = objectToDBMap.get(fieldName);
+        if (value == null) {
+            fieldName = nameFieldName;
+            value = objectToDBMap.get(fieldName);
+            if (value == null) {
+                throw new RuntimeException(String.format(CANNOT_DELETE_RECORD_PATTERN, tableName, idFieldName, nameFieldName));
+            }
+        }
     }
 }

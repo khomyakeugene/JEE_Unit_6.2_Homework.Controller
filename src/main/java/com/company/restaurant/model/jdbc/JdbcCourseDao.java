@@ -62,7 +62,12 @@ public class JdbcCourseDao extends JdbcDaoTable<Course> implements CourseDao {
     }
 
     @Override
-    public void delCourse(String name) {
+    public void delCourse(Course course) {
+        delRecord(course);
+    }
 
+    @Override
+    public void delCourse(String name) {
+        delRecordByName(name);
     }
 }

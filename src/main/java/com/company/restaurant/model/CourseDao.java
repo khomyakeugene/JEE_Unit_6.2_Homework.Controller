@@ -8,6 +8,8 @@ import java.util.List;
 public interface CourseDao {
     int addCourse(Course course);
 
+    void delCourse(Course course);
+
     void delCourse(String name);
 
     Course findCourseByName(String name);

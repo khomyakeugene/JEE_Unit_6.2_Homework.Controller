@@ -8,6 +8,8 @@ import java.util.List;
 public interface MenuDao {
     int addMenu(Menu menu);
 
+    void delMenu(Menu menu);
+
     void delMenu(String name);
 
     Menu findMenuByName(String name);

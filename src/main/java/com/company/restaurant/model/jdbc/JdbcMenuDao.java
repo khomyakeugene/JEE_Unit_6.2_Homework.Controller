@@ -47,8 +47,13 @@ public class JdbcMenuDao extends JdbcDaoTable<Menu> implements MenuDao {
     }
 
     @Override
-    public void delMenu(String name) {
+    public void delMenu(Menu menu) {
+        delRecord(menu);
+    }
 
+    @Override
+    public void delMenu(String name) {
+        delRecordByName(name);
     }
 
     @Override
