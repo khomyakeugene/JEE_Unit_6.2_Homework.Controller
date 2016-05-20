@@ -6,6 +6,7 @@ import com.company.restaurant.model.EmployeeDao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Yevhen on 19.05.2016.
@@ -36,16 +37,6 @@ public class JdbcEmployeeDao extends JdbcDaoTable<Employee> implements EmployeeD
     }
 
     @Override
-    public int addEmployee(int positionId, String firstName, String secondName, String phoneNumber, float salary) {
-        return 0;
-    }
-
-    @Override
-    public void delEmployee(int employeeId) {
-
-    }
-
-    @Override
     public List<Employee> findEmployeeByFirstName(String firstName) {
         return findObjectsByFieldCondition(FIRST_NAME_FIELD_NAME, firstName);
     }
@@ -63,5 +54,20 @@ public class JdbcEmployeeDao extends JdbcDaoTable<Employee> implements EmployeeD
     @Override
     public List<Employee> findAllEmployees() {
         return findAllObjects();
+    }
+
+    @Override
+    protected Map<String, Object> objectToDBMap(Employee object) {
+        return null;
+    }
+
+    @Override
+    public int addEmployee(Employee employee) {
+        return addRecord(employee);
+    }
+
+    @Override
+    public void delEmployee(int employeeId) {
+
     }
 }

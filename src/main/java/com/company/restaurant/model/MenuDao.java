@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Yevhen on 20.05.2016.
  */
 public interface MenuDao {
-    int addMenu(String name);
+    int addMenu(Menu menu);
 
     void delMenu(String name);
 
@@ -14,7 +14,7 @@ public interface MenuDao {
 
     List<Menu> findAllMenus();
 
-    void addCourseToMenu(String menuName, Course course);
+    int addCourseToMenu(String menuName, Course course);
 
     void delCourseFromMenu(String menuName, Course course);
 }

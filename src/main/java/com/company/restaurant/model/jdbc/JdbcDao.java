@@ -15,7 +15,7 @@ public abstract class JdbcDao<T> {
     protected static final String CANNOT_FIND_DATA_BY_INT_PATTERN = "Cannot find data with \"%s\" = %d";
     protected static final String CANNOT_FIND_DATA_BY_STRING_PATTERN = "Cannot find data with \"%s\" = \"%s\"";
 
-    private DataSource dataSource;
+    protected DataSource dataSource;
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -27,7 +27,7 @@ public abstract class JdbcDao<T> {
 
     protected abstract T newObject(ResultSet resultSet) throws SQLException;
 
-    protected T createObject(ResultSet resultSet) {
+    private T createObject(ResultSet resultSet) {
         T result = null;
 
         if (resultSet != null) {

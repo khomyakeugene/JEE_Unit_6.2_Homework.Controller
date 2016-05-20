@@ -6,6 +6,7 @@ import com.company.restaurant.model.CourseDao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Yevhen on 20.05.2016.
@@ -34,16 +35,6 @@ public class JdbcCourseDao extends JdbcDaoTable<Course> implements CourseDao {
     }
 
     @Override
-    public int addCourse(int categoryId, String name, float weight, float cost) {
-        return 0;
-    }
-
-    @Override
-    public void delCourse(String name) {
-
-    }
-
-    @Override
     public Course findCourseByName(String name) {
         return findObjectByName(name);
     }
@@ -51,5 +42,20 @@ public class JdbcCourseDao extends JdbcDaoTable<Course> implements CourseDao {
     @Override
     public List<Course> findAllCourses() {
         return findAllObjects();
+    }
+
+    @Override
+    protected Map<String, Object> objectToDBMap(Course object) {
+        return null;
+    }
+
+    @Override
+    public int addCourse(Course course) {
+        return addRecord(course);
+    }
+
+    @Override
+    public void delCourse(String name) {
+
     }
 }
