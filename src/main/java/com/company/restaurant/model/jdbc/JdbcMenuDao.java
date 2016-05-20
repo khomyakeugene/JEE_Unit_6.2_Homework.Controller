@@ -53,12 +53,12 @@ public class JdbcMenuDao extends JdbcDaoTable<Menu> implements MenuDao {
 
     @Override
     public Menu findMenuByName(String name) {
-        return null;
+        return findObjectByName(name);
     }
 
     @Override
     public List<Menu> findAllMenus() {
-        return null;
+        return findAllObjects();
     }
 
     @Override
