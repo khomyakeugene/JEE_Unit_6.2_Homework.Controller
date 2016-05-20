@@ -9,10 +9,6 @@
     <packaging>jar</packaging>
     <version>1.0</version>
 
-    <properties>
-        <main.class>com.company.Bootstrap</main.class>
-    </properties>
-
     <build>
         <defaultGoal>install</defaultGoal>
 
@@ -40,7 +36,6 @@
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
-                            <mainClass>${main.class}</mainClass>
                             <addClasspath>true</addClasspath>
                         </manifest>
                     </archive>
@@ -59,29 +54,7 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.4.0</version>
-                <configuration>
-                    <workingDirectory>${project.build.directory}</workingDirectory>
-                    <executable>java</executable>
-                    <arguments>
-                        <argument>${project.build.finalName}</argument>
-                    </arguments>
-                    <mainClass>${main.class}</mainClass>
-                    <cleanupDaemonThreads>false</cleanupDaemonThreads>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>Main-execution</id>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
+         </plugins>
     </build>
 
     <dependencies>

@@ -41,38 +41,6 @@ public class Util {
         } while (true);
     }
 
-    public static Integer parseInt(String data) {
-        Integer result;
-
-        try {
-            result = Integer.parseInt(data);
-
-        } catch (NullPointerException | NumberFormatException e) {
-            result = null;
-        }
-
-        return result;
-    }
-
-    public static LocalDate DateToLocalDate(Date date) {
-        Instant instant = date.toInstant();
-        ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
-
-        return zonedDateTime.toLocalDate();
-    }
-
-    public static Date dateAdd(Date date, int days) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE, days);
-
-        return calendar.getTime();
-    }
-
-    public static long dateSub(Date date1, Date date2) {
-        return DateToLocalDate(date2).until(DateToLocalDate(date1), DAYS);
-    }
-
     public static String getApplicationMainClassName() {
         StackTraceElement[] stack = Thread.currentThread().getStackTrace();
         StackTraceElement main = stack[stack.length - 1];
