@@ -3,14 +3,6 @@ package com.company.util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Calendar;
-import java.util.Date;
-
-import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
  * Created by Yevgen on 06.01.2016.

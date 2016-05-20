@@ -13,7 +13,7 @@ import java.util.HashMap;
 @Aspect
 public class LogAspect {
     private static final String RESOURCE_LOG_EXCLUDE_MASK =
-            "!(execution(* get*(..)) || execution(* set*(..))";
+            "!(execution(* get*(..)) || execution(* set*(..)))";
     private static final String RESOURCE_LOG_MODEL_MASK =
             "(execution (* com.company.restaurant.model..*(..)))";
     private static final String RESOURCE_LOG_CONTROLLERS_MASK =
