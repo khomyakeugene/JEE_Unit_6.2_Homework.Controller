@@ -32,8 +32,13 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean class="com.company.restaurant.model.jdbc.JdbcCourseCategoryDicDao" id="courseCategoryDicDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
     <bean class="com.company.restaurant.model.jdbc.JdbcCourseDao" id="courseDao">
         <property name="dataSource" ref="dataSource"/>
+        <property name="courseCategoryDicDao" ref="courseCategoryDicDao"/>
     </bean>
 
     <bean class="com.company.restaurant.model.jdbc.JdbcMenuDao" id="menuDao">
