@@ -1,5 +1,6 @@
 package com.company.restaurant.controllers;
 
+import com.company.restaurant.model.Course;
 import com.company.restaurant.model.Employee;
 import com.company.util.ObjectService;
 import org.junit.BeforeClass;
@@ -12,6 +13,8 @@ import static org.junit.Assert.assertTrue;
  */
 public class RestaurantControllerTest {
     private static final int EMPLOYEE_POSITION_ID = 1;
+    private static final int COURSE_CATEGORY_ID = 1;
+
     private static RestaurantController restaurantController;
 
     @BeforeClass
@@ -50,5 +53,35 @@ public class RestaurantControllerTest {
         // Select test <employee> and check that in does not exist
         employeeById = restaurantController.findEmployeeById(employeeId);
         assertTrue(employeeById == null);
+
+        // Check delete of non-existent data
+        restaurantController.delEmployee(employee);
+        // Select test <employee> and check that in does not exist
+        employeeById = restaurantController.findEmployeeById(employeeId);
+        assertTrue(employeeById == null);
+    }
+
+    @Test
+    public void addFindDelCourseTest() throws Exception {
+        // Generate test <course>
+        String name = Util.getRandomString();
+        Course course = new Course(0, COURSE_CATEGORY_ID, name, Util.getRandomFloat(), Util.getRandomFloat());
+
+        restaurantController.addCourse(course);
+
+        Course courseByName = restaurantController.findCourseByName(name);
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course, courseByName));
+
+        restaurantController.delCourse(name);
+        courseByName = restaurantController.findCourseByName(name);
+        assertTrue(courseByName == null);
+
+        // Test delete by "the whole object"
+        restaurantController.addCourse(course);
+        courseByName = restaurantController.findCourseByName(name);
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course, courseByName));
+        restaurantController.delCourse(course);
+        courseByName = restaurantController.findCourseByName(name);
+        assertTrue(courseByName == null);
     }
 }

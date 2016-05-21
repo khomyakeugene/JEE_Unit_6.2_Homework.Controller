@@ -15,7 +15,7 @@ import java.util.Map;
 public class JdbcCourseDao extends JdbcDaoTable<Course> implements CourseDao {
     private static final String COURSE_TABLE_NAME = "course";
     private static final String COURSE_ID_FIELD_NAME = "course_id";
-    private static final String CATEGORY_ID_FIELD_NAME = "category_id";
+    private static final String COURSE_CATEGORY_ID_FIELD_NAME = "course_category_id";
     private static final String NAME_FIELD_NAME = "name";
     private static final String WEIGHT_FIELD_NAME = "weight";
     private static final String COST_FIELD_NAME = "cost";
@@ -30,7 +30,7 @@ public class JdbcCourseDao extends JdbcDaoTable<Course> implements CourseDao {
 
     @Override
     protected Course newObject(ResultSet resultSet) throws SQLException {
-        return new Course(resultSet.getInt(COURSE_ID_FIELD_NAME), resultSet.getInt(CATEGORY_ID_FIELD_NAME),
+        return new Course(resultSet.getInt(COURSE_ID_FIELD_NAME), resultSet.getInt(COURSE_CATEGORY_ID_FIELD_NAME),
                 resultSet.getString(NAME_FIELD_NAME), resultSet.getFloat(WEIGHT_FIELD_NAME),
                 resultSet.getFloat(COST_FIELD_NAME));
     }
@@ -54,7 +54,7 @@ public class JdbcCourseDao extends JdbcDaoTable<Course> implements CourseDao {
     protected Map<String, Object> objectToDBMap(Course course) {
         HashMap<String, Object> result = new HashMap<>();
 
-        result.put(CATEGORY_ID_FIELD_NAME, course.getCategoryId());
+        result.put(COURSE_CATEGORY_ID_FIELD_NAME, course.getCategoryId());
         result.put(NAME_FIELD_NAME, course.getName());
         result.put(WEIGHT_FIELD_NAME, course.getCost());
 
