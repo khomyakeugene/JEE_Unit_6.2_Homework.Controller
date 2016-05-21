@@ -26,6 +26,8 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     protected String nameFieldName;
     protected String orderByCondition;
 
+    protected abstract void setGeneratedId(int id, T object);
+
     private String orderByCondition() {
         return (orderByCondition == null) ? "" : orderByCondition;
     }
@@ -95,6 +97,8 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
                 result = resultSet.getInt(idFieldName);
+                // Store new generated id in the added <object> - at least, it is important to support data integrity
+                setGeneratedId(result, object);
             } else  {
                 throw new SQLException(String.format(CANNOT_GET_LAST_GENERATED_ID_PATTERN, tableName, idFieldName));
             }

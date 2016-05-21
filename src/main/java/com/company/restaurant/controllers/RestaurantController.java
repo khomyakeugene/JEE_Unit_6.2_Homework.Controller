@@ -63,6 +63,10 @@ public class RestaurantController {
         return employeeDao.findEmployeeByFirstAndSecondName(firstName, secondName);
     }
 
+    public Employee findEmployeeById(int id) {
+        return employeeDao.findEmployeeById(id);
+    }
+
     public int addCourse(Course course) {
        return courseDao.addCourse(course);
     }

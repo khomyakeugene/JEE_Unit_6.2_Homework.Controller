@@ -58,6 +58,11 @@ public class JdbcEmployeeDao extends JdbcDaoTable<Employee> implements EmployeeD
     }
 
     @Override
+    protected void setGeneratedId(int id, Employee employee) {
+        employee.setEmployeeId(id);
+    }
+
+    @Override
     protected Map<String, Object> objectToDBMap(Employee employee) {
         HashMap<String, Object> result = new HashMap<>();
 
@@ -83,5 +88,10 @@ public class JdbcEmployeeDao extends JdbcDaoTable<Employee> implements EmployeeD
     @Override
     public void delEmployee(int employeeId) {
         delRecordById(employeeId);
+    }
+
+    @Override
+    public Employee findEmployeeById(int id) {
+        return findObjectById(id);
     }
 }

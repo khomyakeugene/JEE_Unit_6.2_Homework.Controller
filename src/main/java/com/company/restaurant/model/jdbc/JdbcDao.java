@@ -48,19 +48,6 @@ public abstract class JdbcDao<T> {
         return result;
     }
 
-    private ResultSet executeQuery(String query) {
-        ResultSet resultSet = null;
-
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            resultSet = preparedStatement.executeQuery();
-        } catch (SQLException e) {
-            databaseError(e);
-        }
-
-        return resultSet;
-    }
-
     protected List<T> createObjectListFromQuery(String query) {
         ArrayList<T> result = new ArrayList<>();
 

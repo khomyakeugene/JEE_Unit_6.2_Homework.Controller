@@ -33,6 +33,11 @@ public class JdbcMenuDao extends JdbcDaoTable<Menu> implements MenuDao {
 
 
     @Override
+    protected void setGeneratedId(int id, Menu menu) {
+        menu.setMenuId(id);
+    }
+
+    @Override
     protected Map<String, Object> objectToDBMap(Menu menu) {
         HashMap<String, Object> result = new HashMap<>();
 

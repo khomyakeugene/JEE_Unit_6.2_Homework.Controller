@@ -46,6 +46,11 @@ public class JdbcCourseDao extends JdbcDaoTable<Course> implements CourseDao {
     }
 
     @Override
+    protected void setGeneratedId(int id, Course course) {
+        course.setCourseId(id);
+    }
+
+    @Override
     protected Map<String, Object> objectToDBMap(Course course) {
         HashMap<String, Object> result = new HashMap<>();
 

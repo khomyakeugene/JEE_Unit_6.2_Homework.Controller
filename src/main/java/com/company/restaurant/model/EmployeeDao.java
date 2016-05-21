@@ -12,6 +12,8 @@ public interface EmployeeDao {
 
     void delEmployee(int employeeId);
 
+    Employee findEmployeeById(int id);
+
     List<Employee> findEmployeeByFirstName(String firstName);
 
     List<Employee> findEmployeeBySecondName(String lastName);
