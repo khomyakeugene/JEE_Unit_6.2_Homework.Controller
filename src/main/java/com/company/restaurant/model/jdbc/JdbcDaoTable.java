@@ -1,6 +1,7 @@
 package com.company.restaurant.model.jdbc;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Map;
  */
 public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     private static final String SQL_ALL_FIELD_OF_ALL_RECORDS = "SELECT * FROM %s";
-    private static final String SQL_ALL_FIELD_BY_FIELD_VALUE = "SELECT * FROM %s WHERE (%s = %s)";
+    private static final String SQL_SELECT_BY_FIELD_VALUE = "SELECT %s FROM %s WHERE (%s = %s)";
     private static final String SQL_SELECT_BY_TWO_FIELD_VALUE = "SELECT %s FROM %s WHERE (%s = %s) AND (%s = %s)";
     private static final String SQL_DELETE_EXPRESSION_PATTERN = "DELETE FROM %s WHERE (%s = %s)";
 
@@ -28,9 +29,13 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
         return String.format(SQL_ALL_FIELD_OF_ALL_RECORDS, tableName) + " " + orderByCondition();
     }
 
+    private String fieldQueryCondition(String fieldName, Object value, String selectFields) {
+        return String.format(SQL_SELECT_BY_FIELD_VALUE, selectFields, tableName, fieldName, JdbcDao.toString(value)) +
+                " " + orderByCondition();
+    }
+
     private String fieldQueryCondition(String fieldName, Object value) {
-        return String.format(SQL_ALL_FIELD_BY_FIELD_VALUE, tableName, fieldName, JdbcDao.toString(value)) + " " +
-                orderByCondition();
+        return fieldQueryCondition(fieldName, value, "*");
     }
 
     protected String twoFieldsQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2,
@@ -61,6 +66,22 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
 
     protected List<T> findAllObjects() {
         return createObjectListFromQuery(allQueryCondition());
+    }
+
+    public String getOneFieldByFieldCondition(String selectedField, String fieldName, Object value) {
+        String result = null;
+
+        try(Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(fieldQueryCondition(fieldName, value, selectedField));
+            if (resultSet.next()) {
+                result = resultSet.getString(1);
+            }
+        } catch (SQLException e) {
+            databaseError(e);
+        }
+
+        return result;
     }
 
     private String buildDeleteExpression(String fieldName, Object value) {

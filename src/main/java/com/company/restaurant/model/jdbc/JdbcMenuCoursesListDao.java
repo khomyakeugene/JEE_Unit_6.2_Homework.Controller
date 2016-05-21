@@ -3,7 +3,7 @@ package com.company.restaurant.model.jdbc;
 import com.company.restaurant.model.Course;
 import com.company.restaurant.model.Menu;
 import com.company.restaurant.model.MenuCourseList;
-import com.company.restaurant.model.MenuCourseListDao;
+import com.company.restaurant.model.MenuCoursesListDao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,13 +13,13 @@ import java.util.Map;
 /**
  * Created by Yevhen on 21.05.2016.
  */
-public class JdbcMenuCourseListDao extends JdbcDaoLinkTable<MenuCourseList> implements MenuCourseListDao {
+public class JdbcMenuCoursesListDao extends JdbcDaoLinkTable<MenuCourseList> implements MenuCoursesListDao {
     private static final String MENU_COURSES_LIST_TABLE_NAME = "menu_courses_list";
     private static final String MENU_ID_FIELD_NAME = "menu_id";
     private static final String COURSE_ID_FIELD_NAME = "course_id";
     private static final String COURSE_NUMBER_FIELD_NAME = "course_number";
 
-    public JdbcMenuCourseListDao() {
+    public JdbcMenuCoursesListDao() {
         this.tableName = MENU_COURSES_LIST_TABLE_NAME;
         this.firstIdFieldName = MENU_ID_FIELD_NAME;
         this.secondIdFieldName = COURSE_ID_FIELD_NAME;
@@ -34,9 +34,9 @@ public class JdbcMenuCourseListDao extends JdbcDaoLinkTable<MenuCourseList> impl
         return result;
     }
 
-    private int getMaxCourseNumberInMenu(Menu menu, Course course) {
-        String selectResult = getOneFieldByTwoFieldCondition(String.format(SQL_MAX_STATEMENT, COURSE_NUMBER_FIELD_NAME),
-                menu.getId(), course.getCourseId());
+    private int getMaxCourseNumberInMenu(Menu menu) {
+        String selectResult = getOneFieldByFieldCondition(String.format(SQL_MAX_STATEMENT, COURSE_NUMBER_FIELD_NAME),
+                firstIdFieldName, menu.getId());
 
         return (selectResult == null) || selectResult.equals("") ? 0 : Integer.parseInt(selectResult);
     }
@@ -49,7 +49,7 @@ public class JdbcMenuCourseListDao extends JdbcDaoLinkTable<MenuCourseList> impl
         MenuCourseList menuCourseList = new MenuCourseList();
         menuCourseList.setFirstId(firstId);
         menuCourseList.setSecondId(secondId);
-        menuCourseList.setCourseNumber(getMaxCourseNumberInMenu(menu, course) + 1);
+        menuCourseList.setCourseNumber(getMaxCourseNumberInMenu(menu) + 1);
 
         addRecord(firstId, secondId, menuCourseList);
     }

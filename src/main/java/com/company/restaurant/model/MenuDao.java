@@ -14,7 +14,7 @@ public interface MenuDao {
 
     List<Menu> findAllMenus();
 
-    int addCourseToMenu(String menuName, Course course);
+    void addCourseToMenu(Menu menu, Course course);
 
-    void delCourseFromMenu(String menuName, Course course);
+    void delCourseFromMenu(Menu menu, Course course);
 }

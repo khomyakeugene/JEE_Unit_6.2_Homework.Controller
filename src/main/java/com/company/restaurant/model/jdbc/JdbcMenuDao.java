@@ -13,6 +13,12 @@ public class JdbcMenuDao extends JdbcDaoTableSimpleDic<Menu> implements MenuDao 
     private static final String MENU_TABLE_NAME = "menu";
     private static final String MENU_ID_FIELD_NAME = "menu_id";
 
+    private JdbcMenuCoursesListDao jdbcMenuCourseListDao;
+
+    public void setJdbcMenuCourseListDao(JdbcMenuCoursesListDao jdbcMenuCourseListDao) {
+        this.jdbcMenuCourseListDao = jdbcMenuCourseListDao;
+    }
+
     public JdbcMenuDao() {
         super();
 
@@ -46,14 +52,12 @@ public class JdbcMenuDao extends JdbcDaoTableSimpleDic<Menu> implements MenuDao 
     }
 
     @Override
-    public int addCourseToMenu(String menuName, Course course) {
-        Menu menu = findMenuByName(menuName);
-
-        return 0;
+    public void addCourseToMenu(Menu menu, Course course) {
+        jdbcMenuCourseListDao.addCourseToMenu(menu, course);
     }
 
     @Override
-    public void delCourseFromMenu(String menuName, Course course) {
-
+    public void delCourseFromMenu(Menu menu, Course course) {
+        jdbcMenuCourseListDao.delCourseFromMenu(menu, course);
     }
 }

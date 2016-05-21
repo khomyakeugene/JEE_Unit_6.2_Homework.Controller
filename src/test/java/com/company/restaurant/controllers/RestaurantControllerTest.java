@@ -111,6 +111,21 @@ public class RestaurantControllerTest {
         Menu menuByName = restaurantController.findMenuByName(name);
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(menu, menuByName));
 
+        // Courses in menu ----------------------------
+        String courseName1 = Util.getRandomString();
+        Course course1 = new Course(0, courseCategoryId(), courseName1, Util.getRandomFloat(), Util.getRandomFloat());
+        restaurantController.addCourse(course1);
+        String courseName2 = Util.getRandomString();
+        Course course2 = new Course(0, courseCategoryId(), courseName2, Util.getRandomFloat(), Util.getRandomFloat());
+        restaurantController.addCourse(course2);
+
+        restaurantController.addCourseToMenu(menu, course1);
+        restaurantController.addCourseToMenu(menu, course2);
+
+        restaurantController.delCourseFromMenu(menu, course1);
+        restaurantController.delCourseFromMenu(menu, course2);
+        // ----------------------------
+
         restaurantController.delMenu(name);
         assertTrue(restaurantController.findMenuByName(name) == null);
         // Test delete of non-existent data

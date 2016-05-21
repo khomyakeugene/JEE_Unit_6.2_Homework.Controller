@@ -145,11 +145,11 @@ public class RestaurantController {
         return menuDao.findAllMenus();
     }
 
-    public int addCourseToMenu(String menuName, Course course) {
-        return menuDao.addCourseToMenu(menuName, course);
+    public void addCourseToMenu(Menu menu, Course course) {
+        menuDao.addCourseToMenu(menu, course);
     }
 
-    public void delCourseFromMenu(String menuName, Course course) {
-        menuDao.delCourseFromMenu(menuName, course);
+    public void delCourseFromMenu(Menu menu, Course course) {
+        menuDao.delCourseFromMenu(menu, course);
     }
 }
