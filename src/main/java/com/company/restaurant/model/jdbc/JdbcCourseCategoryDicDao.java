@@ -30,7 +30,7 @@ public class JdbcCourseCategoryDicDao extends JdbcDaoTableSimpleDic<CourseCatego
     }
 
     @Override
-    public int addCourseCategory(String name) {
+    public CourseCategoryDic addCourseCategory(String name) {
         return addRecord(name);
     }
 

@@ -29,12 +29,14 @@ public abstract class JdbcDaoTableSimpleDic<T extends SimpleDic> extends JdbcDao
         object.setId(id);
     }
 
-    public int addRecord(String name) {
+    public T addRecord(String name) {
         T object = newObject();
         object.setId(0);
         object.setName(name);
 
-        return addRecord(object);
+        addRecord(object);
+
+        return object;
     }
 
     @Override

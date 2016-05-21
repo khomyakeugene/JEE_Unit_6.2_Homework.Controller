@@ -48,6 +48,7 @@
     <bean class="com.company.restaurant.controllers.RestaurantController" id="employeeController">
         <property name="txManager" ref="txManager"/>
         <property name="employeeDao" ref="employeeDao"/>
+        <property name="courseCategoryDicDao" ref="courseCategoryDicDao"/>
         <property name="courseDao" ref="courseDao"/>
         <property name="menuDao" ref="menuDao"/>
     </bean>

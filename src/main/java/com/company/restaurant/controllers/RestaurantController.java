@@ -15,6 +15,7 @@ public class RestaurantController {
 
     private PlatformTransactionManager txManager;
     private EmployeeDao employeeDao;
+    private CourseCategoryDicDao courseCategoryDicDao;
     private CourseDao courseDao;
     private MenuDao menuDao;
 
@@ -24,6 +25,10 @@ public class RestaurantController {
 
     public void setEmployeeDao(EmployeeDao employeeDao) {
         this.employeeDao = employeeDao;
+    }
+
+    public void setCourseCategoryDicDao(CourseCategoryDicDao courseCategoryDicDao) {
+        this.courseCategoryDicDao = courseCategoryDicDao;
     }
 
     public void setCourseDao(CourseDao courseDao) {
@@ -65,6 +70,22 @@ public class RestaurantController {
 
     public Employee findEmployeeById(int id) {
         return employeeDao.findEmployeeById(id);
+    }
+
+    CourseCategoryDic addCourseCategory(String name) {
+        return courseCategoryDicDao.addCourseCategory(name);
+    }
+
+    void delCourseCategory(String name) {
+        courseCategoryDicDao.delCourseCategory(name);
+    }
+
+    CourseCategoryDic findCourseCategoryByName(String name) {
+        return courseCategoryDicDao.findCourseCategoryByName(name);
+    }
+
+    List<CourseCategoryDic> findAllCourseCategories() {
+        return courseCategoryDicDao.findAllCourseCategories();
     }
 
     public int addCourse(Course course) {

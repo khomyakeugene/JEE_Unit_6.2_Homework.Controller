@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Yevhen on 21.05.2016.
  */
 public interface CourseCategoryDicDao {
-    int addCourseCategory(String name);
+    CourseCategoryDic addCourseCategory(String name);
 
     void delCourseCategory(String name);
 
