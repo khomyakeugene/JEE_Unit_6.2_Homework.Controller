@@ -20,6 +20,14 @@ public class RestaurantControllerTest {
         return restaurantController.findAllCourseCategories().get(0).getId();
     }
 
+    private int employeeId() {
+        return restaurantController.findAllEmployees().get(0).getEmployeeId();
+    }
+
+    private int tableId() {
+        return restaurantController.findAllTables().get(0).getTableId();
+    }
+
     @BeforeClass
     public static void setUpClass() throws Exception {
         restaurantController = RestaurantController.getInstance();
@@ -147,5 +155,20 @@ public class RestaurantControllerTest {
         assertTrue(restaurantController.findMenuByName(name) == null);
         // Test delete of non-existent data
         restaurantController.delMenu(name);
+    }
+
+    @Test
+    public void addFindDelTableTest() throws Exception {
+        Table table = new Table();
+        int number = Util.getRandomInteger();
+        table.setNumber(number);
+        table.setDescription(Util.getRandomString());
+        restaurantController.addTable(table);
+
+        Table tableByNumber = restaurantController.findTableByNumber(number);
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(table, tableByNumber));
+
+        restaurantController.delTable(table);
+        assertTrue(restaurantController.findTableByNumber(number) == null);
     }
 }
