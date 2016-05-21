@@ -9,6 +9,8 @@ import java.util.List;
  * Created by Yevhen on 19.05.2016.
  */
 public abstract class JdbcDao<T> {
+    public static final String SQL_MAX_STATEMENT = "MAX(%s)";
+
     protected DataSource dataSource;
 
     public void setDataSource(DataSource dataSource) {

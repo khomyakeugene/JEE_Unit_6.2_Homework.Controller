@@ -12,7 +12,7 @@ import java.util.Map;
 public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     private static final String SQL_ALL_FIELD_OF_ALL_RECORDS = "SELECT * FROM %s";
     private static final String SQL_ALL_FIELD_BY_FIELD_VALUE = "SELECT * FROM %s WHERE (%s = %s)";
-    private static final String SQL_ALL_FIELD_BY_TWO_FIELD_VALUE = "SELECT * FROM %s WHERE (%s = %s) AND (%s = %s)";
+    private static final String SQL_SELECT_BY_TWO_FIELD_VALUE = "SELECT %s FROM %s WHERE (%s = %s) AND (%s = %s)";
     private static final String SQL_DELETE_EXPRESSION_PATTERN = "DELETE FROM %s WHERE (%s = %s)";
 
     protected String tableName;
@@ -33,9 +33,14 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
                 orderByCondition();
     }
 
-    private String twoFieldsQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2) {
-        return String.format(SQL_ALL_FIELD_BY_TWO_FIELD_VALUE, tableName, fieldName_1, JdbcDao.toString(value_1),
+    protected String twoFieldsQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2,
+                                           String selectFields) {
+        return String.format(SQL_SELECT_BY_TWO_FIELD_VALUE, selectFields, tableName, fieldName_1, JdbcDao.toString(value_1),
                 fieldName_2, JdbcDao.toString(value_2)) + " " + orderByCondition();
+    }
+
+    private String twoFieldsQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2) {
+        return twoFieldsQueryCondition(fieldName_1, value_1, fieldName_2, value_2, "*");
     }
 
     public T findObjectByFieldCondition(String fieldName, Object value) {

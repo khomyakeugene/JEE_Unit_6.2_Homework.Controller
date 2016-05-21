@@ -2,8 +2,10 @@ package com.company.restaurant.model.jdbc;
 
 import com.company.restaurant.model.LinkObject;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Map;
 
 /**
@@ -12,22 +14,10 @@ import java.util.Map;
 public abstract class JdbcDaoLinkTable<T extends LinkObject> extends JdbcDaoTable<T> {
     private static final String SQL_INSERT_EXPRESSION_PATTERN_PART_1 = "INSERT INTO %s (%s, %s";
     private static final String SQL_INSERT_EXPRESSION_PATTERN_PART_2 = "VALUES(%d, %d";
+    private static final String SQL_DELETE_EXPRESSION_PATTERN = "DELETE FROM %s WHERE (%s = %d) AND (%s = %d)";
 
     protected String firstIdFieldName;
     protected String secondIdFieldName;
-
-    protected T newObject() {
-        return (T)(new LinkObject());
-    }
-
-    @Override
-    protected T newObject(ResultSet resultSet) throws SQLException {
-        T object = newObject();
-        object.setFirstId(resultSet.getInt(firstIdFieldName));
-        object.setSecondId(resultSet.getInt(secondIdFieldName));
-
-        return object;
-    }
 
     public void addRecord(int firstId, int secondId, T object) {
         boolean isAdditionalData = objectToDBMap(object).size() > 0;
@@ -45,5 +35,31 @@ public abstract class JdbcDaoLinkTable<T extends LinkObject> extends JdbcDaoTabl
         pattern += ")";
 
         executeUpdate(buildInsertExpression(pattern, object));
+    }
+
+    public void delRecord(int firstId, int secondId) {
+        executeUpdate(String.format(SQL_DELETE_EXPRESSION_PATTERN, tableName, firstIdFieldName, firstId,
+                secondIdFieldName, secondId));
+    }
+
+    private String twoFieldsQueryCondition(String selectFields, int firstId, int secondId) {
+        return twoFieldsQueryCondition(firstIdFieldName, Integer.toString(firstId), secondIdFieldName,
+                Integer.toString(secondId), selectFields);
+    }
+
+    public String getOneFieldByTwoFieldCondition(String selectFields, int firstId, int secondId) {
+        String result = null;
+
+        try(Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(twoFieldsQueryCondition(selectFields, firstId, secondId));
+            if (resultSet.next()) {
+                result = resultSet.getString(1);
+            }
+        } catch (SQLException e) {
+            databaseError(e);
+        }
+
+        return result;
     }
 }
