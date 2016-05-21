@@ -1,10 +1,7 @@
 package com.company.restaurant.model.jdbc;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,8 +49,8 @@ public abstract class JdbcDao<T> {
         ArrayList<T> result = new ArrayList<>();
 
         try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
+            Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 result.add(createObject(resultSet));
             }
@@ -68,5 +65,14 @@ public abstract class JdbcDao<T> {
         List<T> objectList = createObjectListFromQuery(query);
 
         return (objectList.size() > 0) ? objectList.get(0) : null;
+    }
+
+    public void executeUpdate(String query) {
+        try(Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement()) {
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            databaseError(e);
+        }
     }
 }

@@ -1,5 +1,8 @@
 package com.company.restaurant.model.jdbc;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.sql.*;
 import java.util.List;
 import java.util.Map;
