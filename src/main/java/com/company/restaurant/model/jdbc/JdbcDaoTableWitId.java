@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by Yevhen on 19.05.2016.
  */
-public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
+public abstract class JdbcDaoTableWitId<T> extends JdbcDao<T> {
     private static final String CANNOT_GET_LAST_GENERATED_ID_PATTERN = "Add record problem: cannot get last generated %s.%s value";
     private static final String CANNOT_DELETE_RECORD_PATTERN = "Cannot delete record in table <%s> because it is impossible " +
             "to detect condition value for field <%s> nor for field <%s>";
