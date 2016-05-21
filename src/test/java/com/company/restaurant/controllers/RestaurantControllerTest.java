@@ -43,9 +43,13 @@ public class RestaurantControllerTest {
     public void addFindDelEmployeeTest() throws Exception {
         String firstName = Util.getRandomString();
         String secondName = Util.getRandomString();
-        String phoneNumber = Util.getRandomString();
-        float salary = Util.getRandomFloat();
-        Employee employee = new Employee(0, jobPositionId(), firstName, secondName, phoneNumber, salary);
+        Employee employee = new Employee();
+        employee.setJobPositionId(jobPositionId());
+        employee.setFirstName(firstName);
+        employee.setSecondName(secondName);
+        employee.setPhoneNumber(Util.getRandomString());
+        employee.setSalary(Util.getRandomFloat());
+
         int employeeId = restaurantController.addEmployee(employee);
 
         // Select test <employee> and check
@@ -85,7 +89,11 @@ public class RestaurantControllerTest {
     @Test
     public void addFindDelCourseTest() throws Exception {
         String name = Util.getRandomString();
-        Course course = new Course(0, courseCategoryId(), name, Util.getRandomFloat(), Util.getRandomFloat());
+        Course course = new Course();
+        course.setCategoryId(courseCategoryId());
+        course.setName(name);
+        course.setWeight(Util.getRandomFloat());
+        course.setCost(Util.getRandomFloat());
         restaurantController.addCourse(course);
 
         Course courseByName = restaurantController.findCourseByName(name);
@@ -113,10 +121,19 @@ public class RestaurantControllerTest {
 
         // Courses in menu ----------------------------
         String courseName1 = Util.getRandomString();
-        Course course1 = new Course(0, courseCategoryId(), courseName1, Util.getRandomFloat(), Util.getRandomFloat());
+        Course course1 = new Course();
+        course1.setCategoryId(courseCategoryId());
+        course1.setName(courseName1);
+        course1.setWeight(Util.getRandomFloat());
+        course1.setCost(Util.getRandomFloat());
         restaurantController.addCourse(course1);
+
         String courseName2 = Util.getRandomString();
-        Course course2 = new Course(0, courseCategoryId(), courseName2, Util.getRandomFloat(), Util.getRandomFloat());
+        Course course2 = new Course();
+        course2.setCategoryId(courseCategoryId());
+        course2.setName(courseName2);
+        course2.setWeight(Util.getRandomFloat());
+        course2.setCost(Util.getRandomFloat());
         restaurantController.addCourse(course2);
 
         restaurantController.addCourseToMenu(menu, course1);

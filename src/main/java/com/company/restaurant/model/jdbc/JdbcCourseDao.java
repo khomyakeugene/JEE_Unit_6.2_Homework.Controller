@@ -37,9 +37,14 @@ public class JdbcCourseDao extends JdbcDaoTableWitId<Course> implements CourseDa
 
     @Override
     protected Course newObject(ResultSet resultSet) throws SQLException {
-        return new Course(resultSet.getInt(COURSE_ID_FIELD_NAME), resultSet.getInt(COURSE_CATEGORY_ID_FIELD_NAME),
-                resultSet.getString(NAME_FIELD_NAME), resultSet.getFloat(WEIGHT_FIELD_NAME),
-                resultSet.getFloat(COST_FIELD_NAME));
+        Course result = new Course();
+        result.setCourseId(resultSet.getInt(COURSE_ID_FIELD_NAME));
+        result.setCategoryId(resultSet.getInt(COURSE_CATEGORY_ID_FIELD_NAME));
+        result.setName(resultSet.getString(NAME_FIELD_NAME));
+        result.setWeight(resultSet.getFloat(WEIGHT_FIELD_NAME));
+        result.setCost(resultSet.getFloat(COST_FIELD_NAME));
+
+        return result;
     }
 
     @Override

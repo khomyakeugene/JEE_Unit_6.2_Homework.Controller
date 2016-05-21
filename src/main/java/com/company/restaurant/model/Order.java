@@ -9,7 +9,7 @@ public class Order {
     private int orderId;
     private int tableId;
     private int employeeId;
-    private char state_type;
+    private String stateType;
     private String orderNumber;
     private Date orderDatetime;
 
@@ -37,12 +37,12 @@ public class Order {
         this.employeeId = employeeId;
     }
 
-    public char getState_type() {
-        return state_type;
+    public String getStateType() {
+        return stateType;
     }
 
-    public void setState_type(char state_type) {
-        this.state_type = state_type;
+    public void setStateType(String stateType) {
+        this.stateType = stateType;
     }
 
     public String getOrderNumber() {
