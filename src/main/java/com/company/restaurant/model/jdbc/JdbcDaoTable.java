@@ -18,6 +18,8 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     protected String tableName;
     protected String orderByCondition;
 
+    protected abstract Map<String, Object> objectToDBMap(T object);
+
     private String orderByCondition() {
         return (orderByCondition == null) ? "" : orderByCondition;
     }
@@ -56,8 +58,6 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
         return createObjectListFromQuery(allQueryCondition());
     }
 
-    protected abstract Map<String, Object> objectToDBMap(T object);
-
     private String buildDeleteExpression(String fieldName, Object value) {
         return String.format(SQL_DELETE_EXPRESSION_PATTERN, tableName, fieldName, JdbcDao.toString(value));
     }
@@ -69,5 +69,16 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
         } catch (SQLException e) {
             databaseError(e);
         }
+    }
+
+    protected String buildInsertExpression(String pattern, T object) {
+        Map<String, Object> objectToDBMap = objectToDBMap(object);
+
+        String fieldSequence = String.join(",",
+                (CharSequence[])objectToDBMap.keySet().stream().toArray(String[]::new));
+        String valueSequence = String.join(",",
+                (CharSequence[])objectToDBMap.values().stream().map(v -> (JdbcDao.toString(v))).toArray(String[]::new));
+
+        return String.format(pattern, fieldSequence, valueSequence);
     }
 }
