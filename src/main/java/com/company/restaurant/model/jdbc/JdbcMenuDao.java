@@ -4,26 +4,20 @@ import com.company.restaurant.model.Course;
 import com.company.restaurant.model.Menu;
 import com.company.restaurant.model.MenuDao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Yevhen on 20.05.2016.
  */
 public class JdbcMenuDao extends JdbcDaoTableSimpleDic<Menu> implements MenuDao {
     private static final String MENU_TABLE_NAME = "menu";
-    private static final String MENU_ID_FIELD_NAME = "course_id";
-    private static final String NAME_FIELD_NAME = "name";
-    private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY name";
+    private static final String MENU_ID_FIELD_NAME = "menu_id";
 
     public JdbcMenuDao() {
+        super();
+
         this.tableName = MENU_TABLE_NAME;
         this.idFieldName = MENU_ID_FIELD_NAME;
-        this.nameFieldName = NAME_FIELD_NAME;
-        this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
     }
 
     @Override
@@ -32,13 +26,8 @@ public class JdbcMenuDao extends JdbcDaoTableSimpleDic<Menu> implements MenuDao 
     }
 
     @Override
-    public int addMenu(Menu menu) {
-        return addRecord(menu);
-    }
-
-    @Override
-    public void delMenu(Menu menu) {
-        delRecord(menu);
+    public Menu addMenu(String name) {
+        return addRecord(name);
     }
 
     @Override

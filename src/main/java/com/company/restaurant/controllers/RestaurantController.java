@@ -14,8 +14,9 @@ public class RestaurantController {
     private final static String APPLICATION_CONTEXT_NAME = "application-context.xml";
 
     private PlatformTransactionManager txManager;
+    private JobPositionDao jobPositionDao;
     private EmployeeDao employeeDao;
-    private CourseCategoryDicDao courseCategoryDicDao;
+    private CourseCategoryDao courseCategoryDao;
     private CourseDao courseDao;
     private MenuDao menuDao;
 
@@ -23,12 +24,16 @@ public class RestaurantController {
         this.txManager = txManager;
     }
 
+    public void setJobPositionDao(JobPositionDao jobPositionDao) {
+        this.jobPositionDao = jobPositionDao;
+    }
+
     public void setEmployeeDao(EmployeeDao employeeDao) {
         this.employeeDao = employeeDao;
     }
 
-    public void setCourseCategoryDicDao(CourseCategoryDicDao courseCategoryDicDao) {
-        this.courseCategoryDicDao = courseCategoryDicDao;
+    public void setCourseCategoryDao(CourseCategoryDao courseCategoryDao) {
+        this.courseCategoryDao = courseCategoryDao;
     }
 
     public void setCourseDao(CourseDao courseDao) {
@@ -42,6 +47,22 @@ public class RestaurantController {
     public static RestaurantController getInstance() {
         ApplicationContext context = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_NAME);
         return context.getBean(RestaurantController.class);
+    }
+
+    public JobPosition addJobPosition(String name) {
+        return jobPositionDao.addJobPosition(name);
+    }
+
+    public void delJobPosition(String name) {
+       jobPositionDao.delJobPosition(name);
+    }
+
+    public JobPosition findJobPositionByName(String name) {
+        return jobPositionDao.findJobPositionByName(name);
+    }
+
+    public List<JobPosition> findAllJobPositions() {
+        return jobPositionDao.findAllJobPositions();
     }
 
     public int addEmployee(Employee employee) {
@@ -72,20 +93,20 @@ public class RestaurantController {
         return employeeDao.findEmployeeById(id);
     }
 
-    CourseCategoryDic addCourseCategory(String name) {
-        return courseCategoryDicDao.addCourseCategory(name);
+    public CourseCategory addCourseCategory(String name) {
+        return courseCategoryDao.addCourseCategory(name);
     }
 
-    void delCourseCategory(String name) {
-        courseCategoryDicDao.delCourseCategory(name);
+    public void delCourseCategory(String name) {
+        courseCategoryDao.delCourseCategory(name);
     }
 
-    CourseCategoryDic findCourseCategoryByName(String name) {
-        return courseCategoryDicDao.findCourseCategoryByName(name);
+    public CourseCategory findCourseCategoryByName(String name) {
+        return courseCategoryDao.findCourseCategoryByName(name);
     }
 
-    List<CourseCategoryDic> findAllCourseCategories() {
-        return courseCategoryDicDao.findAllCourseCategories();
+    public List<CourseCategory> findAllCourseCategories() {
+        return courseCategoryDao.findAllCourseCategories();
     }
 
     public int addCourse(Course course) {
@@ -108,12 +129,8 @@ public class RestaurantController {
         return courseDao.findAllCourses();
     }
 
-    public int addMenu(Menu menu) {
-        return menuDao.addMenu(menu);
-    }
-
-    public void delMenu(Menu menu) {
-        menuDao.delMenu(menu);
+    public Menu addMenu(String name) {
+        return menuDao.addMenu(name);
     }
 
     public void delMenu(String name) {

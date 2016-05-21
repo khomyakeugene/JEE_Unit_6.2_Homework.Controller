@@ -13,6 +13,14 @@ import static java.awt.SystemColor.menu;
  * Created by Yevhen on 21.05.2016.
  */
 public abstract class JdbcDaoTableSimpleDic<T extends SimpleDic> extends JdbcDaoTable<T>  {
+    private static final String NAME_FIELD_NAME = "name";
+    private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY name";
+
+    public JdbcDaoTableSimpleDic() {
+        this.nameFieldName = NAME_FIELD_NAME;
+        this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
+    }
+
     protected abstract T newObject();
 
     @Override

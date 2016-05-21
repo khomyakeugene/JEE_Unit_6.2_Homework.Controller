@@ -28,17 +28,21 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean class="com.company.restaurant.model.jdbc.JdbcJobPositionDao" id="jobPositionDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
     <bean class="com.company.restaurant.model.jdbc.JdbcEmployeeDao" id="employeeDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.jdbc.JdbcCourseCategoryDicDao" id="courseCategoryDicDao">
+    <bean class="com.company.restaurant.model.jdbc.JdbcCourseCategoryDao" id="courseCategoryDicDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <bean class="com.company.restaurant.model.jdbc.JdbcCourseDao" id="courseDao">
         <property name="dataSource" ref="dataSource"/>
-        <property name="courseCategoryDicDao" ref="courseCategoryDicDao"/>
+        <property name="courseCategoryDao" ref="courseCategoryDicDao"/>
     </bean>
 
     <bean class="com.company.restaurant.model.jdbc.JdbcMenuDao" id="menuDao">
@@ -47,8 +51,9 @@
 
     <bean class="com.company.restaurant.controllers.RestaurantController" id="employeeController">
         <property name="txManager" ref="txManager"/>
+        <property name="jobPositionDao" ref="jobPositionDao"/>
         <property name="employeeDao" ref="employeeDao"/>
-        <property name="courseCategoryDicDao" ref="courseCategoryDicDao"/>
+        <property name="courseCategoryDao" ref="courseCategoryDicDao"/>
         <property name="courseDao" ref="courseDao"/>
         <property name="menuDao" ref="menuDao"/>
     </bean>

@@ -1,7 +1,7 @@
 package com.company.restaurant.model.jdbc;
 
 import com.company.restaurant.model.Course;
-import com.company.restaurant.model.CourseCategoryDicDao;
+import com.company.restaurant.model.CourseCategoryDao;
 import com.company.restaurant.model.CourseDao;
 
 import java.sql.ResultSet;
@@ -22,7 +22,7 @@ public class JdbcCourseDao extends JdbcDaoTable<Course> implements CourseDao {
     private static final String COST_FIELD_NAME = "cost";
     private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY name";
 
-    private CourseCategoryDicDao courseCategoryDicDao;
+    private CourseCategoryDao courseCategoryDao;
 
     public JdbcCourseDao() {
         this.tableName = COURSE_TABLE_NAME;
@@ -31,8 +31,8 @@ public class JdbcCourseDao extends JdbcDaoTable<Course> implements CourseDao {
         this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
     }
 
-    public void setCourseCategoryDicDao(CourseCategoryDicDao courseCategoryDicDao) {
-        this.courseCategoryDicDao = courseCategoryDicDao;
+    public void setCourseCategoryDao(CourseCategoryDao courseCategoryDao) {
+        this.courseCategoryDao = courseCategoryDao;
     }
 
     @Override
