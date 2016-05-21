@@ -1,9 +1,6 @@
 package com.company.restaurant.model.jdbc;
 
-import com.company.util.Util;
-
 import java.sql.*;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +23,7 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     protected String nameFieldName;
     protected String orderByCondition;
 
-    protected abstract void setGeneratedId(int id, T object);
+    protected abstract void setId(int id, T object);
 
     private String orderByCondition() {
         return (orderByCondition == null) ? "" : orderByCondition;
@@ -98,7 +95,7 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
             if (resultSet.next()) {
                 result = resultSet.getInt(idFieldName);
                 // Store new generated id in the added <object> - at least, it is important to support data integrity
-                setGeneratedId(result, object);
+                setId(result, object);
             } else  {
                 throw new SQLException(String.format(CANNOT_GET_LAST_GENERATED_ID_PATTERN, tableName, idFieldName));
             }

@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by Yevhen on 21.05.2016.
  */
-public class JdbcCourseCategoryDicDao extends JdbcDaoTable<CourseCategoryDic> implements CourseCategoryDicDao {
+public class JdbcCourseCategoryDicDao extends JdbcDaoTableSimpleDic<CourseCategoryDic> implements CourseCategoryDicDao {
     private static final String COURSE_CATEGORY_DIC_TABLE_NAME = "course_category_dic";
     private static final String COURSE_CATEGORY_ID_FIELD_NAME = "course_category_id";
     private static final String NAME_FIELD_NAME = "name";
@@ -25,23 +25,27 @@ public class JdbcCourseCategoryDicDao extends JdbcDaoTable<CourseCategoryDic> im
     }
 
     @Override
-    protected CourseCategoryDic newObject(ResultSet resultSet) throws SQLException {
-        return new CourseCategoryDic(resultSet.getInt(COURSE_CATEGORY_ID_FIELD_NAME),
-                resultSet.getString(NAME_FIELD_NAME));
+    protected CourseCategoryDic newObject() {
+        return new CourseCategoryDic();
     }
 
     @Override
-    public List<CourseCategoryDic> findAllCourseCategoryDic() {
+    public int addCourseCategory(String name) {
+        return addRecord(name);
+    }
+
+    @Override
+    public void delCourseCategory(String name) {
+        delRecordByName(name);
+    }
+
+    @Override
+    public CourseCategoryDic findCourseCategoryByName(String name) {
+        return findObjectByName(name);
+    }
+
+    @Override
+    public List<CourseCategoryDic> findAllCourseCategories() {
         return findAllObjects();
-    }
-
-    @Override
-    protected void setGeneratedId(int id, CourseCategoryDic courseCategoryDic) {
-        courseCategoryDic.setCourseCategoryId(id);
-    }
-
-    @Override
-    protected Map<String, Object> objectToDBMap(CourseCategoryDic object) {
-        return null;
     }
 }

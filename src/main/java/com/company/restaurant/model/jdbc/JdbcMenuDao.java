@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Created by Yevhen on 20.05.2016.
  */
-public class JdbcMenuDao extends JdbcDaoTable<Menu> implements MenuDao {
+public class JdbcMenuDao extends JdbcDaoTableSimpleDic<Menu> implements MenuDao {
     private static final String MENU_TABLE_NAME = "menu";
     private static final String MENU_ID_FIELD_NAME = "course_id";
     private static final String NAME_FIELD_NAME = "name";
@@ -27,23 +27,8 @@ public class JdbcMenuDao extends JdbcDaoTable<Menu> implements MenuDao {
     }
 
     @Override
-    protected Menu newObject(ResultSet resultSet) throws SQLException {
-        return new Menu(resultSet.getInt(MENU_ID_FIELD_NAME), resultSet.getString(NAME_FIELD_NAME));
-    }
-
-
-    @Override
-    protected void setGeneratedId(int id, Menu menu) {
-        menu.setMenuId(id);
-    }
-
-    @Override
-    protected Map<String, Object> objectToDBMap(Menu menu) {
-        HashMap<String, Object> result = new HashMap<>();
-
-        result.put(NAME_FIELD_NAME, menu.getName());
-
-        return result;
+    protected Menu newObject() {
+        return new Menu();
     }
 
     @Override

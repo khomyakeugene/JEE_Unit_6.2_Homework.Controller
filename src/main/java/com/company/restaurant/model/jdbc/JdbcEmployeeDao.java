@@ -58,7 +58,7 @@ public class JdbcEmployeeDao extends JdbcDaoTable<Employee> implements EmployeeD
     }
 
     @Override
-    protected void setGeneratedId(int id, Employee employee) {
+    protected void setId(int id, Employee employee) {
         employee.setEmployeeId(id);
     }
 

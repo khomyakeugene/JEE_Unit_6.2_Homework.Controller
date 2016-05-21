@@ -53,7 +53,7 @@ public class JdbcCourseDao extends JdbcDaoTable<Course> implements CourseDao {
     }
 
     @Override
-    protected void setGeneratedId(int id, Course course) {
+    protected void setId(int id, Course course) {
         course.setCourseId(id);
     }
 
