@@ -5,23 +5,11 @@ package com.company.restaurant.model;
  */
 public class Employee {
     private int employeeId;
-    private int positionId;
+    private int jobPositionId;
     private String firstName;
     private String secondName;
     private String phoneNumber;
     private float salary;
-
-    public Employee() {
-    }
-
-    public Employee(int employeeId, int positionId, String firstName, String secondName, String phoneNumber, float salary) {
-        this.employeeId = employeeId;
-        this.positionId = positionId;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.phoneNumber = phoneNumber;
-        this.salary = salary;
-    }
 
     public int getEmployeeId() {
         return employeeId;
@@ -31,12 +19,12 @@ public class Employee {
         this.employeeId = employeeId;
     }
 
-    public int getPositionId() {
-        return positionId;
+    public int getJobPositionId() {
+        return jobPositionId;
     }
 
-    public void setPositionId(int positionId) {
-        this.positionId = positionId;
+    public void setJobPositionId(int jobPositionId) {
+        this.jobPositionId = jobPositionId;
     }
 
     public String getFirstName() {

@@ -31,10 +31,15 @@ public class JdbcEmployeeDao extends JdbcDaoTableWitId<Employee> implements Empl
 
     @Override
     protected Employee newObject(ResultSet resultSet) throws SQLException {
-        return new Employee(resultSet.getInt(EMPLOYEE_ID_FIELD_NAME),
-                resultSet.getInt(JOB_POSITION_ID_FIELD_NAME), resultSet.getString(FIRST_NAME_FIELD_NAME),
-                resultSet.getString(SECOND_NAME_FIELD_NAME), resultSet.getString(PHONE_NUMBER_FIELD_NAME),
-                resultSet.getFloat(SALARY_FIELD_NAME));
+        Employee result = new Employee();
+        result.setEmployeeId(resultSet.getInt(EMPLOYEE_ID_FIELD_NAME));
+        result.setJobPositionId(resultSet.getInt(JOB_POSITION_ID_FIELD_NAME));
+        result.setFirstName(resultSet.getString(FIRST_NAME_FIELD_NAME));
+        result.setSecondName(resultSet.getString(SECOND_NAME_FIELD_NAME));
+        result.setPhoneNumber(resultSet.getString(PHONE_NUMBER_FIELD_NAME));
+        result.setSalary(resultSet.getFloat(SALARY_FIELD_NAME));
+
+        return result;
     }
 
     @Override
@@ -66,7 +71,7 @@ public class JdbcEmployeeDao extends JdbcDaoTableWitId<Employee> implements Empl
     protected Map<String, Object> objectToDBMap(Employee employee) {
         HashMap<String, Object> result = new HashMap<>();
 
-        result.put(JOB_POSITION_ID_FIELD_NAME, employee.getPositionId());
+        result.put(JOB_POSITION_ID_FIELD_NAME, employee.getJobPositionId());
         result.put(FIRST_NAME_FIELD_NAME, employee.getFirstName());
         result.put(SECOND_NAME_FIELD_NAME, employee.getSecondName());
         result.put(PHONE_NUMBER_FIELD_NAME, employee.getPhoneNumber());
