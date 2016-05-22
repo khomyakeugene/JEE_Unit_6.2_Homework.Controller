@@ -30,7 +30,7 @@ public class StateGraphRules {
         this.stateGraphDao = stateGraphDao;
     }
 
-    private void ErrorMessage(String message) {
+    private void errorMessage(String message) {
         throw new DataIntegrityException(message);
     }
 
@@ -53,7 +53,7 @@ public class StateGraphRules {
         if (optionalStateGraph.isPresent()) {
             result = optionalStateGraph.get().getInitStateType();
         } else {
-            ErrorMessage(String.format(IMPOSSIBLE_TO_DETERMINE_CREATION_STATE_PATTERN, entityName));
+            errorMessage(String.format(IMPOSSIBLE_TO_DETERMINE_CREATION_STATE_PATTERN, entityName));
         }
 
         return result;
@@ -69,7 +69,7 @@ public class StateGraphRules {
         if (optionalStateGraph.isPresent()) {
             result = optionalStateGraph.get().getFiniteStateType();
         } else {
-            ErrorMessage(String.format(IMPOSSIBLE_TO_DETERMINE_FINITE_STATE_PATTERN, entityName, initState, actionType));
+            errorMessage(String.format(IMPOSSIBLE_TO_DETERMINE_FINITE_STATE_PATTERN, entityName, initState, actionType));
         }
 
         return result;
@@ -81,5 +81,20 @@ public class StateGraphRules {
 
     public String deletedState(String entityName, String currentState) {
         return finiteState(entityName, currentState, ACTION_TYPE_REMOVAL);
+    }
+
+    private boolean isActionEnabled(String entityName, String currentState, String actionType) {
+        boolean result;
+        try {
+            result = finiteState(entityName, currentState, actionType) != null;
+        } catch (DataIntegrityException e) {
+            result = false;
+        }
+
+        return result;
+    }
+
+    public boolean isFillingActionEnabled(String entityName, String currentState) {
+        return isActionEnabled(entityName, currentState, ACTION_TYPE_FILLING);
     }
 }

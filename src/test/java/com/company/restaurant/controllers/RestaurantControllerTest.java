@@ -15,26 +15,33 @@ import static org.junit.Assert.assertTrue;
 public class RestaurantControllerTest {
     private static RestaurantController restaurantController;
     private static int closedOrderId;
+    private static Order closedOrder;
+    private static String closedOrderCourseName1;
+    private static Course closedOrderCourse1;
+    private static String closedOrderCourseName2;
+    private static Course closedOrderCourse2;
 
     private int jobPositionId() {
         return restaurantController.findAllJobPositions().get(0).getId();
     }
 
-    private int courseCategoryId() {
+    private static int courseCategoryId() {
         return restaurantController.findAllCourseCategories().get(0).getId();
     }
 
-    private int employeeId() {
+    private static int employeeId() {
         return restaurantController.findAllEmployees().get(0).getEmployeeId();
     }
 
-    private int tableId() {
+    private static int tableId() {
         return restaurantController.findAllTables().get(0).getTableId();
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
         restaurantController = RestaurantController.getInstance();
+
+        prepareClosedOrder();
     }
 
     @Test(timeout = 2000)
@@ -153,6 +160,9 @@ public class RestaurantControllerTest {
 
         restaurantController.delCourseFromMenu(menu, course1);
         restaurantController.delCourseFromMenu(menu, course2);
+
+        restaurantController.delCourse(courseName1);
+        restaurantController.delCourse(courseName2);
         // ----------------------------
 
         restaurantController.delMenu(name);
@@ -189,22 +199,65 @@ public class RestaurantControllerTest {
         // Because, at least field <order_datetime> is filling by default (as a current timestamp) on the database level
         assertTrue(orderById != null);
 
+        // Courses in order ----------------------------
+        String courseName1 = Util.getRandomString();
+        Course course1 = new Course();
+        course1.setCategoryId(courseCategoryId());
+        course1.setName(courseName1);
+        course1.setWeight(Util.getRandomFloat());
+        course1.setCost(Util.getRandomFloat());
+        restaurantController.addCourse(course1);
+
+        String courseName2 = Util.getRandomString();
+        Course course2 = new Course();
+        course2.setCategoryId(courseCategoryId());
+        course2.setName(courseName2);
+        course2.setWeight(Util.getRandomFloat());
+        course2.setCost(Util.getRandomFloat());
+        restaurantController.addCourse(course2);
+
+        restaurantController.addCourseToOrder(order, course1, 1);
+        restaurantController.addCourseToOrder(order, course2, 2);
+
+        restaurantController.delCourseFromOrder(order, course1);
+        restaurantController.delCourseFromOrder(order, course2);
+
+        restaurantController.delCourse(courseName1);
+        restaurantController.delCourse(courseName2);
+        // ----------------------------
+
         restaurantController.delOrder(order);
         assertTrue(restaurantController.findOrderById(orderId) == null);
     }
 
-    @Test(timeout = 2000, expected = DataIntegrityException.class)
-    public void closedOrderTest() throws Exception {
+    private static void prepareClosedOrder() throws Exception {
         Order order = new Order();
         order.setTableId(tableId());
         order.setEmployeeId(employeeId());
         order.setOrderNumber(Util.getRandomString());
         closedOrderId = restaurantController.addOrder(order);
 
-        order = restaurantController.closeOrder(order);
+        // Courses for closed order ----------------------------
+        closedOrderCourseName1 = Util.getRandomString();
+        closedOrderCourse1 = new Course();
+        closedOrderCourse1.setCategoryId(courseCategoryId());
+        closedOrderCourse1.setName(closedOrderCourseName1);
+        closedOrderCourse1.setWeight(Util.getRandomFloat());
+        closedOrderCourse1.setCost(Util.getRandomFloat());
+        restaurantController.addCourse(closedOrderCourse1);
 
-        // <DataIntegrityException> should be generated next
-        restaurantController.delOrder(order);
+        closedOrderCourseName2 = Util.getRandomString();
+        closedOrderCourse2 = new Course();
+        closedOrderCourse2.setCategoryId(courseCategoryId());
+        closedOrderCourse2.setName(closedOrderCourseName2);
+        closedOrderCourse2.setWeight(Util.getRandomFloat());
+        closedOrderCourse2.setCost(Util.getRandomFloat());
+        restaurantController.addCourse(closedOrderCourse2);
+        // ----------
+
+        restaurantController.addCourseToOrder(order, closedOrderCourse1, 1);
+
+        closedOrder = restaurantController.closeOrder(order);
     }
 
     private static void clearClosedOrder() throws Exception {
@@ -212,8 +265,31 @@ public class RestaurantControllerTest {
         Order order = orderDao.findOrderById(closedOrderId);
         // Manually change order state to "open"
         order = orderDao.updOrderState(order, "A");
+
         // Delete "open" order
         orderDao.delOrder(order);
+
+        // Delete course for closed order
+        restaurantController.delCourse(closedOrderCourseName1);
+        restaurantController.delCourse(closedOrderCourseName2);
+    }
+
+    @Test(timeout = 2000, expected = DataIntegrityException.class)
+    public void closedOrderTest_1() throws Exception {
+        // <DataIntegrityException> should be generated next
+        restaurantController.delOrder(closedOrder);
+    }
+
+    @Test(timeout = 2000, expected = DataIntegrityException.class)
+    public void closedOrderTest_2() throws Exception {
+        // <DataIntegrityException> should be generated next
+        restaurantController.addCourseToOrder(closedOrder, closedOrderCourse2, 1);
+    }
+
+    @Test(timeout = 2000, expected = DataIntegrityException.class)
+    public void closedOrderTest_3() throws Exception {
+        // <DataIntegrityException> should be generated next
+        restaurantController.delCourseFromOrder(closedOrder, closedOrderCourse1);
     }
 
     @AfterClass

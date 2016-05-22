@@ -10,6 +10,10 @@ import java.util.List;
 public class OrderAdapter {
     private static final String IMPOSSIBLE_TO_DELETE_ORDER_PATTERN =
             "It is impossible to delete order in <%s> state (<order_id> = %d)!";
+    private static final String IMPOSSIBLE_TO_ADD_COURSE_TO_ORDER_PATTERN =
+            "It is impossible to add course to order in <%s> state (<order_id> = %d)!";
+    private static final String IMPOSSIBLE_TO_DEL_COURSE_FROM_ORDER_PATTERN =
+            "It is impossible to delete course from order in <%s> state (<order_id> = %d)!";
 
     private OrderDao orderDao;
     private StateGraphRules stateGraphRules;
@@ -47,6 +51,14 @@ public class OrderAdapter {
         return stateGraphRules.deletedState(orderDao.orderEntityName(), order.getStateType());
     }
 
+    private boolean isFillingActionEnabled(Order order) {
+        return stateGraphRules.isFillingActionEnabled(orderDao.orderEntityName(), order.getStateType());
+    }
+
+    private void errorMessage(String message) {
+        throw new DataIntegrityException(message);
+    }
+
     public int addOrder(Order order) {
         order.setStateType(orderCreationState());
 
@@ -66,7 +78,7 @@ public class OrderAdapter {
         }
 
         if (!orderWasDeleted) {
-            throw new DataIntegrityException(String.format(
+            errorMessage(String.format(
                     IMPOSSIBLE_TO_DELETE_ORDER_PATTERN, order.getStateTypeName(), order.getOrderId()));
         }
     }
@@ -92,10 +104,20 @@ public class OrderAdapter {
     }
 
     public void addCourseToOrder(Order order, Course course, int quantity) {
-        orderCourseDao.addCourseToOrder(order, course, quantity);
+        if (isFillingActionEnabled(order)) {
+            orderCourseDao.addCourseToOrder(order, course, quantity);
+        } else {
+            errorMessage(String.format(
+                    IMPOSSIBLE_TO_ADD_COURSE_TO_ORDER_PATTERN, order.getStateTypeName(), order.getOrderId()));
+        }
     }
 
     public void delCourseFromOrder(Order order, Course course) {
-        orderCourseDao.delCourseFromOrder(order, course);
+        if (isFillingActionEnabled(order)) {
+            orderCourseDao.delCourseFromOrder(order, course);
+        } else {
+            errorMessage(String.format(
+                    IMPOSSIBLE_TO_DEL_COURSE_FROM_ORDER_PATTERN, order.getStateTypeName(), order.getOrderId()));
+        }
     }
 }
