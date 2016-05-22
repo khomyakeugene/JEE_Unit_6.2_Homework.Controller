@@ -210,4 +210,12 @@ public class RestaurantController {
     List<Order> findAllClosedOrders() {
         return orderAdapter.findAllClosedOrders();
     }
+
+    void addCourseToOrder(Order order, Course course, int quantity) {
+        orderAdapter.addCourseToOrder(order, course, quantity);
+    }
+
+    void delCourseFromOrder(Order order, Course course) {
+        orderAdapter.delCourseFromOrder(order, course);
+    }
 }

@@ -13,6 +13,7 @@ public class OrderAdapter {
 
     private OrderDao orderDao;
     private StateGraphRules stateGraphRules;
+    private OrderCourseDao orderCourseDao;
 
     public OrderDao getOrderDao() {
         return orderDao;
@@ -24,6 +25,10 @@ public class OrderAdapter {
 
     public void setStateGraphRules(StateGraphRules stateGraphRules) {
         this.stateGraphRules = stateGraphRules;
+    }
+
+    public void setOrderCourseDao(OrderCourseDao orderCourseDao) {
+        this.orderCourseDao = orderCourseDao;
     }
 
     private String orderCreationState() {
@@ -84,5 +89,13 @@ public class OrderAdapter {
 
     public List<Order> findAllClosedOrders() {
         return findAllOrders(orderClosedState());
+    }
+
+    public void addCourseToOrder(Order order, Course course, int quantity) {
+        orderCourseDao.addCourseToOrder(order, course, quantity);
+    }
+
+    public void delCourseFromOrder(Order order, Course course) {
+        orderCourseDao.delCourseFromOrder(order, course);
     }
 }

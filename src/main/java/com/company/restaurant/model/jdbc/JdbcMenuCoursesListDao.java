@@ -25,20 +25,30 @@ public class JdbcMenuCoursesListDao extends JdbcDaoLinkTable<MenuCourseList> imp
         this.secondIdFieldName = COURSE_ID_FIELD_NAME;
     }
 
-    @Override
-    protected Map<String, Object> objectToDBMap(MenuCourseList object) {
-        HashMap<String, Object> result = new HashMap<>();
-
-        result.put(COURSE_NUMBER_FIELD_NAME, object.getCourseNumber());
-
-        return result;
-    }
-
     private int getMaxCourseNumberInMenu(Menu menu) {
         String selectResult = getOneFieldByFieldCondition(String.format(SQL_MAX_STATEMENT, COURSE_NUMBER_FIELD_NAME),
                 firstIdFieldName, menu.getId());
 
         return (selectResult == null) || selectResult.equals("") ? 0 : Integer.parseInt(selectResult);
+    }
+
+    @Override
+    protected Map<String, Object> objectToDBMap(MenuCourseList menuCourseList) {
+        HashMap<String, Object> result = new HashMap<>();
+
+        result.put(COURSE_NUMBER_FIELD_NAME, menuCourseList.getCourseNumber());
+
+        return result;
+    }
+
+    @Override
+    protected MenuCourseList newObject(ResultSet resultSet) throws SQLException {
+        MenuCourseList result = new MenuCourseList();
+        result.setFirstId(resultSet.getInt(firstIdFieldName));
+        result.setSecondId(resultSet.getInt(secondIdFieldName));
+        result.setCourseNumber(resultSet.getInt(COURSE_NUMBER_FIELD_NAME));
+
+        return result;
     }
 
     @Override
@@ -57,15 +67,5 @@ public class JdbcMenuCoursesListDao extends JdbcDaoLinkTable<MenuCourseList> imp
     @Override
     public void delCourseFromMenu(Menu menu, Course course) {
         delRecord(menu.getId(), course.getCourseId());
-    }
-
-    @Override
-    protected MenuCourseList newObject(ResultSet resultSet) throws SQLException {
-        MenuCourseList result = new MenuCourseList();
-        result.setFirstId(resultSet.getInt(firstIdFieldName));
-        result.setSecondId(resultSet.getInt(secondIdFieldName));
-        result.setCourseNumber(resultSet.getInt(COURSE_NUMBER_FIELD_NAME));
-
-        return result;
     }
 }
