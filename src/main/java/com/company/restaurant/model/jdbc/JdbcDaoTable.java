@@ -107,13 +107,18 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
         }
     }
 
-    protected String buildInsertExpression(String pattern, T object) {
+    private Map<String, Object> getObjectToDBMap(T object) {
         Map<String, Object> objectToDBMap = objectToDBMap(object);
 
         // Exclude null-value data
-        HashMap<String, Object> clarifiedDBMap = new HashMap<>();
-        objectToDBMap.forEach((k, v) -> {if (v != null) {
-            clarifiedDBMap.put(k,v);}});
+        Map<String, Object> result = new HashMap<>();
+        objectToDBMap.forEach((k, v) -> {if (v != null) {result.put(k,v);}});
+
+        return result;
+    }
+
+    protected String buildInsertExpression(String pattern, T object) {
+        Map<String, Object> clarifiedDBMap = getObjectToDBMap(object);
 
         String fieldSequence = String.join(",",
                 (CharSequence[])clarifiedDBMap.keySet().stream().toArray(String[]::new));
