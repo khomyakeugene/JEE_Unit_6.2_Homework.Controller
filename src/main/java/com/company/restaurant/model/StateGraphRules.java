@@ -62,13 +62,14 @@ public class StateGraphRules {
     public String finiteState(String entityName, String currentState, String actionType) {
         String result = null;
 
+        String initState = (currentState == null) ? currentState = creationState(entityName) : currentState;
         Optional<StateGraph> optionalStateGraph = entityGraphStateList(entityName).stream().
                 filter(s -> (s.getActionType().equals(actionType)) &&
-                        (s.getInitStateType().equals(currentState))).findFirst();
+                        (s.getInitStateType().equals(initState))).findFirst();
         if (optionalStateGraph.isPresent()) {
             result = optionalStateGraph.get().getFiniteStateType();
         } else {
-            ErrorMessage(String.format(IMPOSSIBLE_TO_DETERMINE_FINITE_STATE_PATTERN, entityName, currentState, actionType));
+            ErrorMessage(String.format(IMPOSSIBLE_TO_DETERMINE_FINITE_STATE_PATTERN, entityName, initState, actionType));
         }
 
         return result;

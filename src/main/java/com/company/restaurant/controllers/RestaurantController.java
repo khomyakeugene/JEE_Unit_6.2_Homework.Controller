@@ -195,11 +195,19 @@ public class RestaurantController {
         return orderAdapter.findOrderById(id);
     }
 
+    Order closeOrder(Order order) {
+        return orderAdapter.closeOrder(order);
+    }
+
     List<Order> findAllOrders(String stateType) {
         return orderAdapter.findAllOrders(stateType);
     }
 
-    Order closeOrder(Order order) {
-        return orderAdapter.closeOrder(order);
+    List<Order> findAllOpenOrders() {
+        return orderAdapter.findAllOpenOrders();
+    }
+
+    List<Order> findAllClosedOrders() {
+        return orderAdapter.findAllClosedOrders();
     }
 }

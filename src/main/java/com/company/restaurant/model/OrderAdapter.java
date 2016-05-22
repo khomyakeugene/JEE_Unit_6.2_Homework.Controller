@@ -31,7 +31,11 @@ public class OrderAdapter {
     }
 
     private String orderClosedState(Order order) {
-        return stateGraphRules.closedState(orderDao.orderEntityName(), order.getStateType());
+        return stateGraphRules.closedState(orderDao.orderEntityName(), (order == null) ? null : order.getStateType());
+    }
+
+    private String orderClosedState() {
+        return orderClosedState(null);
     }
 
     private String orderDeletedState(Order order) {
@@ -66,11 +70,19 @@ public class OrderAdapter {
         return orderDao.findOrderById(id);
     }
 
+    public Order closeOrder(Order order) {
+        return orderDao.updOrderState(order, orderClosedState(order));
+    }
+
     public List<Order> findAllOrders(String stateType) {
         return orderDao.findAllOrders(stateType);
     }
 
-    public Order closeOrder(Order order) {
-        return orderDao.updOrderState(order, orderClosedState(order));
+    public List<Order> findAllOpenOrders() {
+        return findAllOrders(orderCreationState());
+    }
+
+    public List<Order> findAllClosedOrders() {
+        return findAllOrders(orderClosedState());
     }
 }
