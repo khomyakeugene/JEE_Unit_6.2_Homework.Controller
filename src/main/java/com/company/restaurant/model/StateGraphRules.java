@@ -77,4 +77,8 @@ public class StateGraphRules {
     public String closedState(String entityName, String currentState) {
         return finiteState(entityName, currentState, ACTION_TYPE_CLOSING);
     }
+
+    public String deletedState(String entityName, String currentState) {
+        return finiteState(entityName, currentState, ACTION_TYPE_REMOVAL);
+    }
 }

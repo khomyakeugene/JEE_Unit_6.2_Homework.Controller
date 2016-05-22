@@ -73,9 +73,9 @@ public abstract class JdbcDaoTableWitId<T> extends JdbcDaoTable<T> {
     }
 
     public void delRecord(T object) {
-        AbstractMap.SimpleEntry<String, Object> fieldData = getKeyFieldNameAndFieldValue(object);
+        AbstractMap.SimpleEntry<String, Object> keyFieldData = getKeyFieldNameAndFieldValue(object);
 
-        delRecordByFieldCondition(fieldData.getKey(), fieldData.getValue());
+        delRecordByFieldCondition(keyFieldData.getKey(), keyFieldData.getValue());
     }
 
     public void delRecordById(int id) {
@@ -86,9 +86,14 @@ public abstract class JdbcDaoTableWitId<T> extends JdbcDaoTable<T> {
         delRecordByFieldCondition(nameFieldName, name);
     }
 
-    public void updRecord(T object, String updateFieldName, Object updateFieldValue) {
-        AbstractMap.SimpleEntry<String, Object> fieldData = getKeyFieldNameAndFieldValue(object);
+    public T updRecord(T object, String updateFieldName, Object updateFieldValue) {
+        AbstractMap.SimpleEntry<String, Object> keyFieldData = getKeyFieldNameAndFieldValue(object);
 
-        updateOneFieldByOneFieldCondition(updateFieldName, updateFieldValue, fieldData.getKey(), fieldData.getValue());
+        String keyFieldName = keyFieldData.getKey();
+        Object keyFieldValue = keyFieldData.getValue();
+        updateOneFieldByOneFieldCondition(updateFieldName, updateFieldValue, keyFieldName, keyFieldValue);
+        // Retrieve current state of object (hope, that no key field (in case if this key field is not from primary
+        // key) were updated!)
+        return findObjectByFieldCondition(keyFieldName, keyFieldValue);
     }
 }

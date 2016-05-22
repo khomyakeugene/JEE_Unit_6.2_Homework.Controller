@@ -2,8 +2,6 @@ package com.company.restaurant.model.jdbc;
 
 import com.company.restaurant.model.Order;
 import com.company.restaurant.model.OrderDao;
-import com.company.restaurant.model.StateGraphDao;
-import com.company.restaurant.model.StateGraphRules;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -92,8 +90,8 @@ public class JdbcOrderDao extends JdbcDaoTableWitId<Order> implements OrderDao {
     }
 
     @Override
-    public void updOrderState(Order order, String stateType) {
-        updRecord(order, STATE_TYPE_FIELD_NAME, stateType);
+    public Order updOrderState(Order order, String stateType) {
+        return updRecord(order, STATE_TYPE_FIELD_NAME, stateType);
     }
 
 }

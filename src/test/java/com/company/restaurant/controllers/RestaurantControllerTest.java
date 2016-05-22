@@ -1,9 +1,11 @@
 package com.company.restaurant.controllers;
 
 import com.company.restaurant.model.*;
+import com.company.util.DataIntegrityException;
 import com.company.util.ObjectService;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -33,7 +35,7 @@ public class RestaurantControllerTest {
         restaurantController = RestaurantController.getInstance();
     }
 
-    @Test
+    @Test(timeout = 2000)
     public void addFindDelJobPosition() throws Exception {
         String name = Util.getRandomString();
         JobPosition jobPosition = restaurantController.addJobPosition(name);
@@ -47,7 +49,7 @@ public class RestaurantControllerTest {
         restaurantController.delJobPosition(name);
     }
 
-    @Test
+    @Test(timeout = 2000)
     public void addFindDelEmployeeTest() throws Exception {
         String firstName = Util.getRandomString();
         String secondName = Util.getRandomString();
@@ -80,7 +82,7 @@ public class RestaurantControllerTest {
         restaurantController.delEmployee(employee);
     }
 
-    @Test
+    @Test(timeout = 2000)
     public void addFindDelCourseCategoryTest() throws Exception {
         String name = Util.getRandomString();
         CourseCategory courseCategory = restaurantController.addCourseCategory(name);
@@ -94,7 +96,7 @@ public class RestaurantControllerTest {
         restaurantController.delCourseCategory(name);
     }
 
-    @Test
+    @Test(timeout = 2000)
     public void addFindDelCourseTest() throws Exception {
         String name = Util.getRandomString();
         Course course = new Course();
@@ -119,7 +121,7 @@ public class RestaurantControllerTest {
         restaurantController.delCourse(name);
     }
 
-    @Test
+    @Test(timeout = 2000)
     public void addFindDelMenuTest() throws Exception {
         String name = Util.getRandomString();
         Menu menu = restaurantController.addMenu(name);
@@ -157,7 +159,7 @@ public class RestaurantControllerTest {
         restaurantController.delMenu(name);
     }
 
-    @Test
+    @Test(timeout = 2000)
     public void addFindDelTableTest() throws Exception {
         Table table = new Table();
         int number = Util.getRandomInteger();
@@ -172,7 +174,7 @@ public class RestaurantControllerTest {
         assertTrue(restaurantController.findTableByNumber(number) == null);
     }
 
-    @Test
+    @Test(timeout = 2000)
     public void addFindDelOrderTest() throws Exception {
         Order order = new Order();
         order.setTableId(tableId());
@@ -185,7 +187,19 @@ public class RestaurantControllerTest {
         // Because, at least field <order_datetime> is filling by default (as a current timestamp) on the database level
         assertTrue(orderById != null);
 
-        restaurantController.closeOrder(order);
+        restaurantController.delOrder(order);
+        assertTrue(restaurantController.findOrderById(orderId) == null);
+    }
+
+    @Test(timeout = 2000, expected = DataIntegrityException.class)
+    public void closedOrderTest() throws Exception {
+        Order order = new Order();
+        order.setTableId(tableId());
+        order.setEmployeeId(employeeId());
+        order.setOrderNumber(Util.getRandomString());
+        int orderId = restaurantController.addOrder(order);
+
+        order = restaurantController.closeOrder(order);
 
         restaurantController.delOrder(order);
         assertTrue(restaurantController.findOrderById(orderId) == null);

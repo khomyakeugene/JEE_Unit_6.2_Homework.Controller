@@ -195,7 +195,7 @@ public class RestaurantController {
         return orderAdapter.findAllOrders(stateType);
     }
 
-    void closeOrder(Order order) {
-        orderAdapter.closeOrder(order);
+    Order closeOrder(Order order) {
+        return orderAdapter.closeOrder(order);
     }
 }

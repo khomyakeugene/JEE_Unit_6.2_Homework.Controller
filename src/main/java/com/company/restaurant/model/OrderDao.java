@@ -1,7 +1,5 @@
 package com.company.restaurant.model;
 
-import org.aspectj.weaver.ast.Or;
-
 import java.util.List;
 
 /**
@@ -18,5 +16,5 @@ public interface OrderDao {
 
     List<Order> findAllOrders(String stateType);
 
-    void updOrderState(Order order, String stateType);
+    Order updOrderState(Order order, String stateType);
 }
