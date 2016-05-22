@@ -54,6 +54,10 @@ public class RestaurantController {
         this.orderAdapter = orderAdapter;
     }
 
+    public OrderAdapter getOrderAdapter() {
+        return orderAdapter;
+    }
+
     public static RestaurantController getInstance() {
         ApplicationContext context = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_NAME);
         return context.getBean(RestaurantController.class);

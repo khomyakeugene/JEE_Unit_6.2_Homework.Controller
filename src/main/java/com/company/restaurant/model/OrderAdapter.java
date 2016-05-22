@@ -14,6 +14,10 @@ public class OrderAdapter {
     private OrderDao orderDao;
     private StateGraphRules stateGraphRules;
 
+    public OrderDao getOrderDao() {
+        return orderDao;
+    }
+
     public void setOrderDao(OrderDao orderDao) {
         this.orderDao = orderDao;
     }

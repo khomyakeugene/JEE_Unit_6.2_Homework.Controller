@@ -3,6 +3,7 @@ package com.company.restaurant.controllers;
 import com.company.restaurant.model.*;
 import com.company.util.DataIntegrityException;
 import com.company.util.ObjectService;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -13,6 +14,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class RestaurantControllerTest {
     private static RestaurantController restaurantController;
+    private static int closedOrderId;
 
     private int jobPositionId() {
         return restaurantController.findAllJobPositions().get(0).getId();
@@ -197,11 +199,25 @@ public class RestaurantControllerTest {
         order.setTableId(tableId());
         order.setEmployeeId(employeeId());
         order.setOrderNumber(Util.getRandomString());
-        int orderId = restaurantController.addOrder(order);
+        closedOrderId = restaurantController.addOrder(order);
 
         order = restaurantController.closeOrder(order);
 
+        // <DataIntegrityException> should be generated next
         restaurantController.delOrder(order);
-        assertTrue(restaurantController.findOrderById(orderId) == null);
+    }
+
+    private static void clearClosedOrder() throws Exception {
+        OrderDao orderDao = restaurantController.getOrderAdapter().getOrderDao();
+        Order order = orderDao.findOrderById(closedOrderId);
+        // Manually change order state to "open"
+        order = orderDao.updOrderState(order, "A");
+        // Delete "open" order
+        orderDao.delOrder(order);
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        clearClosedOrder();
     }
 }
