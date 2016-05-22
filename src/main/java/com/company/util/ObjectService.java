@@ -91,7 +91,7 @@ public class ObjectService {
                 Object methodResult2 = invokePublicEmptyArgumentMethod(object2, s);
 
                 result = ((methodResult1 == null) ? "" : methodResult1.toString()).
-                        equals((methodResult1 == null) ? "" : methodResult2.toString());
+                        equals((methodResult2 == null) ? "" : methodResult2.toString());
                 if (!result) {
                     break;
                 }
