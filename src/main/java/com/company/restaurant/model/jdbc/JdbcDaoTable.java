@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -100,10 +101,15 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     protected String buildInsertExpression(String pattern, T object) {
         Map<String, Object> objectToDBMap = objectToDBMap(object);
 
+        // Exclude null-value data
+        HashMap<String, Object> clarifiedDBMap = new HashMap<>();
+        objectToDBMap.forEach((k, v) -> {if (v != null) {
+            clarifiedDBMap.put(k,v);}});
+
         String fieldSequence = String.join(",",
-                (CharSequence[])objectToDBMap.keySet().stream().toArray(String[]::new));
+                (CharSequence[])clarifiedDBMap.keySet().stream().toArray(String[]::new));
         String valueSequence = String.join(",",
-                (CharSequence[])objectToDBMap.values().stream().map(v -> (JdbcDao.toString(v))).toArray(String[]::new));
+                (CharSequence[])clarifiedDBMap.values().stream().map(v -> (JdbcDao.toString(v))).toArray(String[]::new));
 
         return String.format(pattern, fieldSequence, valueSequence);
     }

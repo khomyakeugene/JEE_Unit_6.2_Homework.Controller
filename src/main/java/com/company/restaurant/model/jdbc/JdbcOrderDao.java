@@ -13,7 +13,7 @@ import java.util.Map;
  * Created by Yevhen on 22.05.2016.
  */
 public class JdbcOrderDao extends JdbcDaoTableWitId<Order> implements OrderDao {
-    private static final String ORDER_TABLE_NAME = "order";
+    private static final String ORDER_TABLE_NAME = "\"order\"";
     private static final String ORDER_ID_FIELD_NAME = "order_id";
     private static final String TABLE_ID_FIELD_NAME = "table_id";
     private static final String STATE_TYPE_FIELD_NAME = "state_type";

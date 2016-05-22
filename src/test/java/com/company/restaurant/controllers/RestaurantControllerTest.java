@@ -171,4 +171,19 @@ public class RestaurantControllerTest {
         restaurantController.delTable(table);
         assertTrue(restaurantController.findTableByNumber(number) == null);
     }
+
+    @Test
+    public void addFindDelOrderTest() throws Exception {
+        Order order = new Order();
+        order.setTableId(tableId());
+        order.setEmployeeId(employeeId());
+        order.setOrderNumber(Util.getRandomString());
+        int orderId = restaurantController.addOrder(order);
+
+        Order orderById = restaurantController.findOrderById(orderId);
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(order, orderById));
+
+        restaurantController.delOrder(order);
+        assertTrue(restaurantController.findOrderById(orderId) == null);
+    }
 }

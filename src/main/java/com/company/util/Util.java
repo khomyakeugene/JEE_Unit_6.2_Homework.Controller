@@ -65,10 +65,14 @@ public class Util {
     }
 
     public static String toString(Object object) {
-        String result = object.toString();
-
-        if (object instanceof String) {
-            result =  "\"" + result + "\"";
+        String result;
+        if (object == null) {
+            result = "null";
+        } else {
+            result = object.toString();
+            if (object instanceof String) {
+                result =  "\"" + result + "\"";
+            }
         }
 
         return result;

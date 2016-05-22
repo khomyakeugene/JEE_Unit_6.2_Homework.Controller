@@ -32,8 +32,10 @@ public abstract class JdbcDaoTableWitId<T> extends JdbcDaoTable<T> {
         try(Connection connection = dataSource.getConnection();
             Statement statement = connection.createStatement()) {
 
-            statement.executeUpdate(buildInsertExpression(String.format(SQL_INSERT_EXPRESSION_PATTERN_PART_1,
-                    tableName) + SQL_INSERT_EXPRESSION_PATTERN_PART_2, object), Statement.RETURN_GENERATED_KEYS);
+            String s = buildInsertExpression(String.format(SQL_INSERT_EXPRESSION_PATTERN_PART_1,
+                    tableName) + SQL_INSERT_EXPRESSION_PATTERN_PART_2, object);
+
+            statement.executeUpdate(s, Statement.RETURN_GENERATED_KEYS);
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
                 result = resultSet.getInt(idFieldName);
