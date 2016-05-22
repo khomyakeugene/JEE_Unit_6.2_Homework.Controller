@@ -2,6 +2,8 @@ package com.company.restaurant.model.jdbc;
 
 import com.company.restaurant.model.Order;
 import com.company.restaurant.model.OrderDao;
+import com.company.restaurant.model.StateGraphDao;
+import com.company.restaurant.model.StateGraphRules;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,11 +24,17 @@ public class JdbcOrderDao extends JdbcDaoTableWitId<Order> implements OrderDao {
     private static final String ORDER_DATETIME_FIELD_NAME = "order_datetime";
     private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY order_id";
 
+    private StateGraphRules stateGraphRules;
+
     public JdbcOrderDao() {
         this.tableName = ORDER_TABLE_NAME;
         this.idFieldName = ORDER_ID_FIELD_NAME;
         this.nameFieldName = ORDER_NUMBER_FIELD_NAME;
         this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
+    }
+
+    public void setStateGraphRules(StateGraphRules stateGraphRules) {
+        this.stateGraphRules = stateGraphRules;
     }
 
     @Override

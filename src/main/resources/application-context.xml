@@ -58,8 +58,17 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean class="com.company.restaurant.model.jdbc.JdbcStateGraphDao" id="stateGraphDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.model.StateGraphRules" id="stateGraphRules">
+        <property name="stateGraphDao" ref="stateGraphDao"/>
+    </bean>
+
     <bean class="com.company.restaurant.model.jdbc.JdbcOrderDao" id="orderDao">
         <property name="dataSource" ref="dataSource"/>
+        <property name="stateGraphRules" ref="stateGraphRules"/>
     </bean>
 
     <bean class="com.company.restaurant.controllers.RestaurantController" id="employeeController">
