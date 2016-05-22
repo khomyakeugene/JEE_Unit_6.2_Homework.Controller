@@ -8,6 +8,8 @@ import java.util.List;
  * Created by Yevhen on 22.05.2016.
  */
 public interface OrderDao {
+    String orderEntityName();
+
     int addOrder(Order order);
 
     void delOrder(Order order);

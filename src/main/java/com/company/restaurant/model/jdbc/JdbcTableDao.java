@@ -13,7 +13,7 @@ import java.util.Map;
  * Created by Yevhen on 22.05.2016.
  */
 public class JdbcTableDao extends JdbcDaoTableWitId<Table> implements TableDao {
-    private static final String TABLE_TABLE_NAME = "\"table\"";
+    private static final String TABLE_TABLE_NAME = "table";
     private static final String TABLE_ID_FIELD_NAME = "table_id";
     private static final String NUMBER_FIELD_NAME = "number";
     private static final String DESCRIPTION_FIELD_NAME = "description";

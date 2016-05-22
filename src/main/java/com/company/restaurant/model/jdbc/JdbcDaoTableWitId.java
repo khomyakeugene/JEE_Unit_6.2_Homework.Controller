@@ -10,7 +10,7 @@ public abstract class JdbcDaoTableWitId<T> extends JdbcDaoTable<T> {
     private static final String CANNOT_GET_LAST_GENERATED_ID_PATTERN = "Add record problem: cannot get last generated %s.%s value";
     private static final String CANNOT_DELETE_RECORD_PATTERN = "Cannot delete record in table <%s> because it is impossible " +
             "to detect condition value for field <%s> nor for field <%s>";
-    private static final String SQL_INSERT_EXPRESSION_PATTERN_PART_1 = "INSERT INTO %s";
+    private static final String SQL_INSERT_EXPRESSION_PATTERN_PART_1 = "INSERT INTO \"%s\"";
     private static final String SQL_INSERT_EXPRESSION_PATTERN_PART_2 = " (%s) VALUES(%s)";
 
     protected String idFieldName;

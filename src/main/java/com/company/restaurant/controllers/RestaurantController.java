@@ -20,7 +20,7 @@ public class RestaurantController {
     private CourseDao courseDao;
     private MenuDao menuDao;
     private TableDao tableDao;
-    private OrderDao orderDao;
+    private OrderAdapter orderAdapter;
 
     public void setTxManager(PlatformTransactionManager txManager) {
         this.txManager = txManager;
@@ -50,8 +50,8 @@ public class RestaurantController {
         this.tableDao = tableDao;
     }
 
-    public void setOrderDao(OrderDao orderDao) {
-        this.orderDao = orderDao;
+    public void setOrderAdapter(OrderAdapter orderAdapter) {
+        this.orderAdapter = orderAdapter;
     }
 
     public static RestaurantController getInstance() {
@@ -180,18 +180,18 @@ public class RestaurantController {
     }
 
     int addOrder(Order order) {
-        return orderDao.addOrder(order);
+        return orderAdapter.addOrder(order);
     }
 
     void delOrder(Order order) {
-        orderDao.delOrder(order);
+        orderAdapter.delOrder(order);
     }
 
     Order findOrderById(int id) {
-        return orderDao.findOrderById(id);
+        return orderAdapter.findOrderById(id);
     }
 
     List<Order> findAllOrders(String stateType) {
-        return orderDao.findAllOrders(stateType);
+        return orderAdapter.findAllOrders(stateType);
     }
 }

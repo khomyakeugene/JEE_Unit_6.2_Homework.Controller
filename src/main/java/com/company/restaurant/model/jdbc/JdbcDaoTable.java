@@ -12,15 +12,19 @@ import java.util.Map;
  * Created by Yevhen on 21.05.2016.
  */
 public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
-    private static final String SQL_ALL_FIELD_OF_ALL_RECORDS = "SELECT * FROM %s";
-    private static final String SQL_SELECT_BY_FIELD_VALUE = "SELECT %s FROM %s WHERE (%s = %s)";
-    private static final String SQL_SELECT_BY_TWO_FIELD_VALUE = "SELECT %s FROM %s WHERE (%s = %s) AND (%s = %s)";
-    private static final String SQL_DELETE_EXPRESSION_PATTERN = "DELETE FROM %s WHERE (%s = %s)";
+    private static final String SQL_ALL_FIELD_OF_ALL_RECORDS = "SELECT * FROM \"%s\"";
+    private static final String SQL_SELECT_BY_FIELD_VALUE = "SELECT %s FROM \"%s\" WHERE (%s = %s)";
+    private static final String SQL_SELECT_BY_TWO_FIELD_VALUE = "SELECT %s FROM \"%s\" WHERE (%s = %s) AND (%s = %s)";
+    private static final String SQL_DELETE_EXPRESSION_PATTERN = "DELETE FROM \"%s\" WHERE (%s = %s)";
 
     protected String tableName;
     protected String orderByCondition;
 
     protected abstract Map<String, Object> objectToDBMap(T object);
+
+    public String getTableName() {
+        return tableName;
+    }
 
     private String orderByCondition() {
         return (orderByCondition == null) ? "" : orderByCondition;
