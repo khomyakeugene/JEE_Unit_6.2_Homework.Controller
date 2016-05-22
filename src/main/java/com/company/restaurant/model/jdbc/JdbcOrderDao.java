@@ -5,6 +5,7 @@ import com.company.restaurant.model.OrderDao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,8 +36,15 @@ public class JdbcOrderDao extends JdbcDaoTableWitId<Order> implements OrderDao {
 
     @Override
     protected Map<String, Object> objectToDBMap(Order order) {
+        HashMap<String, Object> result = new HashMap<>();
 
-        return null;
+        result.put(TABLE_ID_FIELD_NAME, order.getTableId());
+        result.put(STATE_TYPE_FIELD_NAME, order.getStateType());
+        result.put(EMPLOYEE_ID_FIELD_NAME, order.getEmployeeId());
+        result.put(ORDER_NUMBER_FIELD_NAME, order.getOrderNumber());
+        result.put(ORDER_DATETIME_FIELD_NAME, order.getOrderDatetime());
+
+        return result;
     }
 
     @Override

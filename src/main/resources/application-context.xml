@@ -58,6 +58,10 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean class="com.company.restaurant.model.jdbc.JdbcOrderDao" id="orderDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
     <bean class="com.company.restaurant.controllers.RestaurantController" id="employeeController">
         <property name="txManager" ref="txManager"/>
         <property name="jobPositionDao" ref="jobPositionDao"/>
@@ -66,6 +70,7 @@
         <property name="courseDao" ref="courseDao"/>
         <property name="menuDao" ref="menuDao"/>
         <property name="tableDao" ref="tableDao"/>
+        <property name="orderDao" ref="orderDao"/>
     </bean>
     <!-- END OF DB-CONTEXT -->
 
