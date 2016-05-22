@@ -14,5 +14,5 @@ public interface OrderDao {
 
     Order findOrderById(int id);
 
-    List<Order> findAllOrders(char stateType);
+    List<Order> findAllOrders(String stateType);
 }

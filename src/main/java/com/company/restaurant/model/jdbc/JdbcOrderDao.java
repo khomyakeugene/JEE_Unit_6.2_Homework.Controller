@@ -76,8 +76,8 @@ public class JdbcOrderDao extends JdbcDaoTableWitId<Order> implements OrderDao {
     }
 
     @Override
-    public List<Order> findAllOrders(char stateType) {
-        return null;
+    public List<Order> findAllOrders(String stateType) {
+        return findObjectsByFieldCondition(STATE_TYPE_FIELD_NAME, stateType) ;
     }
 
 }

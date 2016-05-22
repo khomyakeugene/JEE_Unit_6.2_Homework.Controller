@@ -191,7 +191,7 @@ public class RestaurantController {
         return orderDao.findOrderById(id);
     }
 
-    List<Order> findAllOrders(char stateType) {
+    List<Order> findAllOrders(String stateType) {
         return orderDao.findAllOrders(stateType);
     }
 }
