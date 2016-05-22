@@ -1,5 +1,7 @@
 package com.company.restaurant.model;
 
+import com.company.util.DataIntegrityException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +29,7 @@ public class StateGraphRules {
     }
 
     private void ErrorMessage(String message) {
-        throw new RuntimeException(message);
+        throw new DataIntegrityException(message);
     }
 
     private List<StateGraph> entityGraphStateList(String entityName) {

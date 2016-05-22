@@ -1,5 +1,7 @@
 package com.company.restaurant.model.jdbc;
 
+import com.company.util.DataIntegrityException;
+
 import java.sql.*;
 import java.util.Map;
 
@@ -61,7 +63,7 @@ public abstract class JdbcDaoTableWitId<T> extends JdbcDaoTable<T> {
             fieldName = nameFieldName;
             value = objectToDBMap.get(fieldName);
             if (value == null) {
-                throw new RuntimeException(String.format(CANNOT_DELETE_RECORD_PATTERN, tableName, idFieldName, nameFieldName));
+                throw new DataIntegrityException(String.format(CANNOT_DELETE_RECORD_PATTERN, tableName, idFieldName, nameFieldName));
             }
         }
 
