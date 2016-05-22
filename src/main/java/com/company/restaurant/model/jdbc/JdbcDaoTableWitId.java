@@ -3,6 +3,7 @@ package com.company.restaurant.model.jdbc;
 import com.company.util.DataIntegrityException;
 
 import java.sql.*;
+import java.util.AbstractMap;
 import java.util.Map;
 
 /**
@@ -54,21 +55,27 @@ public abstract class JdbcDaoTableWitId<T> extends JdbcDaoTable<T> {
         return result;
     }
 
-    public void delRecord(T object) {
-        Map<String, Object> objectToDBMap = objectToDBMap(object);
+    private AbstractMap.SimpleEntry<String, Object> getKeyFieldNameAndFieldValue(T object) {
+        Map<String, Object> objectToDBMap = getObjectToDBMap(object);
 
         String fieldName = idFieldName;
-        Object value = objectToDBMap.get(fieldName);
-        if (value == null) {
+        Object fieldValue = objectToDBMap.get(fieldName);
+        if (fieldValue == null) {
             fieldName = nameFieldName;
-            value = objectToDBMap.get(fieldName);
-            if (value == null) {
-                throw new DataIntegrityException(String.format(CANNOT_DELETE_RECORD_PATTERN, tableName, idFieldName, nameFieldName));
+            fieldValue = objectToDBMap.get(fieldName);
+            if (fieldValue == null) {
+                throw new DataIntegrityException(String.format(CANNOT_DELETE_RECORD_PATTERN, tableName, idFieldName,
+                        nameFieldName));
             }
         }
 
-        // Actually, delete teh record by suitable condition
-        delRecordByFieldCondition(fieldName, value);
+        return new AbstractMap.SimpleEntry<>(fieldName, fieldValue);
+    }
+
+    public void delRecord(T object) {
+        AbstractMap.SimpleEntry<String, Object> fieldData = getKeyFieldNameAndFieldValue(object);
+
+        delRecordByFieldCondition(fieldData.getKey(), fieldData.getValue());
     }
 
     public void delRecordById(int id) {
@@ -77,5 +84,11 @@ public abstract class JdbcDaoTableWitId<T> extends JdbcDaoTable<T> {
 
     public void delRecordByName(String name) {
         delRecordByFieldCondition(nameFieldName, name);
+    }
+
+    public void updRecord(T object, String updateFieldName, Object updateFieldValue) {
+        AbstractMap.SimpleEntry<String, Object> fieldData = getKeyFieldNameAndFieldValue(object);
+
+        updateOneFieldByOneFieldCondition(updateFieldName, updateFieldValue, fieldData.getKey(), fieldData.getValue());
     }
 }

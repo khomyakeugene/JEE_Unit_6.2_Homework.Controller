@@ -12,6 +12,8 @@ import java.util.Optional;
 public class StateGraphRules {
     private static final String IMPOSSIBLE_TO_DETERMINE_CREATION_STATE_PATTERN =
             "It is impossible to determine <creation state> for entity <%s>!";
+    private static final String IMPOSSIBLE_TO_DETERMINE_FINITE_STATE_PATTERN =
+            "It is impossible to determine <finite state> of entity <%s> for <init state> = <%s> and operation <%s>!";
 
     private static final String STATE_TYPE_OPEN = "A";
     private static final String STATE_TYPE_CLOSED = "B";
@@ -55,5 +57,24 @@ public class StateGraphRules {
         }
 
         return result;
+    }
+
+    public String finiteState(String entityName, String currentState, String actionType) {
+        String result = null;
+
+        Optional<StateGraph> optionalStateGraph = entityGraphStateList(entityName).stream().
+                filter(s -> (s.getActionType().equals(actionType)) &&
+                        (s.getInitStateType().equals(currentState))).findFirst();
+        if (optionalStateGraph.isPresent()) {
+            result = optionalStateGraph.get().getFiniteStateType();
+        } else {
+            ErrorMessage(String.format(IMPOSSIBLE_TO_DETERMINE_FINITE_STATE_PATTERN, entityName, currentState, actionType));
+        }
+
+        return result;
+    }
+
+    public String closedState(String entityName, String currentState) {
+        return finiteState(entityName, currentState, ACTION_TYPE_CLOSING);
     }
 }

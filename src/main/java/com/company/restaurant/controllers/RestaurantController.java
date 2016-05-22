@@ -194,4 +194,8 @@ public class RestaurantController {
     List<Order> findAllOrders(String stateType) {
         return orderAdapter.findAllOrders(stateType);
     }
+
+    void closeOrder(Order order) {
+        orderAdapter.closeOrder(order);
+    }
 }

@@ -185,6 +185,8 @@ public class RestaurantControllerTest {
         // Because, at least field <order_datetime> is filling by default (as a current timestamp) on the database level
         assertTrue(orderById != null);
 
+        restaurantController.closeOrder(order);
+
         restaurantController.delOrder(order);
         assertTrue(restaurantController.findOrderById(orderId) == null);
     }

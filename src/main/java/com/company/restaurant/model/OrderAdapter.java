@@ -34,4 +34,8 @@ public class OrderAdapter {
     public List<Order> findAllOrders(String stateType) {
         return orderDao.findAllOrders(stateType);
     }
+
+    public void closeOrder(Order order) {
+        orderDao.updOrderState(order, stateGraphRules.closedState(orderDao.orderEntityName(), order.getStateType()));
+    }
 }

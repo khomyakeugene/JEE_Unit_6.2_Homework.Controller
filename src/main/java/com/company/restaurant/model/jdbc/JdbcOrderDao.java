@@ -91,4 +91,9 @@ public class JdbcOrderDao extends JdbcDaoTableWitId<Order> implements OrderDao {
         return findObjectsByFieldCondition(STATE_TYPE_FIELD_NAME, stateType) ;
     }
 
+    @Override
+    public void updOrderState(Order order, String stateType) {
+        updRecord(order, STATE_TYPE_FIELD_NAME, stateType);
+    }
+
 }

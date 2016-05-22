@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
 /**
  * Created by Yevhen on 21.05.2016.
@@ -16,6 +17,8 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     private static final String SQL_SELECT_BY_FIELD_VALUE = "SELECT %s FROM \"%s\" WHERE (%s = %s)";
     private static final String SQL_SELECT_BY_TWO_FIELD_VALUE = "SELECT %s FROM \"%s\" WHERE (%s = %s) AND (%s = %s)";
     private static final String SQL_DELETE_EXPRESSION_PATTERN = "DELETE FROM \"%s\" WHERE (%s = %s)";
+    private static final String SQL_UPDATE_BY_FIELD_VALUE = "UPDATE \"%s\" SET %s WHERE (%s = %s)";
+    private static final String SQL_UPDATE_SET_SECTION_PART_PATTERN = "%s = %s";
 
     protected String tableName;
     protected String viewName;
@@ -107,7 +110,7 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
         }
     }
 
-    private Map<String, Object> getObjectToDBMap(T object) {
+    protected Map<String, Object> getObjectToDBMap(T object) {
         Map<String, Object> objectToDBMap = objectToDBMap(object);
 
         // Exclude null-value data
@@ -126,5 +129,14 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
                 (CharSequence[])clarifiedDBMap.values().stream().map(v -> (JdbcDao.toString(v))).toArray(String[]::new));
 
         return String.format(pattern, fieldSequence, valueSequence);
+    }
+
+    protected void updateOneFieldByOneFieldCondition(String updateFieldName, Object updateFieldValue,
+                                                     String conditionFieldName, Object conditionFieldValue) {
+        String query = String.format(SQL_UPDATE_BY_FIELD_VALUE, tableName,
+                String.format(SQL_UPDATE_SET_SECTION_PART_PATTERN, updateFieldName, toString(updateFieldValue)),
+                conditionFieldName, toString(conditionFieldValue));
+
+        executeUpdate(query);
     }
 }
