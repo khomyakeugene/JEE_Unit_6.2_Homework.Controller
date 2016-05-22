@@ -9,9 +9,10 @@ public class Order {
     private int orderId;
     private int tableId;
     private int employeeId;
-    private String  stateType;
+    private String stateType;
     private String orderNumber;
     private Date orderDatetime;
+    private String stateTypeName;
 
     public int getOrderId() {
         return orderId;
@@ -59,5 +60,13 @@ public class Order {
 
     public void setOrderDatetime(Date orderDatetime) {
         this.orderDatetime = orderDatetime;
+    }
+
+    public String getStateTypeName() {
+        return stateTypeName;
+    }
+
+    public void setStateTypeName(String stateTypeName) {
+        this.stateTypeName = stateTypeName;
     }
 }

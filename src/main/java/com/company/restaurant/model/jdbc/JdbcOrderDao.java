@@ -16,16 +16,19 @@ import java.util.Map;
  */
 public class JdbcOrderDao extends JdbcDaoTableWitId<Order> implements OrderDao {
     private static final String ORDER_TABLE_NAME = "order";
+    private static final String ORDER_VIEW_NAME = "v_order";
     private static final String ORDER_ID_FIELD_NAME = "order_id";
     private static final String TABLE_ID_FIELD_NAME = "table_id";
     private static final String STATE_TYPE_FIELD_NAME = "state_type";
     private static final String EMPLOYEE_ID_FIELD_NAME = "employee_id";
     private static final String ORDER_NUMBER_FIELD_NAME = "order_number";
     private static final String ORDER_DATETIME_FIELD_NAME = "order_datetime";
+    private static final String STATE_TYPE_NAME_FIELD_NAME = "state_type_name";
     private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY order_id";
 
     public JdbcOrderDao() {
         this.tableName = ORDER_TABLE_NAME;
+        this.viewName = ORDER_VIEW_NAME;
         this.idFieldName = ORDER_ID_FIELD_NAME;
         this.nameFieldName = ORDER_NUMBER_FIELD_NAME;
         this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
@@ -58,6 +61,7 @@ public class JdbcOrderDao extends JdbcDaoTableWitId<Order> implements OrderDao {
         result.setEmployeeId(resultSet.getInt(EMPLOYEE_ID_FIELD_NAME));
         result.setOrderNumber(resultSet.getString(ORDER_NUMBER_FIELD_NAME));
         result.setOrderDatetime(resultSet.getTime(ORDER_DATETIME_FIELD_NAME));
+        result.setStateTypeName(resultSet.getString(STATE_TYPE_NAME_FIELD_NAME));
 
         return result;
     }

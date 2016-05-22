@@ -18,6 +18,7 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     private static final String SQL_DELETE_EXPRESSION_PATTERN = "DELETE FROM \"%s\" WHERE (%s = %s)";
 
     protected String tableName;
+    protected String viewName;
     protected String orderByCondition;
 
     protected abstract Map<String, Object> objectToDBMap(T object);
@@ -26,16 +27,20 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
         return tableName;
     }
 
+    public String getViewName() {
+        return (viewName != null && viewName.length() > 0) ? viewName : tableName;
+    }
+
     private String orderByCondition() {
         return (orderByCondition == null) ? "" : orderByCondition;
     }
 
     private String allQueryCondition() {
-        return String.format(SQL_ALL_FIELD_OF_ALL_RECORDS, tableName) + " " + orderByCondition();
+        return String.format(SQL_ALL_FIELD_OF_ALL_RECORDS, getViewName()) + " " + orderByCondition();
     }
 
     private String fieldQueryCondition(String fieldName, Object value, String selectFields) {
-        return String.format(SQL_SELECT_BY_FIELD_VALUE, selectFields, tableName, fieldName, JdbcDao.toString(value)) +
+        return String.format(SQL_SELECT_BY_FIELD_VALUE, selectFields, getViewName(), fieldName, JdbcDao.toString(value)) +
                 " " + orderByCondition();
     }
 
@@ -45,7 +50,7 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
 
     protected String twoFieldsQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2,
                                            String selectFields) {
-        return String.format(SQL_SELECT_BY_TWO_FIELD_VALUE, selectFields, tableName, fieldName_1, JdbcDao.toString(value_1),
+        return String.format(SQL_SELECT_BY_TWO_FIELD_VALUE, selectFields, getViewName(), fieldName_1, JdbcDao.toString(value_1),
                 fieldName_2, JdbcDao.toString(value_2)) + " " + orderByCondition();
     }
 
