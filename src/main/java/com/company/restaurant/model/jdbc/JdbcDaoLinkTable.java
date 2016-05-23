@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by Yevhen on 21.05.2016.
  */
-public class JdbcDaoLinkTable<T extends LinkObject> extends JdbcDaoTable<T> {
+public abstract class JdbcDaoLinkTable<T extends LinkObject> extends JdbcDaoTable<T> {
     private static final String SQL_INSERT_EXPRESSION_PATTERN_PART_1 = "INSERT INTO \"%s\" (%s, %s";
     private static final String SQL_INSERT_EXPRESSION_PATTERN_PART_2 = "VALUES(%d, %d";
     private static final String SQL_DELETE_EXPRESSION_PATTERN = "DELETE FROM \"%s\" WHERE (%s = %d) AND (%s = %d)";
@@ -23,17 +23,7 @@ public class JdbcDaoLinkTable<T extends LinkObject> extends JdbcDaoTable<T> {
     protected String thirdFieldName;
 
     @Override
-    protected T newObject(ResultSet resultSet) throws SQLException {
-        LinkObject result = new LinkObject();
-        result.setFirstId(resultSet.getInt(firstIdFieldName));
-        result.setSecondId(resultSet.getInt(secondIdFieldName));
-        result.setLinkData(resultSet.getString(thirdFieldName));
-
-        return (T)result;
-    }
-
-    @Override
-    protected Map<String, Object> objectToDBMap(T object) {
+    protected Map<String, Object> objectToDBMap(LinkObject object) {
         HashMap<String, Object> result = new HashMap<>();
 
         result.put(thirdFieldName, object.getLinkData());
@@ -41,22 +31,26 @@ public class JdbcDaoLinkTable<T extends LinkObject> extends JdbcDaoTable<T> {
         return result;
     }
 
-    public void addRecord(int firstId, int secondId, T object) {
+    private String prepareAddRecordPattern(int firstId, int secondId, LinkObject object) {
         boolean isAdditionalData = objectToDBMap(object).size() > 0;
 
-        String pattern = String.format(SQL_INSERT_EXPRESSION_PATTERN_PART_1, tableName, firstIdFieldName,
+        String result = String.format(SQL_INSERT_EXPRESSION_PATTERN_PART_1, tableName, firstIdFieldName,
                 secondIdFieldName);
         if (isAdditionalData) {
-            pattern += ",%s";
+            result += ",%s";
         }
-        pattern += ")";
-        pattern += String.format(SQL_INSERT_EXPRESSION_PATTERN_PART_2, firstId, secondId);
+        result += ")";
+        result += String.format(SQL_INSERT_EXPRESSION_PATTERN_PART_2, firstId, secondId);
         if (isAdditionalData) {
-            pattern += ",%s";
+            result += ",%s";
         }
-        pattern += ")";
+        result += ")";
 
-        executeUpdate(buildInsertExpression(pattern, object));
+        return result;
+    }
+
+    public void addRecord(int firstId, int secondId, T object) {
+        executeUpdate(buildInsertExpression(prepareAddRecordPattern(firstId, secondId, object), object));
     }
 
     public void addRecord(int firstId, int secondId, String thirdFieldValue) {
@@ -65,7 +59,8 @@ public class JdbcDaoLinkTable<T extends LinkObject> extends JdbcDaoTable<T> {
         linkObject.setSecondId(secondId);
         linkObject.setLinkData(thirdFieldValue);
 
-        addRecord(firstId, secondId, (T)linkObject);
+        executeUpdate(String.format(prepareAddRecordPattern(firstId, secondId, linkObject),
+                thirdFieldName, thirdFieldValue));
     }
 
     public void delRecord(int firstId, int secondId) {

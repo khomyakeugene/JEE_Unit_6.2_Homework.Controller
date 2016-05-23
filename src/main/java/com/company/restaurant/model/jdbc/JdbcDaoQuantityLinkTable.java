@@ -5,7 +5,7 @@ import com.company.restaurant.model.IntegerLinkObject;
 /**
  * Created by Yevhen on 23.05.2016.
  */
-public class JdbcDaoQuantityLinkTable<T extends IntegerLinkObject> extends JdbcDaoLinkTable<T> {
+public abstract class JdbcDaoQuantityLinkTable<T extends IntegerLinkObject> extends JdbcDaoLinkTable<T> {
     private Integer selectCurrentQuantity(int firstId, int secondId) {
         String stringResult = getOneFieldByTwoFieldCondition(thirdFieldName, firstId, secondId);
 

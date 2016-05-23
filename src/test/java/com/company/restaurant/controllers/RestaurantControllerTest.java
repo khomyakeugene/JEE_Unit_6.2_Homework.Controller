@@ -20,6 +20,15 @@ public class RestaurantControllerTest {
     private static Course closedOrderCourse1;
     private static String closedOrderCourseName2;
     private static Course closedOrderCourse2;
+    private static Course testCourse;
+
+    private static Employee employee() {
+        return restaurantController.findAllEmployees().get(0);
+    }
+
+    private static Course course() {
+        return restaurantController.findAllCourses().get(0);
+    }
 
     private int jobPositionId() {
         return restaurantController.findAllJobPositions().get(0).getId();
@@ -30,19 +39,87 @@ public class RestaurantControllerTest {
     }
 
     private static int employeeId() {
-        return restaurantController.findAllEmployees().get(0).getEmployeeId();
+        return employee().getEmployeeId();
     }
 
     private static int tableId() {
         return restaurantController.findAllTables().get(0).getTableId();
     }
 
+    private static void clearClosedOrder() throws Exception {
+        OrderDao orderDao = restaurantController.getOrderAdapter().getOrderDao();
+        Order order = orderDao.findOrderById(closedOrderId);
+        // Manually change order state to "open"
+        order = orderDao.updOrderState(order, "A");
+
+        // Delete "open" order
+        orderDao.delOrder(order);
+
+        // Delete course for closed order
+        restaurantController.delCourse(closedOrderCourseName1);
+        restaurantController.delCourse(closedOrderCourseName2);
+    }
+
+    private static Course prepareTestCourse() {
+        testCourse = new Course();
+        testCourse.setCategoryId(courseCategoryId());
+        testCourse.setName(Util.getRandomString());
+        testCourse.setWeight(Util.getRandomFloat());
+        testCourse.setCost(Util.getRandomFloat());
+
+        restaurantController.addCourse(testCourse);
+
+        return testCourse;
+    }
+
+    private static void delTestCourse() {
+        restaurantController.delCourse(testCourse);
+    }
+
+    private static void prepareClosedOrder() throws Exception {
+        Order order = new Order();
+        order.setTableId(tableId());
+        order.setEmployeeId(employeeId());
+        order.setOrderNumber(Util.getRandomString());
+        closedOrderId = restaurantController.addOrder(order);
+
+        // Courses for closed order ----------------------------
+        closedOrderCourseName1 = Util.getRandomString();
+        closedOrderCourse1 = new Course();
+        closedOrderCourse1.setCategoryId(courseCategoryId());
+        closedOrderCourse1.setName(closedOrderCourseName1);
+        closedOrderCourse1.setWeight(Util.getRandomFloat());
+        closedOrderCourse1.setCost(Util.getRandomFloat());
+        restaurantController.addCourse(closedOrderCourse1);
+
+        closedOrderCourseName2 = Util.getRandomString();
+        closedOrderCourse2 = new Course();
+        closedOrderCourse2.setCategoryId(courseCategoryId());
+        closedOrderCourse2.setName(closedOrderCourseName2);
+        closedOrderCourse2.setWeight(Util.getRandomFloat());
+        closedOrderCourse2.setCost(Util.getRandomFloat());
+        restaurantController.addCourse(closedOrderCourse2);
+        // ----------
+
+        restaurantController.addCourseToOrder(order, closedOrderCourse1, 1);
+
+        closedOrder = restaurantController.closeOrder(order);
+    }
+
     @BeforeClass
     public static void setUpClass() throws Exception {
         restaurantController = RestaurantController.getInstance();
 
+        prepareTestCourse();
         prepareClosedOrder();
     }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        delTestCourse();
+        clearClosedOrder();
+    }
+
 
     @Test(timeout = 2000)
     public void addFindDelJobPosition() throws Exception {
@@ -231,49 +308,7 @@ public class RestaurantControllerTest {
         assertTrue(restaurantController.findOrderById(orderId) == null);
     }
 
-    private static void prepareClosedOrder() throws Exception {
-        Order order = new Order();
-        order.setTableId(tableId());
-        order.setEmployeeId(employeeId());
-        order.setOrderNumber(Util.getRandomString());
-        closedOrderId = restaurantController.addOrder(order);
 
-        // Courses for closed order ----------------------------
-        closedOrderCourseName1 = Util.getRandomString();
-        closedOrderCourse1 = new Course();
-        closedOrderCourse1.setCategoryId(courseCategoryId());
-        closedOrderCourse1.setName(closedOrderCourseName1);
-        closedOrderCourse1.setWeight(Util.getRandomFloat());
-        closedOrderCourse1.setCost(Util.getRandomFloat());
-        restaurantController.addCourse(closedOrderCourse1);
-
-        closedOrderCourseName2 = Util.getRandomString();
-        closedOrderCourse2 = new Course();
-        closedOrderCourse2.setCategoryId(courseCategoryId());
-        closedOrderCourse2.setName(closedOrderCourseName2);
-        closedOrderCourse2.setWeight(Util.getRandomFloat());
-        closedOrderCourse2.setCost(Util.getRandomFloat());
-        restaurantController.addCourse(closedOrderCourse2);
-        // ----------
-
-        restaurantController.addCourseToOrder(order, closedOrderCourse1, 1);
-
-        closedOrder = restaurantController.closeOrder(order);
-    }
-
-    private static void clearClosedOrder() throws Exception {
-        OrderDao orderDao = restaurantController.getOrderAdapter().getOrderDao();
-        Order order = orderDao.findOrderById(closedOrderId);
-        // Manually change order state to "open"
-        order = orderDao.updOrderState(order, "A");
-
-        // Delete "open" order
-        orderDao.delOrder(order);
-
-        // Delete course for closed order
-        restaurantController.delCourse(closedOrderCourseName1);
-        restaurantController.delCourse(closedOrderCourseName2);
-    }
 
     @Test(timeout = 2000, expected = DataIntegrityException.class)
     public void closedOrderTest_1() throws Exception {
@@ -293,8 +328,8 @@ public class RestaurantControllerTest {
         restaurantController.takeCourseFromOrder(closedOrder, closedOrderCourse1, 1);
     }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-        clearClosedOrder();
+    @Test(timeout = 2000)
+    public void addCookedCourse() throws Exception {
+        restaurantController.addCookedCourse(testCourse, employee(), Util.getRandomFloat());
     }
 }

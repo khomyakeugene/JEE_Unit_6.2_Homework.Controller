@@ -19,8 +19,9 @@ public class JdbcCookedCourseDao extends JdbcDaoLinkTable<CookedCourse> implemen
     private static final String COOKED_COURSE_VIEW_NAME = "v_cooked_course";
     private static final String COURSE_ID_FIELD_NAME = "course_id";
     private static final String EMPLOYEE_ID_FIELD_NAME = "employee_id";
-    private static final String COOK_DATETIME_FIELD_NAME = "cook_datetime";
+    private static final String WEIGHT_FIELD_NAME = "weight";
     private static final String COOK_WEIGHT_FIELD_NAME = "cook_weight";
+    private static final String COOK_DATETIME_FIELD_NAME = "cook_datetime";
     private static final String COURSE_CATEGORY_ID_FIELD_NAME = "course_category_id";
     private static final String COURSE_NAME_FIELD_NAME = "course_name";
     private static final String COURSE_WEIGHT_FIELD_NAME = "course_weight";
@@ -36,6 +37,7 @@ public class JdbcCookedCourseDao extends JdbcDaoLinkTable<CookedCourse> implemen
         this.viewName = COOKED_COURSE_VIEW_NAME;
         this.firstIdFieldName = COURSE_ID_FIELD_NAME;
         this.secondIdFieldName = EMPLOYEE_ID_FIELD_NAME;
+        this.thirdFieldName = WEIGHT_FIELD_NAME;
     }
 
     @Override
@@ -62,7 +64,7 @@ public class JdbcCookedCourseDao extends JdbcDaoLinkTable<CookedCourse> implemen
     protected Map<String, Object> objectToDBMap(CookedCourse cookedCourse) {
         HashMap<String, Object> result = new HashMap<>();
 
-        result.put(COOK_WEIGHT_FIELD_NAME, cookedCourse.getCookWeight());
+        result.put(WEIGHT_FIELD_NAME, cookedCourse.getCookWeight());
 
         return result;
     }
