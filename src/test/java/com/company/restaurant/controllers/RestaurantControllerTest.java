@@ -26,10 +26,6 @@ public class RestaurantControllerTest {
         return restaurantController.findAllEmployees().get(0);
     }
 
-    private static Course course() {
-        return restaurantController.findAllCourses().get(0);
-    }
-
     private int jobPositionId() {
         return restaurantController.findAllJobPositions().get(0).getId();
     }
@@ -44,20 +40,6 @@ public class RestaurantControllerTest {
 
     private static int tableId() {
         return restaurantController.findAllTables().get(0).getTableId();
-    }
-
-    private static void clearClosedOrder() throws Exception {
-        OrderDao orderDao = restaurantController.getOrderAdapter().getOrderDao();
-        Order order = orderDao.findOrderById(closedOrderId);
-        // Manually change order state to "open"
-        order = orderDao.updOrderState(order, "A");
-
-        // Delete "open" order
-        orderDao.delOrder(order);
-
-        // Delete course for closed order
-        restaurantController.delCourse(closedOrderCourseName1);
-        restaurantController.delCourse(closedOrderCourseName2);
     }
 
     private static Course prepareTestCourse() {
@@ -104,6 +86,20 @@ public class RestaurantControllerTest {
         restaurantController.addCourseToOrder(order, closedOrderCourse1, 1);
 
         closedOrder = restaurantController.closeOrder(order);
+    }
+
+    private static void clearClosedOrder() throws Exception {
+        OrderDao orderDao = restaurantController.getOrderAdapter().getOrderDao();
+        Order order = orderDao.findOrderById(closedOrderId);
+        // Manually change order state to "open"
+        order = orderDao.updOrderState(order, "A");
+
+        // Delete "open" order
+        orderDao.delOrder(order);
+
+        // Delete course for closed order
+        restaurantController.delCourse(closedOrderCourseName1);
+        restaurantController.delCourse(closedOrderCourseName2);
     }
 
     @BeforeClass
@@ -331,5 +327,9 @@ public class RestaurantControllerTest {
     @Test(timeout = 2000)
     public void addCookedCourse() throws Exception {
         restaurantController.addCookedCourse(testCourse, employee(), Util.getRandomFloat());
+
+        for (CookedCourse cookedCourse : restaurantController.findAllCookedCourses()) {
+            System.out.println(cookedCourse.getCourseName() + " : " + cookedCourse.getCookDatetime());
+        }
     }
 }
