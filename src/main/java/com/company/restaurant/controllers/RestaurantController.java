@@ -21,6 +21,7 @@ public class RestaurantController {
     private MenuDao menuDao;
     private TableDao tableDao;
     private OrderAdapter orderAdapter;
+    private KitchenAdapter kitchenAdapter;
 
     public void setTxManager(PlatformTransactionManager txManager) {
         this.txManager = txManager;
@@ -52,6 +53,10 @@ public class RestaurantController {
 
     public void setOrderAdapter(OrderAdapter orderAdapter) {
         this.orderAdapter = orderAdapter;
+    }
+
+    public void setKitchenAdapter(KitchenAdapter kitchenAdapter) {
+        this.kitchenAdapter = kitchenAdapter;
     }
 
     public OrderAdapter getOrderAdapter() {
@@ -221,5 +226,13 @@ public class RestaurantController {
 
     void takeCourseFromOrder(Order order, Course course) {
         orderAdapter.takeCourseFromOrder(order, course);
+    }
+
+    void addCookedCourse(Course course, Employee employee, float weight) {
+        kitchenAdapter.addCookedCourse(course, employee, weight);
+    }
+
+    List<CookedCourse> findAllCookedCourses() {
+        return kitchenAdapter.findAllCookedCourses();
     }
 }

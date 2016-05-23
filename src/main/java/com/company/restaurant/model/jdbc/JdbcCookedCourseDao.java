@@ -1,6 +1,9 @@
 package com.company.restaurant.model.jdbc;
 
-import com.company.restaurant.model.*;
+import com.company.restaurant.model.CookedCourse;
+import com.company.restaurant.model.CookedCourseDao;
+import com.company.restaurant.model.Course;
+import com.company.restaurant.model.Employee;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,6 +70,11 @@ public class JdbcCookedCourseDao extends JdbcDaoLinkTable<CookedCourse> implemen
     @Override
     public void addCookedCourse(Course course, Employee employee, float weight) {
         addRecord(course.getCourseId(), employee.getEmployeeId(), Float.toString(weight));
+    }
+
+    @Override
+    public void delCookedCourse(CookedCourse cookedCourse) {
+        // 23.05.2016, 22:15 - TO DO!!!
     }
 
     @Override

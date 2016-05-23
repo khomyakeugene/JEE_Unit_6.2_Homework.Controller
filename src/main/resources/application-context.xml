@@ -84,6 +84,10 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean class="com.company.restaurant.model.KitchenAdapter" id="kitchenAdapter">
+        <property name="cookedCourseDao" ref="cookedCourseDao"/>
+    </bean>
+
     <bean class="com.company.restaurant.controllers.RestaurantController" id="employeeController">
         <property name="txManager" ref="txManager"/>
         <property name="jobPositionDao" ref="jobPositionDao"/>
@@ -93,6 +97,7 @@
         <property name="menuDao" ref="menuDao"/>
         <property name="tableDao" ref="tableDao"/>
         <property name="orderAdapter" ref="orderAdapter"/>
+        <property name="kitchenAdapter" ref="kitchenAdapter"/>
     </bean>
     <!-- END OF DB-CONTEXT -->
 
