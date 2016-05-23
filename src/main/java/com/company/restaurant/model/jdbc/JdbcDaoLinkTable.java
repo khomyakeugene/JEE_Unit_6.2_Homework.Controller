@@ -73,7 +73,7 @@ public class JdbcDaoLinkTable<T extends LinkObject> extends JdbcDaoTable<T> {
                 secondIdFieldName, secondId));
     }
 
-    public void updRecord(int firstId, int secondId, Object thirdFieldValue) {
+    public void updRecord(int firstId, int secondId, Integer thirdFieldValue) {
         executeUpdate(String.format(SQL_UPDATE_EXPRESSION_PATTERN, tableName, thirdFieldName, toString(thirdFieldValue),
                 firstIdFieldName, firstId, secondIdFieldName, secondId));
     }

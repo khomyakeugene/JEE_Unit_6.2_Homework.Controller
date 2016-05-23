@@ -186,7 +186,7 @@ public class RestaurantControllerTest {
         assertTrue(restaurantController.findTableByNumber(number) == null);
     }
 
-    @Test(timeout = 2000)
+    @Test (timeout = 2000)
     public void addFindDelOrderTest() throws Exception {
         Order order = new Order();
         order.setTableId(tableId());
