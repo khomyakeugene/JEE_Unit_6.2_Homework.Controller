@@ -40,9 +40,4 @@ public class JdbcOrderCourseDao extends JdbcDaoQuantityLinkTable<OrderCourse> im
     public void takeCourseFromOrder(Order order, Course course, int quantity) {
         decreaseQuantity(course.getCourseId(), order.getOrderId(), quantity);
     }
-
-    @Override
-    public void takeCourseFromOrder(Order order, Course course) {
-        takeCourseFromOrder(order, course, 1);
-    }
 }

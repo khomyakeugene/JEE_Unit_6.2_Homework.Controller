@@ -218,4 +218,8 @@ public class RestaurantController {
     void takeCourseFromOrder(Order order, Course course, int quantity) {
         orderAdapter.takeCourseFromOrder(order, course, quantity);
     }
+
+    void takeCourseFromOrder(Order order, Course course) {
+        orderAdapter.takeCourseFromOrder(order, course);
+    }
 }

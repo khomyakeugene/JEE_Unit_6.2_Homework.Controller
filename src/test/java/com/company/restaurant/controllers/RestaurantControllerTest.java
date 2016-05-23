@@ -220,7 +220,7 @@ public class RestaurantControllerTest {
         restaurantController.addCourseToOrder(order, course2, 2);
 
         restaurantController.takeCourseFromOrder(order, course1, 2);
-        restaurantController.takeCourseFromOrder(order, course1, 1);
+        restaurantController.takeCourseFromOrder(order, course1);
         restaurantController.takeCourseFromOrder(order, course2, 2);
 
         restaurantController.delCourse(courseName1);

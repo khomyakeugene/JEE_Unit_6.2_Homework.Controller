@@ -7,6 +7,4 @@ public interface OrderCourseDao {
     void addCourseToOrder(Order order, Course course, int quantity);
 
     void takeCourseFromOrder(Order order, Course course, int quantity);
-
-    void takeCourseFromOrder(Order order, Course course);
 }
