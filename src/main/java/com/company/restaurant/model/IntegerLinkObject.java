@@ -8,7 +8,7 @@ public class IntegerLinkObject extends LinkObject {
         return Integer.parseInt(linkData);
     }
 
-    public void setIntegerLinkData(int quantity) {
-        this.linkData = Integer.toString(quantity);
+    public void setIntegerLinkData(int intValue) {
+        this.linkData = Integer.toString(intValue);
     }
 }

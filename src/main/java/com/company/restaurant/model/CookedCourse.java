@@ -5,9 +5,8 @@ import java.util.Date;
 /**
  * Created by Yevhen on 23.05.2016.
  */
-public class CookedCourse extends LinkObject {
+public class CookedCourse extends FloatLinkObject {
     private Date cookDatetime;
-    private Float cookWeight;
     private int courseCategoryId;
     private String courseName;
     private float courseWeight;
@@ -34,20 +33,20 @@ public class CookedCourse extends LinkObject {
         setSecondId(employeeId);
     }
 
+    public Float getCookWeight() {
+        return getFloatLinkData();
+    }
+
+    public void setCookWeight(Float cookWeight) {
+        setFloatLinkData(cookWeight);
+    }
+
     public Date getCookDatetime() {
         return cookDatetime;
     }
 
     public void setCookDatetime(Date cookDatetime) {
         this.cookDatetime = cookDatetime;
-    }
-
-    public Float getCookWeight() {
-        return cookWeight;
-    }
-
-    public void setCookWeight(Float cookWeight) {
-        this.cookWeight = cookWeight;
     }
 
     public int getCourseCategoryId() {
@@ -122,3 +121,4 @@ public class CookedCourse extends LinkObject {
         this.employeeSalary = employeeSalary;
     }
 }
+

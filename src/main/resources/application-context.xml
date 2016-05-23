@@ -80,6 +80,10 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean class="com.company.restaurant.model.jdbc.JdbcCookedCourseDao" id="cookedCourseDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
     <bean class="com.company.restaurant.controllers.RestaurantController" id="employeeController">
         <property name="txManager" ref="txManager"/>
         <property name="jobPositionDao" ref="jobPositionDao"/>
