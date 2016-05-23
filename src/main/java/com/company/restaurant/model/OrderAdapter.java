@@ -112,9 +112,9 @@ public class OrderAdapter {
         }
     }
 
-    public void delCourseFromOrder(Order order, Course course) {
+    public void takeCourseFromOrder(Order order, Course course, int quantity) {
         if (isFillingActionEnabled(order)) {
-            orderCourseDao.delCourseFromOrder(order, course);
+            orderCourseDao.takeCourseFromOrder(order, course, quantity);
         } else {
             errorMessage(String.format(
                     IMPOSSIBLE_TO_DEL_COURSE_FROM_ORDER_PATTERN, order.getStateTypeName(), order.getOrderId()));

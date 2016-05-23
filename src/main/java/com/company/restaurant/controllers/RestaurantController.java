@@ -215,7 +215,7 @@ public class RestaurantController {
         orderAdapter.addCourseToOrder(order, course, quantity);
     }
 
-    void delCourseFromOrder(Order order, Course course) {
-        orderAdapter.delCourseFromOrder(order, course);
+    void takeCourseFromOrder(Order order, Course course, int quantity) {
+        orderAdapter.takeCourseFromOrder(order, course, quantity);
     }
 }

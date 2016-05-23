@@ -6,6 +6,7 @@ package com.company.restaurant.model;
 public class LinkObject {
     private int firstId;
     private int secondId;
+    protected String linkData;
 
     public int getFirstId() {
         return firstId;
@@ -21,5 +22,13 @@ public class LinkObject {
 
     public void setSecondId(int secondId) {
         this.secondId = secondId;
+    }
+
+    public String getLinkData() {
+        return linkData;
+    }
+
+    public void setLinkData(String linkData) {
+        this.linkData = linkData;
     }
 }

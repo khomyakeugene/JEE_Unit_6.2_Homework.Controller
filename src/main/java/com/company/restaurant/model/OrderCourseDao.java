@@ -6,5 +6,7 @@ package com.company.restaurant.model;
 public interface OrderCourseDao {
     void addCourseToOrder(Order order, Course course, int quantity);
 
-    void delCourseFromOrder(Order order, Course course);
+    void takeCourseFromOrder(Order order, Course course, int quantity);
+
+    void takeCourseFromOrder(Order order, Course course);
 }

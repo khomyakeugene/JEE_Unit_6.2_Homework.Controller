@@ -216,11 +216,12 @@ public class RestaurantControllerTest {
         course2.setCost(Util.getRandomFloat());
         restaurantController.addCourse(course2);
 
-        restaurantController.addCourseToOrder(order, course1, 1);
+        restaurantController.addCourseToOrder(order, course1, 3);
         restaurantController.addCourseToOrder(order, course2, 2);
 
-        restaurantController.delCourseFromOrder(order, course1);
-        restaurantController.delCourseFromOrder(order, course2);
+        restaurantController.takeCourseFromOrder(order, course1, 2);
+        restaurantController.takeCourseFromOrder(order, course1, 1);
+        restaurantController.takeCourseFromOrder(order, course2, 2);
 
         restaurantController.delCourse(courseName1);
         restaurantController.delCourse(courseName2);
@@ -289,7 +290,7 @@ public class RestaurantControllerTest {
     @Test(timeout = 2000, expected = DataIntegrityException.class)
     public void closedOrderTest_3() throws Exception {
         // <DataIntegrityException> should be generated next
-        restaurantController.delCourseFromOrder(closedOrder, closedOrderCourse1);
+        restaurantController.takeCourseFromOrder(closedOrder, closedOrderCourse1, 1);
     }
 
     @AfterClass
