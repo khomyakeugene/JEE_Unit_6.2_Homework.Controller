@@ -22,7 +22,8 @@ public class JdbcEmployeeDao extends JdbcDaoTableWitId<Employee> implements Empl
     private static final String SALARY_FIELD_NAME = "salary";
     private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY second_name, first_name";
 
-    public JdbcEmployeeDao() {
+    @Override
+    protected void initMetadata() {
         this.tableName = EMPLOYEE_TABLE_NAME;
         this.idFieldName = EMPLOYEE_ID_FIELD_NAME;
         this.nameFieldName = SECOND_NAME_FIELD_NAME;

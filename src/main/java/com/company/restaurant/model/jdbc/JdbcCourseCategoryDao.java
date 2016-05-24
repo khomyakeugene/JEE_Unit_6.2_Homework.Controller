@@ -12,9 +12,8 @@ public class JdbcCourseCategoryDao extends JdbcDaoTableSimpleDic<CourseCategory>
     private static final String COURSE_CATEGORY_DIC_TABLE_NAME = "course_category_dic";
     private static final String COURSE_CATEGORY_ID_FIELD_NAME = "course_category_id";
 
-    public JdbcCourseCategoryDao() {
-        super();
-
+    @Override
+    protected void initMetadata() {
         this.tableName = COURSE_CATEGORY_DIC_TABLE_NAME;
         this.idFieldName = COURSE_CATEGORY_ID_FIELD_NAME;
     }

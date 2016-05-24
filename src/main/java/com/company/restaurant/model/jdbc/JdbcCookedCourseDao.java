@@ -32,7 +32,8 @@ public class JdbcCookedCourseDao extends JdbcDaoLinkTable<CookedCourse> implemen
     private static final String EMPLOYEE_PHONE_NUMBER_FIELD_NAME = "employee_phone_number";
     private static final String EMPLOYEE_SALARY_FIELD_NAME = "employee_salary";
 
-    public JdbcCookedCourseDao() {
+    @Override
+    protected void initMetadata() {
         this.tableName = COOKED_COURSE_TABLE_NAME;
         this.viewName = COOKED_COURSE_VIEW_NAME;
         this.firstIdFieldName = COURSE_ID_FIELD_NAME;

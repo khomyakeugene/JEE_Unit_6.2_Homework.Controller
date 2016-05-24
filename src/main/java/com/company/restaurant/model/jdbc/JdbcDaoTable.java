@@ -24,6 +24,12 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     protected String viewName;
     protected String orderByCondition;
 
+    public JdbcDaoTable() {
+        initMetadata();
+    }
+
+    protected abstract void initMetadata();
+
     protected abstract Map<String, Object> objectToDBMap(T object);
 
     public String getTableName() {

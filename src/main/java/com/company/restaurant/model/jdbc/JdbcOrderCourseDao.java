@@ -23,7 +23,8 @@ public class JdbcOrderCourseDao extends JdbcDaoQuantityLinkTable<OrderCourse> im
     private static final String COURSE_CATEGORY_NAME_FIELD_NAME = "course_category_name";
     private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY course_name";
 
-    public JdbcOrderCourseDao() {
+    @Override
+    protected void initMetadata() {
         this.tableName = ORDER_COURSE_TABLE_NAME;
         this.viewName = ORDER_COURSE_VIEW_NAME;
         this.firstIdFieldName = COURSE_ID_FIELD_NAME;

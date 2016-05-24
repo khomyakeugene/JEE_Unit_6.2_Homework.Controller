@@ -24,7 +24,8 @@ public class JdbcOrderDao extends JdbcDaoTableWitId<Order> implements OrderDao {
     private static final String STATE_TYPE_NAME_FIELD_NAME = "state_type_name";
     private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY order_id";
 
-    public JdbcOrderDao() {
+    @Override
+    protected void initMetadata() {
         this.tableName = ORDER_TABLE_NAME;
         this.viewName = ORDER_VIEW_NAME;
         this.idFieldName = ORDER_ID_FIELD_NAME;

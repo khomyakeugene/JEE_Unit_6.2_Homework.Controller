@@ -26,7 +26,8 @@ public class JdbcCourseDao extends JdbcDaoTableWitId<Course> implements CourseDa
 
     private CourseCategoryDao courseCategoryDao;
 
-    public JdbcCourseDao() {
+    @Override
+    protected void initMetadata() {
         this.tableName = COURSE_TABLE_NAME;
         this.viewName = COURSE_VIEW_NAME;
         this.idFieldName = COURSE_ID_FIELD_NAME;

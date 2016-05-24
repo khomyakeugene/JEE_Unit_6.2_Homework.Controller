@@ -21,7 +21,8 @@ public class JdbcStateGraphDao extends JdbcDaoTable<StateGraph> implements State
     private static final String COMMENT_FIELD_NAME = "comment";
     private static final String DEFAULT_ORDER_BY_CONDITION = "";
 
-    public JdbcStateGraphDao() {
+    @Override
+    protected void initMetadata() {
         this.tableName = STATE_GRAPH_TABLE_NAME;
         this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
     }

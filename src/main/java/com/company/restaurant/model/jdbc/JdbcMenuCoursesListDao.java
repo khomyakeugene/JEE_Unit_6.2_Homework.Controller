@@ -26,7 +26,8 @@ public class JdbcMenuCoursesListDao extends JdbcDaoLinkTable<MenuCourseList> imp
     private static final String COURSE_COST_FIELD_NAME = "course_cost";
     private static final String COURSE_CATEGORY_NAME_FIELD_NAME = "course_category_name";
 
-    public JdbcMenuCoursesListDao() {
+    @Override
+    protected void initMetadata() {
         this.tableName = MENU_COURSES_LIST_TABLE_NAME;
         this.viewName = MENU_COURSES_LIST_VIEW_NAME;
         this.firstIdFieldName = MENU_ID_FIELD_NAME;

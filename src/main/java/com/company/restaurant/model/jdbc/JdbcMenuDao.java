@@ -17,9 +17,8 @@ public class JdbcMenuDao extends JdbcDaoTableSimpleDic<Menu> implements MenuDao 
         this.menuCourseListDao = menuCourseListDao;
     }
 
-    public JdbcMenuDao() {
-        super();
-
+    @Override
+    protected void initMetadata() {
         this.tableName = MENU_TABLE_NAME;
         this.idFieldName = MENU_ID_FIELD_NAME;
     }

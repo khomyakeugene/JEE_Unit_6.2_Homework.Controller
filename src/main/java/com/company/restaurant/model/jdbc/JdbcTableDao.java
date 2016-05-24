@@ -19,7 +19,8 @@ public class JdbcTableDao extends JdbcDaoTableWitId<Table> implements TableDao {
     private static final String DESCRIPTION_FIELD_NAME = "description";
     private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY number";
 
-    public JdbcTableDao() {
+    @Override
+    protected void initMetadata() {
         this.tableName = TABLE_TABLE_NAME;
         this.idFieldName = TABLE_ID_FIELD_NAME;
         this.nameFieldName = NUMBER_FIELD_NAME;

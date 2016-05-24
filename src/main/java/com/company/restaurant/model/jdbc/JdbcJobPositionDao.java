@@ -12,9 +12,8 @@ public class JdbcJobPositionDao extends JdbcDaoTableSimpleDic<JobPosition> imple
     private static final String JOB_POSITION_DIC_TABLE_NAME = "job_position_dic";
     private static final String JOB_POSITION_ID_FIELD_NAME = "job_position_id";
 
-    public JdbcJobPositionDao() {
-        super();
-
+    @Override
+    protected void initMetadata() {
         this.tableName = JOB_POSITION_DIC_TABLE_NAME;
         this.idFieldName = JOB_POSITION_ID_FIELD_NAME;
     }
