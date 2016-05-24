@@ -173,6 +173,11 @@ public class RestaurantController {
         menuDao.delCourseFromMenu(menu, course);
     }
 
+    public List<MenuCourseList> findMenuCourses(Menu menu) {
+        return menuDao.findMenuCourses(menu);
+    }
+
+
     Table addTable(Table table){
         return tableDao.addTable(table);
     }

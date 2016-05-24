@@ -51,7 +51,7 @@
 
     <bean class="com.company.restaurant.model.jdbc.JdbcMenuDao" id="menuDao">
         <property name="dataSource" ref="dataSource"/>
-        <property name="jdbcMenuCourseListDao" ref="menuCourseListDao"/>
+        <property name="menuCourseListDao" ref="menuCourseListDao"/>
     </bean>
 
     <bean class="com.company.restaurant.model.jdbc.JdbcTableDao" id="tableDao">

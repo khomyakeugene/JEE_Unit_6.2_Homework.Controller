@@ -1,8 +1,6 @@
 package com.company.restaurant.model.jdbc;
 
-import com.company.restaurant.model.Course;
-import com.company.restaurant.model.Menu;
-import com.company.restaurant.model.MenuDao;
+import com.company.restaurant.model.*;
 
 import java.util.List;
 
@@ -13,10 +11,10 @@ public class JdbcMenuDao extends JdbcDaoTableSimpleDic<Menu> implements MenuDao 
     private static final String MENU_TABLE_NAME = "menu";
     private static final String MENU_ID_FIELD_NAME = "menu_id";
 
-    private JdbcMenuCoursesListDao jdbcMenuCourseListDao;
+    private MenuCoursesListDao menuCourseListDao;
 
-    public void setJdbcMenuCourseListDao(JdbcMenuCoursesListDao jdbcMenuCourseListDao) {
-        this.jdbcMenuCourseListDao = jdbcMenuCourseListDao;
+    public void setMenuCourseListDao(MenuCoursesListDao menuCourseListDao) {
+        this.menuCourseListDao = menuCourseListDao;
     }
 
     public JdbcMenuDao() {
@@ -53,11 +51,16 @@ public class JdbcMenuDao extends JdbcDaoTableSimpleDic<Menu> implements MenuDao 
 
     @Override
     public void addCourseToMenu(Menu menu, Course course) {
-        jdbcMenuCourseListDao.addCourseToMenu(menu, course);
+        menuCourseListDao.addCourseToMenu(menu, course);
     }
 
     @Override
     public void delCourseFromMenu(Menu menu, Course course) {
-        jdbcMenuCourseListDao.delCourseFromMenu(menu, course);
+        menuCourseListDao.delCourseFromMenu(menu, course);
+    }
+
+    @Override
+    public List<MenuCourseList> findMenuCourses(Menu menu) {
+        return menuCourseListDao.findMenuCourses(menu);
     }
 }

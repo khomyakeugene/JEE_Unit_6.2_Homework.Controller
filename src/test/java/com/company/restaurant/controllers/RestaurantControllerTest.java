@@ -7,6 +7,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -206,7 +208,7 @@ public class RestaurantControllerTest {
         restaurantController.findAllCourses();
     }
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addFindDelMenuTest() throws Exception {
         String name = Util.getRandomString();
         Menu menu = restaurantController.addMenu(name);
@@ -233,6 +235,10 @@ public class RestaurantControllerTest {
 
         restaurantController.addCourseToMenu(menu, course1);
         restaurantController.addCourseToMenu(menu, course2);
+
+        for (MenuCourseList menuCourseList : restaurantController.findMenuCourses(menu)) {
+            System.out.println(menuCourseList.getCourseName() + ": " + menuCourseList.getCourseCategoryName());
+        }
 
         restaurantController.delCourseFromMenu(menu, course1);
         restaurantController.delCourseFromMenu(menu, course2);
@@ -310,8 +316,6 @@ public class RestaurantControllerTest {
         restaurantController.delOrder(order);
         assertTrue(restaurantController.findOrderById(orderId) == null);
     }
-
-
 
     @Test(timeout = 2000, expected = DataIntegrityException.class)
     public void closedOrderTest_1() throws Exception {

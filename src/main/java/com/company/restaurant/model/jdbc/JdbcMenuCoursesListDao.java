@@ -8,6 +8,7 @@ import com.company.restaurant.model.MenuCoursesListDao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,12 +16,19 @@ import java.util.Map;
  */
 public class JdbcMenuCoursesListDao extends JdbcDaoLinkTable<MenuCourseList> implements MenuCoursesListDao {
     private static final String MENU_COURSES_LIST_TABLE_NAME = "menu_courses_list";
+    private static final String MENU_COURSES_LIST_VIEW_NAME = "v_menu_courses_list";
     private static final String MENU_ID_FIELD_NAME = "menu_id";
     private static final String COURSE_ID_FIELD_NAME = "course_id";
     private static final String COURSE_NUMBER_FIELD_NAME = "course_number";
+    private static final String COURSE_CATEGORY_ID_FIELD_NAME = "course_category_id";
+    private static final String COURSE_NAME_FIELD_NAME = "course_name";
+    private static final String COURSE_WEIGHT_FIELD_NAME = "course_weight";
+    private static final String COURSE_COST_FIELD_NAME = "course_cost";
+    private static final String COURSE_CATEGORY_NAME_FIELD_NAME = "course_category_name";
 
     public JdbcMenuCoursesListDao() {
         this.tableName = MENU_COURSES_LIST_TABLE_NAME;
+        this.viewName = MENU_COURSES_LIST_VIEW_NAME;
         this.firstIdFieldName = MENU_ID_FIELD_NAME;
         this.secondIdFieldName = COURSE_ID_FIELD_NAME;
     }
@@ -44,9 +52,14 @@ public class JdbcMenuCoursesListDao extends JdbcDaoLinkTable<MenuCourseList> imp
     @Override
     protected MenuCourseList newObject(ResultSet resultSet) throws SQLException {
         MenuCourseList result = new MenuCourseList();
-        result.setFirstId(resultSet.getInt(firstIdFieldName));
-        result.setSecondId(resultSet.getInt(secondIdFieldName));
+        result.setMenuId(resultSet.getInt(MENU_ID_FIELD_NAME));
+        result.setCourseId(resultSet.getInt(COURSE_ID_FIELD_NAME));
         result.setCourseNumber(resultSet.getInt(COURSE_NUMBER_FIELD_NAME));
+        result.setCourseCategoryId(resultSet.getInt(COURSE_CATEGORY_ID_FIELD_NAME));
+        result.setCourseName(resultSet.getString(COURSE_NAME_FIELD_NAME));
+        result.setCourseWeight(resultSet.getFloat(COURSE_WEIGHT_FIELD_NAME));
+        result.setCourseCost(resultSet.getFloat(COURSE_COST_FIELD_NAME));
+        result.setCourseCategoryName(resultSet.getString(COURSE_CATEGORY_NAME_FIELD_NAME));
 
         return result;
     }
@@ -67,5 +80,10 @@ public class JdbcMenuCoursesListDao extends JdbcDaoLinkTable<MenuCourseList> imp
     @Override
     public void delCourseFromMenu(Menu menu, Course course) {
         delRecord(menu.getId(), course.getCourseId());
+    }
+
+    @Override
+    public List<MenuCourseList> findMenuCourses(Menu menu) {
+        return findObjectsByFieldCondition(MENU_ID_FIELD_NAME, menu.getId());
     }
 }
