@@ -29,8 +29,8 @@ public abstract class JdbcDaoTableWitId<T> extends JdbcDaoTable<T> {
         return findObjectByFieldCondition(nameFieldName, name);
     }
 
-    public int addRecord(T object) {
-        int result = 0;
+    public T addRecord(T object) {
+        T result = object;
 
         try(Connection connection = dataSource.getConnection();
             Statement statement = connection.createStatement()) {
@@ -41,9 +41,15 @@ public abstract class JdbcDaoTableWitId<T> extends JdbcDaoTable<T> {
             statement.executeUpdate(s, Statement.RETURN_GENERATED_KEYS);
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                result = resultSet.getInt(idFieldName);
-                // Store new generated id in the added <object> - at least, it is important to support data integrity
-                setId(result, object);
+                int id = resultSet.getInt(idFieldName);
+                // Store new generated id in the "source variant" of added <object> - at least, it is important
+                // to support data integrity
+                setId(id, object);
+                // Retrieve all fields in case if <tableName> != <viewName>, because entity item can contain also
+                // <viewName>-fields
+                if (viewName != null && !viewName.equals(tableName)) {
+                    result = findObjectById(id);
+                }
             } else  {
                 throw new SQLException(String.format(CANNOT_GET_LAST_GENERATED_ID_PATTERN, tableName, idFieldName));
             }

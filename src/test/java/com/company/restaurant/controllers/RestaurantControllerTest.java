@@ -49,7 +49,7 @@ public class RestaurantControllerTest {
         testCourse.setWeight(Util.getRandomFloat());
         testCourse.setCost(Util.getRandomFloat());
 
-        restaurantController.addCourse(testCourse);
+        testCourse = restaurantController.addCourse(testCourse);
 
         return testCourse;
     }
@@ -63,7 +63,7 @@ public class RestaurantControllerTest {
         order.setTableId(tableId());
         order.setEmployeeId(employeeId());
         order.setOrderNumber(Util.getRandomString());
-        closedOrderId = restaurantController.addOrder(order);
+        closedOrderId = restaurantController.addOrder(order).getOrderId();
 
         // Courses for closed order ----------------------------
         closedOrderCourseName1 = Util.getRandomString();
@@ -72,7 +72,7 @@ public class RestaurantControllerTest {
         closedOrderCourse1.setName(closedOrderCourseName1);
         closedOrderCourse1.setWeight(Util.getRandomFloat());
         closedOrderCourse1.setCost(Util.getRandomFloat());
-        restaurantController.addCourse(closedOrderCourse1);
+        closedOrderCourse1 = restaurantController.addCourse(closedOrderCourse1);
 
         closedOrderCourseName2 = Util.getRandomString();
         closedOrderCourse2 = new Course();
@@ -80,7 +80,7 @@ public class RestaurantControllerTest {
         closedOrderCourse2.setName(closedOrderCourseName2);
         closedOrderCourse2.setWeight(Util.getRandomFloat());
         closedOrderCourse2.setCost(Util.getRandomFloat());
-        restaurantController.addCourse(closedOrderCourse2);
+        closedOrderCourse2 = restaurantController.addCourse(closedOrderCourse2);
         // ----------
 
         restaurantController.addCourseToOrder(order, closedOrderCourse1, 1);
@@ -142,7 +142,7 @@ public class RestaurantControllerTest {
         employee.setPhoneNumber(Util.getRandomString());
         employee.setSalary(Util.getRandomFloat());
 
-        int employeeId = restaurantController.addEmployee(employee);
+        int employeeId = restaurantController.addEmployee(employee).getEmployeeId();
 
         // Select test <employee> and check
         Employee employeeByFirstName = restaurantController.findEmployeeByFirstName(firstName).get(0);
@@ -186,7 +186,7 @@ public class RestaurantControllerTest {
         course.setName(name);
         course.setWeight(Util.getRandomFloat());
         course.setCost(Util.getRandomFloat());
-        restaurantController.addCourse(course);
+        course = restaurantController.addCourse(course);
 
         Course courseByName = restaurantController.findCourseByName(name);
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course, courseByName));
@@ -194,13 +194,16 @@ public class RestaurantControllerTest {
         restaurantController.delCourse(name);
         assertTrue(restaurantController.findCourseByName(name) == null);
         // Test delete by "the whole object"
-        restaurantController.addCourse(course);
+        course = restaurantController.addCourse(course);
         courseByName = restaurantController.findCourseByName(name);
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course, courseByName));
         restaurantController.delCourse(course);
         assertTrue(restaurantController.findCourseByName(name) == null);
         // Test delete of non-existent data
         restaurantController.delCourse(name);
+
+        // Whole course list
+        restaurantController.findAllCourses();
     }
 
     @Test(timeout = 2000)
@@ -218,7 +221,7 @@ public class RestaurantControllerTest {
         course1.setName(courseName1);
         course1.setWeight(Util.getRandomFloat());
         course1.setCost(Util.getRandomFloat());
-        restaurantController.addCourse(course1);
+        course1 = restaurantController.addCourse(course1);
 
         String courseName2 = Util.getRandomString();
         Course course2 = new Course();
@@ -226,7 +229,7 @@ public class RestaurantControllerTest {
         course2.setName(courseName2);
         course2.setWeight(Util.getRandomFloat());
         course2.setCost(Util.getRandomFloat());
-        restaurantController.addCourse(course2);
+        course2 = restaurantController.addCourse(course2);
 
         restaurantController.addCourseToMenu(menu, course1);
         restaurantController.addCourseToMenu(menu, course2);
@@ -250,7 +253,7 @@ public class RestaurantControllerTest {
         int number = Util.getRandomInteger();
         table.setNumber(number);
         table.setDescription(Util.getRandomString());
-        restaurantController.addTable(table);
+        table = restaurantController.addTable(table);
 
         Table tableByNumber = restaurantController.findTableByNumber(number);
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(table, tableByNumber));
@@ -265,7 +268,7 @@ public class RestaurantControllerTest {
         order.setTableId(tableId());
         order.setEmployeeId(employeeId());
         order.setOrderNumber(Util.getRandomString());
-        int orderId = restaurantController.addOrder(order);
+        int orderId = restaurantController.addOrder(order).getOrderId();
 
         Order orderById = restaurantController.findOrderById(orderId);
         // Just check of successful retrieving from database,  without "full comparing"!!!
@@ -279,7 +282,7 @@ public class RestaurantControllerTest {
         course1.setName(courseName1);
         course1.setWeight(Util.getRandomFloat());
         course1.setCost(Util.getRandomFloat());
-        restaurantController.addCourse(course1);
+        course1 = restaurantController.addCourse(course1);
 
         String courseName2 = Util.getRandomString();
         Course course2 = new Course();
@@ -287,7 +290,7 @@ public class RestaurantControllerTest {
         course2.setName(courseName2);
         course2.setWeight(Util.getRandomFloat());
         course2.setCost(Util.getRandomFloat());
-        restaurantController.addCourse(course2);
+        course2 = restaurantController.addCourse(course2);
 
         restaurantController.addCourseToOrder(order, course1, 3);
         restaurantController.addCourseToOrder(order, course2, 2);

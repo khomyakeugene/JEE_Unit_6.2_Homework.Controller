@@ -81,7 +81,7 @@ public class JdbcEmployeeDao extends JdbcDaoTableWitId<Employee> implements Empl
     }
 
     @Override
-    public int addEmployee(Employee employee) {
+    public Employee addEmployee(Employee employee) {
         return addRecord(employee);
     }
 

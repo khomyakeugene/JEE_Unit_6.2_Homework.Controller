@@ -70,7 +70,7 @@ public class JdbcOrderDao extends JdbcDaoTableWitId<Order> implements OrderDao {
     }
 
     @Override
-    public int addOrder(Order order) {
+    public Order addOrder(Order order) {
         return addRecord(order);
     }
 

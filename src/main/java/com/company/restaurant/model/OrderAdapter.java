@@ -59,7 +59,7 @@ public class OrderAdapter {
         throw new DataIntegrityException(message);
     }
 
-    public int addOrder(Order order) {
+    public Order addOrder(Order order) {
         order.setStateType(orderCreationState());
 
         return orderDao.addOrder(order);

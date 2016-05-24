@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Yevhen on 22.05.2016.
  */
 public interface TableDao {
-    int addTable(Table table);
+    Table addTable(Table table);
 
     void delTable(Table table);
 

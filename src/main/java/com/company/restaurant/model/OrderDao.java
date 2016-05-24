@@ -8,7 +8,7 @@ import java.util.List;
 public interface OrderDao {
     String orderEntityName();
 
-    int addOrder(Order order);
+    Order addOrder(Order order);
 
     void delOrder(Order order);
 

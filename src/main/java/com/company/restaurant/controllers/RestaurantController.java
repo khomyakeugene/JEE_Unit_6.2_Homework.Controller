@@ -1,6 +1,7 @@
 package com.company.restaurant.controllers;
 
 import com.company.restaurant.model.*;
+import javafx.scene.control.Tab;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -84,7 +85,7 @@ public class RestaurantController {
         return jobPositionDao.findAllJobPositions();
     }
 
-    public int addEmployee(Employee employee) {
+    public Employee addEmployee(Employee employee) {
         return employeeDao.addEmployee(employee);
     }
 
@@ -128,7 +129,7 @@ public class RestaurantController {
         return courseCategoryDao.findAllCourseCategories();
     }
 
-    public int addCourse(Course course) {
+    public Course addCourse(Course course) {
        return courseDao.addCourse(course);
     }
 
@@ -172,7 +173,7 @@ public class RestaurantController {
         menuDao.delCourseFromMenu(menu, course);
     }
 
-    int addTable(Table table){
+    Table addTable(Table table){
         return tableDao.addTable(table);
     }
 
@@ -188,7 +189,7 @@ public class RestaurantController {
         return tableDao.findAllTables();
     }
 
-    int addOrder(Order order) {
+    Order addOrder(Order order) {
         return orderAdapter.addOrder(order);
     }
 

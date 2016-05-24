@@ -27,7 +27,7 @@ public class JdbcTableDao extends JdbcDaoTableWitId<Table> implements TableDao {
     }
 
     @Override
-    public int addTable(Table table) {
+    public Table addTable(Table table) {
         return addRecord(table);
     }
 

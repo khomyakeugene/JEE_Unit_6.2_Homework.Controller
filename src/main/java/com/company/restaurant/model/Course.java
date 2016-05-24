@@ -9,6 +9,7 @@ public class Course {
     private String name;
     private float weight;
     private float cost;
+    private String courseCategoryName;
 
     public int getCourseId() {
         return courseId;
@@ -48,5 +49,13 @@ public class Course {
 
     public void setCost(float cost) {
         this.cost = cost;
+    }
+
+    public String getCourseCategoryName() {
+        return courseCategoryName;
+    }
+
+    public void setCourseCategoryName(String courseCategoryName) {
+        this.courseCategoryName = courseCategoryName;
     }
 }
