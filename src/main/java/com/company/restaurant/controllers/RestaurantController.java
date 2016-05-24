@@ -186,7 +186,6 @@ public class RestaurantController {
         return menuDao.findMenuCourses(menu);
     }
 
-
     Table addTable(Table table){
         return tableDao.addTable(table);
     }

@@ -10,10 +10,6 @@ public class WarehouseAdapter {
     private IngredientDao ingredientDao;
     private PortionDao portionDao;
 
-    public WarehouseDao getWarehouseDao() {
-        return warehouseDao;
-    }
-
     public void setWarehouseDao(WarehouseDao warehouseDao) {
         this.warehouseDao = warehouseDao;
     }
