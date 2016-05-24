@@ -36,6 +36,7 @@ public class JdbcWarehouseDao extends JdbcDaoAmountLinkTable<Warehouse> implemen
         this.viewName = WAREHOUSE_VIEW_NAME;
         this.firstIdFieldName = INGREDIENT_ID_FIELD_NAME;
         this.secondIdFieldName = PORTION_ID_FIELD_NAME;
+        this.thirdFieldName = AMOUNT_FIELD_NAME;
         this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
     }
 
@@ -75,7 +76,7 @@ public class JdbcWarehouseDao extends JdbcDaoAmountLinkTable<Warehouse> implemen
     }
 
     @Override
-    public Warehouse findIngredientByName(String name) {
+    public Warehouse findIngredientInWarehouseByName(String name) {
         return findObjectByFieldCondition(INGREDIENT_NAME_FIELD_NAME, name);
     }
 

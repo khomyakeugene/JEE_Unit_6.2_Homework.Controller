@@ -344,4 +344,14 @@ public class RestaurantControllerTest {
             System.out.println(cookedCourse.getCourseName() + " : " + cookedCourse.getCookDatetime());
         }
     }
+
+    @Test//(timeout = 2000)
+    public void addFindDelWarehouseTest() throws Exception {
+        for (Ingredient ingredient: restaurantController.getWarehouseAdapter().getIngredientDao().findAllIngredients()) {
+            for (Portion portion : restaurantController.getWarehouseAdapter().getPortionDao().findAllPortions()) {
+                restaurantController.addIngredientToWarehouse(ingredient, portion, Util.getRandomFloat());
+                restaurantController.takeIngredientFromWarehouse(ingredient, Util.getRandomFloat());
+            }
+        }
+    }
 }

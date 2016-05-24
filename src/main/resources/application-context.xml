@@ -102,6 +102,8 @@
 
     <bean class="com.company.restaurant.model.WarehouseAdapter" id="warehouseAdapter">
         <property name="warehouseDao" ref="warehouseDao"/>
+        <property name="ingredientDao" ref="ingredientDao"/>
+        <property name="portionDao" ref="portionDao"/>
     </bean>
 
     <bean class="com.company.restaurant.controllers.RestaurantController" id="employeeController">

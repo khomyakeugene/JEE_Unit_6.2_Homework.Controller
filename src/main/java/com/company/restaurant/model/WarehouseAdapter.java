@@ -7,9 +7,31 @@ import java.util.List;
  */
 public class WarehouseAdapter {
     private WarehouseDao warehouseDao;
+    private IngredientDao ingredientDao;
+    private PortionDao portionDao;
+
+    public WarehouseDao getWarehouseDao() {
+        return warehouseDao;
+    }
 
     public void setWarehouseDao(WarehouseDao warehouseDao) {
         this.warehouseDao = warehouseDao;
+    }
+
+    public IngredientDao getIngredientDao() {
+        return ingredientDao;
+    }
+
+    public void setIngredientDao(IngredientDao ingredientDao) {
+        this.ingredientDao = ingredientDao;
+    }
+
+    public PortionDao getPortionDao() {
+        return portionDao;
+    }
+
+    public void setPortionDao(PortionDao portionDao) {
+        this.portionDao = portionDao;
     }
 
     public void addIngredientToWarehouse(Ingredient ingredient, Portion portion, float amount) {
@@ -20,8 +42,8 @@ public class WarehouseAdapter {
         warehouseDao.takeIngredientFromWarehouse(ingredient, amount);
     }
 
-    public Warehouse findIngredientByName(String name) {
-        return warehouseDao.findIngredientByName(name);
+    public Warehouse findIngredientInWarehouseByName(String name) {
+        return warehouseDao.findIngredientInWarehouseByName(name);
     }
 
     public List<Warehouse> findAllWarehouseIngredients() {

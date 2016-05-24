@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Yevhen on 24.05.2016.
  */
 public class JdbcIngredientDao extends JdbcDaoTableSimpleDic<Ingredient> implements IngredientDao {
-    private static final String INGREDIENT_DIC_TABLE_NAME = "ingredient_dic";
+    private static final String INGREDIENT_DIC_TABLE_NAME = "ingredient";
     private static final String INGREDIENT_ID_FIELD_NAME = "ingredient_id";
     private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY name";
 

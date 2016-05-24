@@ -10,7 +10,7 @@ public interface WarehouseDao {
 
     void takeIngredientFromWarehouse(Ingredient ingredient, float amount);
 
-    Warehouse findIngredientByName(String name);
+    Warehouse findIngredientInWarehouseByName(String name);
 
     List<Warehouse> findAllWarehouseIngredients();
 

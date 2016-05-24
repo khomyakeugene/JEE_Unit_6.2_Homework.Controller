@@ -1,6 +1,5 @@
 package com.company.restaurant.model.jdbc;
 
-import com.company.restaurant.model.FloatLinkObject;
 import com.company.restaurant.model.LinkObject;
 
 /**

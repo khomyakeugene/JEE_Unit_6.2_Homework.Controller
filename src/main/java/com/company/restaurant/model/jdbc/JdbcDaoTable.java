@@ -49,8 +49,7 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     }
 
     private String fieldQueryCondition(String fieldName, Object value, String selectFields) {
-        return String.format(SQL_SELECT_BY_FIELD_VALUE, selectFields, getViewName(), fieldName, JdbcDao.toString(value)) +
-                " " + orderByCondition();
+        return String.format(SQL_SELECT_BY_FIELD_VALUE, selectFields, getViewName(), fieldName, JdbcDao.toString(value));
     }
 
     private String fieldQueryCondition(String fieldName, Object value) {
@@ -60,7 +59,7 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     protected String twoFieldsQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2,
                                            String selectFields) {
         return String.format(SQL_SELECT_BY_TWO_FIELD_VALUE, selectFields, getTableName(), fieldName_1, JdbcDao.toString(value_1),
-                fieldName_2, JdbcDao.toString(value_2)) + " " + orderByCondition();
+                fieldName_2, JdbcDao.toString(value_2));
     }
 
     private String twoFieldsQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2) {

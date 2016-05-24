@@ -32,6 +32,7 @@ public class JdbcPortionDao extends JdbcDaoTableWithId<Portion> implements Porti
     @Override
     protected Portion newObject(ResultSet resultSet) throws SQLException {
         Portion result = new Portion();
+        result.setPortionId(resultSet.getInt(PORTION_ID_FIELD_NAME));
         result.setPortionTypeId(resultSet.getInt(PORTION_TYPE_ID_FIELD_NAME));
         result.setMeasuringTypeId(resultSet.getInt(MEASURING_TYPE_FIELD_NAME));
         result.setAmount(resultSet.getFloat(AMOUNT_FIELD_NAME));
