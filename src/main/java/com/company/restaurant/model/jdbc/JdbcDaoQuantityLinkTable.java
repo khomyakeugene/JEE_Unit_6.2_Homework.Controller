@@ -5,30 +5,16 @@ import com.company.restaurant.model.IntegerLinkObject;
 /**
  * Created by Yevhen on 23.05.2016.
  */
-public abstract class JdbcDaoQuantityLinkTable<T extends IntegerLinkObject> extends JdbcDaoLinkTable<T> {
+public abstract class JdbcDaoQuantityLinkTable<T extends IntegerLinkObject> extends JdbcDaoAmountLinkTable<T> {
     private Integer selectCurrentQuantity(int firstId, int secondId) {
-        String stringResult = getOneFieldByTwoFieldCondition(thirdFieldName, firstId, secondId);
-
-        return (stringResult == null) ? null : Integer.parseInt(stringResult);
+        return selectCurrentAmount(firstId, secondId).intValue();
     }
 
     public void increaseQuantity(int firstId, int secondId, int increasePortion) {
-        Integer currentQuantity = selectCurrentQuantity(firstId, secondId);
-        if (currentQuantity == null) {
-            if (increasePortion > 0) {
-                addRecord(firstId, secondId, String.valueOf(increasePortion));
-            }
-        } else {
-            currentQuantity += increasePortion;
-            if (currentQuantity > 0) {
-                updRecord(firstId, secondId, currentQuantity);
-            } else {
-                delRecord(firstId, secondId);
-            }
-        }
+        increaseAmount(firstId, secondId, increasePortion);
     }
 
     public void decreaseQuantity(int firstId, int secondId, int decreasePortion) {
-        increaseQuantity(firstId, secondId, -decreasePortion);
+        decreaseAmount(firstId, secondId, decreasePortion);
     }
 }

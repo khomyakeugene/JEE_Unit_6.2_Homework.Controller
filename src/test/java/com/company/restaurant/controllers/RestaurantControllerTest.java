@@ -116,8 +116,9 @@ public class RestaurantControllerTest {
     public static void tearDownClass() throws Exception {
         delTestCourse();
         clearClosedOrder();
-    }
 
+        System.out.println("tearDownClass finished!");
+    }
 
     @Test(timeout = 2000)
     public void addFindDelJobPosition() throws Exception {
@@ -208,7 +209,7 @@ public class RestaurantControllerTest {
         restaurantController.findAllCourses();
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelMenuTest() throws Exception {
         String name = Util.getRandomString();
         Menu menu = restaurantController.addMenu(name);
