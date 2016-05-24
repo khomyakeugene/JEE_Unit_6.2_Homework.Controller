@@ -8,11 +8,11 @@ import java.util.List;
 public interface WarehouseDao {
     void addIngredientToWarehouse(Ingredient ingredient, Portion portion, float amount);
 
-    void takeIngredientFromWarehouse(Ingredient ingredient, Portion portion, float amount);
+    void takeIngredientFromWarehouse(Ingredient ingredient, float amount);
 
-    Ingredient findIngredientByName(String name);
+    Warehouse findIngredientByName(String name);
 
-    List<Ingredient> findAllWarehouseIngredients();
+    List<Warehouse> findAllWarehouseIngredients();
 
-    List<Ingredient> findAllElapsingWarehouseIngredients(float limit);
+    List<Warehouse> findAllElapsingWarehouseIngredients(float limit);
 }

@@ -96,6 +96,14 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean class="com.company.restaurant.model.jdbc.JdbcWarehouseDao" id="warehouseDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.model.WarehouseAdapter" id="warehouseAdapter">
+        <property name="warehouseDao" ref="warehouseDao"/>
+    </bean>
+
     <bean class="com.company.restaurant.controllers.RestaurantController" id="employeeController">
         <property name="txManager" ref="txManager"/>
         <property name="jobPositionDao" ref="jobPositionDao"/>
@@ -106,6 +114,7 @@
         <property name="tableDao" ref="tableDao"/>
         <property name="orderAdapter" ref="orderAdapter"/>
         <property name="kitchenAdapter" ref="kitchenAdapter"/>
+        <property name="warehouseAdapter" ref="warehouseAdapter"/>
     </bean>
     <!-- END OF DB-CONTEXT -->
 

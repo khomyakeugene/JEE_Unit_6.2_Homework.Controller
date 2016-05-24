@@ -23,6 +23,12 @@ public class RestaurantController {
     private TableDao tableDao;
     private OrderAdapter orderAdapter;
     private KitchenAdapter kitchenAdapter;
+    private  WarehouseAdapter warehouseAdapter;
+
+    public static RestaurantController getInstance() {
+        ApplicationContext context = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_NAME);
+        return context.getBean(RestaurantController.class);
+    }
 
     public void setTxManager(PlatformTransactionManager txManager) {
         this.txManager = txManager;
@@ -64,9 +70,8 @@ public class RestaurantController {
         return orderAdapter;
     }
 
-    public static RestaurantController getInstance() {
-        ApplicationContext context = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_NAME);
-        return context.getBean(RestaurantController.class);
+    public void setWarehouseAdapter(WarehouseAdapter warehouseAdapter) {
+        this.warehouseAdapter = warehouseAdapter;
     }
 
     public JobPosition addJobPosition(String name) {

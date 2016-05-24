@@ -28,11 +28,14 @@ public class JdbcWarehouseDao extends JdbcDaoAmountLinkTable<Warehouse> implemen
     private static final String MEASURING_TYPE_CODE_FIELD_NAME = "measuring_type_code";
     private static final String MEASURING_TYPE_NAME_FIELD_NAME = "measuring_type_name";
     private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY ingredient_name";
+    private static final String SQL_SELECT_ELAPSING_WAREHOUSE_INGREDIENTS = "SELECT * FROM warehouse WHERE (amount < %f)";
 
     @Override
     protected void initMetadata() {
         this.tableName = WAREHOUSE_TABLE_NAME;
         this.viewName = WAREHOUSE_VIEW_NAME;
+        this.firstIdFieldName = INGREDIENT_ID_FIELD_NAME;
+        this.secondIdFieldName = PORTION_ID_FIELD_NAME;
         this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
     }
 
@@ -61,26 +64,28 @@ public class JdbcWarehouseDao extends JdbcDaoAmountLinkTable<Warehouse> implemen
 
     @Override
     public void addIngredientToWarehouse(Ingredient ingredient, Portion portion, float amount) {
+        increaseAmount(ingredient.getIngredient(), portion.getPortionId(), amount);
 
     }
 
     @Override
-    public void takeIngredientFromWarehouse(Ingredient ingredient, Portion portion, float amount) {
-
+    public void takeIngredientFromWarehouse(Ingredient ingredient, float amount) {
+        decreaseAmount(ingredient.getIngredient(), findObjectByFieldCondition(INGREDIENT_ID_FIELD_NAME,
+                ingredient.getIngredient()).getPortionId(), amount);
     }
 
     @Override
-    public Ingredient findIngredientByName(String name) {
-        return null;
+    public Warehouse findIngredientByName(String name) {
+        return findObjectByFieldCondition(INGREDIENT_NAME_FIELD_NAME, name);
     }
 
     @Override
-    public List<Ingredient> findAllWarehouseIngredients() {
-        return null;
+    public List<Warehouse> findAllWarehouseIngredients() {
+        return findAllObjects();
     }
 
     @Override
-    public List<Ingredient> findAllElapsingWarehouseIngredients(float limit) {
-        return null;
+    public List<Warehouse> findAllElapsingWarehouseIngredients(float limit) {
+        return createObjectListFromQuery(String.format(SQL_SELECT_ELAPSING_WAREHOUSE_INGREDIENTS, limit));
     }
 }
