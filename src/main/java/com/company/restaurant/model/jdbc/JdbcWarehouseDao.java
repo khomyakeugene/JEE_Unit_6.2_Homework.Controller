@@ -8,6 +8,7 @@ import com.company.restaurant.model.WarehouseDao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -28,7 +29,7 @@ public class JdbcWarehouseDao extends JdbcDaoAmountLinkTable<Warehouse> implemen
     private static final String MEASURING_TYPE_CODE_FIELD_NAME = "measuring_type_code";
     private static final String MEASURING_TYPE_NAME_FIELD_NAME = "measuring_type_name";
     private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY ingredient_name";
-    private static final String SQL_SELECT_ELAPSING_WAREHOUSE_INGREDIENTS = "SELECT * FROM warehouse WHERE (amount < %f)";
+    private static final String SQL_SELECT_ELAPSING_WAREHOUSE_INGREDIENTS = "SELECT * FROM v_warehouse WHERE (amount < %f)";
 
     @Override
     protected void initMetadata() {
@@ -87,6 +88,6 @@ public class JdbcWarehouseDao extends JdbcDaoAmountLinkTable<Warehouse> implemen
 
     @Override
     public List<Warehouse> findAllElapsingWarehouseIngredients(float limit) {
-        return createObjectListFromQuery(String.format(SQL_SELECT_ELAPSING_WAREHOUSE_INGREDIENTS, limit));
+        return createObjectListFromQuery(String.format(Locale.US, SQL_SELECT_ELAPSING_WAREHOUSE_INGREDIENTS, limit));
     }
 }

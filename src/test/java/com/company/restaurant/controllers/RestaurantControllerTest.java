@@ -345,13 +345,22 @@ public class RestaurantControllerTest {
         }
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 10000)
     public void addFindDelWarehouseTest() throws Exception {
         for (Ingredient ingredient: restaurantController.getWarehouseAdapter().getIngredientDao().findAllIngredients()) {
             for (Portion portion : restaurantController.getWarehouseAdapter().getPortionDao().findAllPortions()) {
                 restaurantController.addIngredientToWarehouse(ingredient, portion, Util.getRandomFloat());
                 restaurantController.takeIngredientFromWarehouse(ingredient, Util.getRandomFloat());
             }
+        }
+
+        System.out.println("Warehouse all ingredients:");
+        for (Warehouse warehouse : restaurantController.findAllWarehouseIngredients()) {
+            System.out.println(warehouse.getIngredientName() + ": " + warehouse.getAmount());
+        }
+        System.out.println("Warehouse elapsing ingredients:");
+        for (Warehouse warehouse : restaurantController.findAllElapsingWarehouseIngredients((float)500.0)) {
+            System.out.println(warehouse.getIngredientName() + ": " + warehouse.getAmount());
         }
     }
 }
