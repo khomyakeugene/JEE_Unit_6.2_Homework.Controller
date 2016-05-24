@@ -106,7 +106,7 @@
         <property name="portionDao" ref="portionDao"/>
     </bean>
 
-    <bean class="com.company.restaurant.controllers.RestaurantController" id="employeeController">
+    <bean class="com.company.restaurant.controllers.RestaurantController" id="restaurantController">
         <property name="txManager" ref="txManager"/>
         <property name="jobPositionDao" ref="jobPositionDao"/>
         <property name="employeeDao" ref="employeeDao"/>
