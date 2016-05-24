@@ -229,6 +229,10 @@ public class RestaurantController {
         orderAdapter.takeCourseFromOrder(order, course);
     }
 
+    public List<OrderCourse> findAllOrderCourses(Order order) {
+        return orderAdapter.findAllOrderCourses(order);
+    }
+
     void addCookedCourse(Course course, Employee employee, float weight) {
         kitchenAdapter.addCookedCourse(course, employee, weight);
     }

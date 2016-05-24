@@ -128,4 +128,9 @@ public class OrderAdapter {
     public void takeCourseFromOrder(Order order, Course course) {
         takeCourseFromOrder(order, course, 1);
     }
+
+    public List<OrderCourse> findAllOrderCourses(Order order) {
+        return orderCourseDao.findAllOrderCourses(order);
+    }
+
 }

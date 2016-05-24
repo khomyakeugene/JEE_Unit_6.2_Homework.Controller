@@ -295,6 +295,10 @@ public class RestaurantControllerTest {
         restaurantController.addCourseToOrder(order, course1, 3);
         restaurantController.addCourseToOrder(order, course2, 2);
 
+        for (OrderCourse orderCourse : restaurantController.findAllOrderCourses(order)) {
+            System.out.println(orderCourse.getCourseName() + " : " + orderCourse.getCourseCost());
+        }
+
         restaurantController.takeCourseFromOrder(order, course1, 2);
         restaurantController.takeCourseFromOrder(order, course1);
         restaurantController.takeCourseFromOrder(order, course2, 2);
