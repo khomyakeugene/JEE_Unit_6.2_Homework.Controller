@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by Yevhen on 22.05.2016.
  */
-public class JdbcOrderDao extends JdbcDaoTableWitId<Order> implements OrderDao {
+public class JdbcOrderDao extends JdbcDaoTableWithId<Order> implements OrderDao {
     private static final String ORDER_TABLE_NAME = "order";
     private static final String ORDER_VIEW_NAME = "v_order";
     private static final String ORDER_ID_FIELD_NAME = "order_id";

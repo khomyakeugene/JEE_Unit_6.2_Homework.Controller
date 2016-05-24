@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by Yevhen on 19.05.2016.
  */
-public class JdbcEmployeeDao extends JdbcDaoTableWitId<Employee> implements EmployeeDao {
+public class JdbcEmployeeDao extends JdbcDaoTableWithId<Employee> implements EmployeeDao {
     private static final String EMPLOYEE_TABLE_NAME = "employee";
     private static final String EMPLOYEE_ID_FIELD_NAME = "employee_id";
     private static final String JOB_POSITION_ID_FIELD_NAME = "job_position_id";

@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by Yevhen on 22.05.2016.
  */
-public class JdbcTableDao extends JdbcDaoTableWitId<Table> implements TableDao {
+public class JdbcTableDao extends JdbcDaoTableWithId<Table> implements TableDao {
     private static final String TABLE_TABLE_NAME = "table";
     private static final String TABLE_ID_FIELD_NAME = "table_id";
     private static final String NUMBER_FIELD_NAME = "number";

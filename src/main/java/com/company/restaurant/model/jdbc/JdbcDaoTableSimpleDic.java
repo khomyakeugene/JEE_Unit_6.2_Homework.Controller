@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by Yevhen on 21.05.2016.
  */
-public abstract class JdbcDaoTableSimpleDic<T extends SimpleDic> extends JdbcDaoTableWitId<T> {
+public abstract class JdbcDaoTableSimpleDic<T extends SimpleDic> extends JdbcDaoTableWithId<T> {
     private static final String NAME_FIELD_NAME = "name";
     private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY name";
 

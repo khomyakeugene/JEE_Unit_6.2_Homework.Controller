@@ -3,8 +3,7 @@ package com.company.restaurant.model;
 /**
  * Created by Yevhen on 21.05.2016.
  */
-public class MenuCourseList extends LinkObject {
-    private int courseNumber;
+public class MenuCourseList extends IntegerLinkObject {
     private int courseCategoryId;
     private String courseName;
     private float courseWeight;
@@ -28,11 +27,11 @@ public class MenuCourseList extends LinkObject {
     }
 
     public int getCourseNumber() {
-        return courseNumber;
+        return getIntegerLinkData();
     }
 
     public void setCourseNumber(int courseNumber) {
-        this.courseNumber = courseNumber;
+        setIntegerLinkData(courseNumber);
     }
 
     public int getCourseCategoryId() {

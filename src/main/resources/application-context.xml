@@ -88,6 +88,14 @@
         <property name="cookedCourseDao" ref="cookedCourseDao"/>
     </bean>
 
+    <bean class="com.company.restaurant.model.jdbc.JdbcIngredientDao" id="ingredientDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.model.jdbc.JdbcPortionDao" id="portionDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
     <bean class="com.company.restaurant.controllers.RestaurantController" id="employeeController">
         <property name="txManager" ref="txManager"/>
         <property name="jobPositionDao" ref="jobPositionDao"/>

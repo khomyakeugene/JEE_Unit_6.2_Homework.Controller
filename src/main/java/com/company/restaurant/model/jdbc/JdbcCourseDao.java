@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Created by Yevhen on 20.05.2016.
  */
-public class JdbcCourseDao extends JdbcDaoTableWitId<Course> implements CourseDao {
+public class JdbcCourseDao extends JdbcDaoTableWithId<Course> implements CourseDao {
     private static final String COURSE_TABLE_NAME = "course";
     private static final String COURSE_VIEW_NAME = "v_course";
     private static final String COURSE_ID_FIELD_NAME = "course_id";

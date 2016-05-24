@@ -3,10 +3,7 @@ package com.company.restaurant.model;
 /**
  * Created by Yevhen on 24.05.2016.
  */
-public class Warehouse {
-    private int ingredientId;
-    private int portionId;
-    private float amount;
+public class Warehouse extends FloatLinkObject {
     private String ingredientName;
     private int portionTypeId;
     private int measuringTypeId;
@@ -17,27 +14,27 @@ public class Warehouse {
     private String measuringTypeName;
 
     public int getIngredientId() {
-        return ingredientId;
+        return getFirstId();
     }
 
     public void setIngredientId(int ingredientId) {
-        this.ingredientId = ingredientId;
+        setFirstId(ingredientId);
     }
 
     public int getPortionId() {
-        return portionId;
+        return getSecondId();
     }
 
     public void setPortionId(int portionId) {
-        this.portionId = portionId;
+        setSecondId(portionId);
     }
 
     public float getAmount() {
-        return amount;
+        return getFloatLinkData();
     }
 
     public void setAmount(float amount) {
-        this.amount = amount;
+        setFloatLinkData(amount);
     }
 
     public String getIngredientName() {
