@@ -1,7 +1,6 @@
 package com.company.restaurant.controllers;
 
 import com.company.restaurant.model.*;
-import javafx.scene.control.Tab;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -12,7 +11,7 @@ import java.util.List;
  * Created by Yevhen on 19.05.2016.
  */
 public class RestaurantController {
-    private final static String APPLICATION_CONTEXT_NAME = "application-context.xml";
+    private final static String APPLICATION_CONTEXT_NAME = "restaurant-controller-application-context.xml";
 
     private PlatformTransactionManager txManager;
     private JobPositionDao jobPositionDao;
