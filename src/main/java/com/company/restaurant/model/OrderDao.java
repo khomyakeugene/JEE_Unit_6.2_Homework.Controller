@@ -14,6 +14,8 @@ public interface OrderDao {
 
     Order findOrderById(int id);
 
+    List<Order> findOrderByNumber(String orderNumber);
+
     List<Order> findAllOrders(String stateType);
 
     Order updOrderState(Order order, String stateType);

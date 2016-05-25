@@ -106,6 +106,11 @@ public class JdbcOrderDao extends JdbcDaoTableWithId<Order> implements OrderDao 
     }
 
     @Override
+    public List<Order> findOrderByNumber(String orderNumber) {
+        return findObjectsByFieldCondition(ORDER_NUMBER_FIELD_NAME, orderNumber);
+    }
+
+    @Override
     public List<Order> findAllOrders(String stateType) {
         return findObjectsByFieldCondition(STATE_TYPE_FIELD_NAME, stateType) ;
     }

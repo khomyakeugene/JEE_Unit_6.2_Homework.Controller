@@ -162,4 +162,7 @@ public class OrderAdapter {
         return orderCourseDao.findAllOrderCourses(order);
     }
 
+    public List<Order> findOrderByNumber(String orderNumber) {
+        return orderDao.findOrderByNumber(orderNumber);
+    }
 }

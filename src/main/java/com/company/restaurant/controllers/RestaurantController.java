@@ -22,7 +22,7 @@ public class RestaurantController {
     private TableDao tableDao;
     private OrderAdapter orderAdapter;
     private KitchenAdapter kitchenAdapter;
-    private  WarehouseAdapter warehouseAdapter;
+    private WarehouseAdapter warehouseAdapter;
 
     public static RestaurantController getInstance() {
         ApplicationContext context = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_NAME);
@@ -82,7 +82,7 @@ public class RestaurantController {
     }
 
     public String delJobPosition(String name) {
-       return jobPositionDao.delJobPosition(name);
+        return jobPositionDao.delJobPosition(name);
     }
 
     public JobPosition findJobPositionByName(String name) {
@@ -146,7 +146,7 @@ public class RestaurantController {
     }
 
     public Course addCourse(Course course) {
-       return courseDao.addCourse(course);
+        return courseDao.addCourse(course);
     }
 
     public String delCourse(Course course) {
@@ -193,19 +193,19 @@ public class RestaurantController {
         return menuDao.findMenuCourses(menu);
     }
 
-    Table addTable(Table table){
+    Table addTable(Table table) {
         return tableDao.addTable(table);
     }
 
-    public String delTable(Table table){
+    public String delTable(Table table) {
         return tableDao.delTable(table);
     }
 
-    public Table findTableByNumber(int number){
+    public Table findTableByNumber(int number) {
         return tableDao.findTableByNumber(number);
     }
 
-    public List<Table> findAllTables(){
+    public List<Table> findAllTables() {
         return tableDao.findAllTables();
     }
 
@@ -219,6 +219,10 @@ public class RestaurantController {
 
     public Order findOrderById(int id) {
         return orderAdapter.findOrderById(id);
+    }
+
+    public List<Order> findOrderByNumber(String orderNumber) {
+        return orderAdapter.findOrderByNumber(orderNumber);
     }
 
     public Order closeOrder(Order order) {
