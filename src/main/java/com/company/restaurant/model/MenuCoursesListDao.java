@@ -8,7 +8,7 @@ import java.util.List;
 public interface MenuCoursesListDao {
     void addCourseToMenu(Menu menu, Course course);
 
-    void delCourseFromMenu(Menu menu, Course course);
+    String delCourseFromMenu(Menu menu, Course course);
 
     List<MenuCourseList> findMenuCourses(Menu menu);
 }

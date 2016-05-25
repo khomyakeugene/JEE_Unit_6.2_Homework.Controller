@@ -8,7 +8,7 @@ import java.util.List;
 public interface IngredientDao {
     Ingredient addIngredient(String name);
 
-    void delIngredient(String name);
+    String delIngredient(String name);
 
     List<Ingredient> findAllIngredients();
 }

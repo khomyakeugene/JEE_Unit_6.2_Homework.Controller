@@ -19,8 +19,8 @@ public class JdbcIngredientDao extends JdbcDaoTableSimpleDic<Ingredient> impleme
     }
 
     @Override
-    public void delIngredient(String name) {
-        delRecordByName(name);
+    public String delIngredient(String name) {
+        return delRecordByName(name);
     }
 
     @Override

@@ -76,8 +76,8 @@ public class JdbcOrderDao extends JdbcDaoTableWithId<Order> implements OrderDao 
     }
 
     @Override
-    public void delOrder(Order order) {
-        delRecord(order);
+    public String delOrder(Order order) {
+        return delRecord(order);
     }
 
     @Override

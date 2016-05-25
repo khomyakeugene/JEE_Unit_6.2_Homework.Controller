@@ -76,8 +76,9 @@ public class JdbcCookedCourseDao extends JdbcDaoLinkTable<CookedCourse> implemen
     }
 
     @Override
-    public void delCookedCourse(CookedCourse cookedCourse) {
+    public String delCookedCourse(CookedCourse cookedCourse) {
         // 23.05.2016, 22:15 - TO DO!!!
+        return null;
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.util.List;
 public interface MenuDao {
     Menu addMenu(String name);
 
-    void delMenu(String name);
+    String delMenu(String name);
 
     Menu findMenuByName(String name);
 

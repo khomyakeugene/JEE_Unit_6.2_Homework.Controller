@@ -7,8 +7,8 @@ public class Course {
     private int courseId;
     private int categoryId;
     private String name;
-    private float weight;
-    private float cost;
+    private Float weight;
+    private Float cost;
     private String courseCategoryName;
 
     public int getCourseId() {
@@ -35,19 +35,19 @@ public class Course {
         this.name = name;
     }
 
-    public float getWeight() {
+    public Float getWeight() {
         return weight;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(Float weight) {
         this.weight = weight;
     }
 
-    public float getCost() {
+    public Float getCost() {
         return cost;
     }
 
-    public void setCost(float cost) {
+    public void setCost(Float cost) {
         this.cost = cost;
     }
 

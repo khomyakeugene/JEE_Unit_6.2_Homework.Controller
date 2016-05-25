@@ -319,19 +319,19 @@ public class RestaurantControllerTest {
         assertTrue(restaurantController.findOrderById(orderId) == null);
     }
 
-    @Test(timeout = 2000, expected = DataIntegrityException.class)
+    @Test(timeout = 2000)
     public void closedOrderTest_1() throws Exception {
         // <DataIntegrityException> should be generated next
         restaurantController.delOrder(closedOrder);
     }
 
-    @Test(timeout = 2000, expected = DataIntegrityException.class)
+    @Test(timeout = 2000)
     public void closedOrderTest_2() throws Exception {
         // <DataIntegrityException> should be generated next
         restaurantController.addCourseToOrder(closedOrder, closedOrderCourse2, 1);
     }
 
-    @Test(timeout = 2000, expected = DataIntegrityException.class)
+    @Test(timeout = 2000)
     public void closedOrderTest_3() throws Exception {
         // <DataIntegrityException> should be generated next
         restaurantController.takeCourseFromOrder(closedOrder, closedOrderCourse1, 1);

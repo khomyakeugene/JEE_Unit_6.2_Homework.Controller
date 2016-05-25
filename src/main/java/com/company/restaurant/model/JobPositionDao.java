@@ -8,7 +8,7 @@ import java.util.List;
 public interface JobPositionDao {
     JobPosition addJobPosition(String name);
 
-    void delJobPosition(String name);
+    String delJobPosition(String name);
 
     JobPosition findJobPositionByName(String name);
 

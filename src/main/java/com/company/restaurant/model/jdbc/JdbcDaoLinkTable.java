@@ -63,8 +63,8 @@ public abstract class JdbcDaoLinkTable<T extends LinkObject> extends JdbcDaoTabl
                 thirdFieldName, thirdFieldValue));
     }
 
-    public void delRecord(int firstId, int secondId) {
-        executeUpdate(String.format(SQL_DELETE_EXPRESSION_PATTERN, tableName, firstIdFieldName, firstId,
+    public String delRecord(int firstId, int secondId) {
+        return executeUpdate(String.format(SQL_DELETE_EXPRESSION_PATTERN, tableName, firstIdFieldName, firstId,
                 secondIdFieldName, secondId));
     }
 

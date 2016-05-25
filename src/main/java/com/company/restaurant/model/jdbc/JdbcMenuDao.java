@@ -34,8 +34,8 @@ public class JdbcMenuDao extends JdbcDaoTableSimpleDic<Menu> implements MenuDao 
     }
 
     @Override
-    public void delMenu(String name) {
-        delRecordByName(name);
+    public String delMenu(String name) {
+        return delRecordByName(name);
     }
 
     @Override

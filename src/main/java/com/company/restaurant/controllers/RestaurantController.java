@@ -81,8 +81,8 @@ public class RestaurantController {
         return jobPositionDao.addJobPosition(name);
     }
 
-    public void delJobPosition(String name) {
-       jobPositionDao.delJobPosition(name);
+    public String delJobPosition(String name) {
+       return jobPositionDao.delJobPosition(name);
     }
 
     public JobPosition findJobPositionByName(String name) {
@@ -97,8 +97,8 @@ public class RestaurantController {
         return employeeDao.addEmployee(employee);
     }
 
-    public void delEmployee(Employee employee) {
-        employeeDao.delEmployee(employee);
+    public String delEmployee(Employee employee) {
+        return employeeDao.delEmployee(employee);
     }
 
     public List<Employee> findAllEmployees() {
@@ -125,8 +125,8 @@ public class RestaurantController {
         return courseCategoryDao.addCourseCategory(name);
     }
 
-    public void delCourseCategory(String name) {
-        courseCategoryDao.delCourseCategory(name);
+    public String delCourseCategory(String name) {
+        return courseCategoryDao.delCourseCategory(name);
     }
 
     public CourseCategory findCourseCategoryByName(String name) {
@@ -141,12 +141,12 @@ public class RestaurantController {
        return courseDao.addCourse(course);
     }
 
-    public void delCourse(Course course) {
-        courseDao.delCourse(course);
+    public String delCourse(Course course) {
+        return courseDao.delCourse(course);
     }
 
-    public void delCourse(String name) {
-        courseDao.delCourse(name);
+    public String delCourse(String name) {
+        return courseDao.delCourse(name);
     }
 
     public Course findCourseByName(String name) {
@@ -161,8 +161,8 @@ public class RestaurantController {
         return menuDao.addMenu(name);
     }
 
-    public void delMenu(String name) {
-        menuDao.delMenu(name);
+    public String delMenu(String name) {
+        return menuDao.delMenu(name);
     }
 
     public Menu findMenuByName(String name) {
@@ -189,52 +189,52 @@ public class RestaurantController {
         return tableDao.addTable(table);
     }
 
-    void delTable(Table table){
-        tableDao.delTable(table);
+    public String delTable(Table table){
+        return tableDao.delTable(table);
     }
 
-    Table findTableByNumber(int number){
+    public Table findTableByNumber(int number){
         return tableDao.findTableByNumber(number);
     }
 
-    List<Table> findAllTables(){
+    public List<Table> findAllTables(){
         return tableDao.findAllTables();
     }
 
-    Order addOrder(Order order) {
+    public Order addOrder(Order order) {
         return orderAdapter.addOrder(order);
     }
 
-    void delOrder(Order order) {
-        orderAdapter.delOrder(order);
+    public String delOrder(Order order) {
+        return orderAdapter.delOrder(order);
     }
 
-    Order findOrderById(int id) {
+    public Order findOrderById(int id) {
         return orderAdapter.findOrderById(id);
     }
 
-    Order closeOrder(Order order) {
+    public Order closeOrder(Order order) {
         return orderAdapter.closeOrder(order);
     }
 
-    List<Order> findAllOrders(String stateType) {
+    public List<Order> findAllOrders(String stateType) {
         return orderAdapter.findAllOrders(stateType);
     }
 
-    List<Order> findAllOpenOrders() {
+    public List<Order> findAllOpenOrders() {
         return orderAdapter.findAllOpenOrders();
     }
 
-    List<Order> findAllClosedOrders() {
+    public List<Order> findAllClosedOrders() {
         return orderAdapter.findAllClosedOrders();
     }
 
-    void addCourseToOrder(Order order, Course course, int quantity) {
-        orderAdapter.addCourseToOrder(order, course, quantity);
+    public String addCourseToOrder(Order order, Course course, int quantity) {
+        return orderAdapter.addCourseToOrder(order, course, quantity);
     }
 
-    void takeCourseFromOrder(Order order, Course course, int quantity) {
-        orderAdapter.takeCourseFromOrder(order, course, quantity);
+    public String takeCourseFromOrder(Order order, Course course, int quantity) {
+        return orderAdapter.takeCourseFromOrder(order, course, quantity);
     }
 
     void takeCourseFromOrder(Order order, Course course) {
@@ -245,11 +245,11 @@ public class RestaurantController {
         return orderAdapter.findAllOrderCourses(order);
     }
 
-    void addCookedCourse(Course course, Employee employee, float weight) {
+    public void addCookedCourse(Course course, Employee employee, float weight) {
         kitchenAdapter.addCookedCourse(course, employee, weight);
     }
 
-    List<CookedCourse> findAllCookedCourses() {
+    public List<CookedCourse> findAllCookedCourses() {
         return kitchenAdapter.findAllCookedCourses();
     }
 

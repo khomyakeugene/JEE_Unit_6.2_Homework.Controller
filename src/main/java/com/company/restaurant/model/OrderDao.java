@@ -10,7 +10,7 @@ public interface OrderDao {
 
     Order addOrder(Order order);
 
-    void delOrder(Order order);
+    String delOrder(Order order);
 
     Order findOrderById(int id);
 

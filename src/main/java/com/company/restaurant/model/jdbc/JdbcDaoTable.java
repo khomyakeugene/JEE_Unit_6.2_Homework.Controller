@@ -119,13 +119,17 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
         return String.format(SQL_DELETE_EXPRESSION_PATTERN, tableName, fieldName, JdbcDao.toString(value));
     }
 
-    public void delRecordByFieldCondition(String fieldName, Object value) {
+    public String delRecordByFieldCondition(String fieldName, Object value) {
+        String result = null;
+
         try(Connection connection = dataSource.getConnection();
             Statement statement = connection.createStatement()) {
             statement.executeUpdate(buildDeleteExpression(fieldName, value));
         } catch (SQLException e) {
-            databaseError(e);
+            result = e.getMessage();
         }
+
+        return result;
     }
 
     protected Map<String, Object> getObjectToDBMap(T object) {

@@ -62,7 +62,20 @@ public class JdbcEmployeeDao extends JdbcDaoTableWithId<Employee> implements Emp
 
     @Override
     public List<Employee> findEmployeeByFirstAndSecondName(String firstName, String secondName) {
-        return findObjectsFromViewByTwoFieldCondition(FIRST_NAME_FIELD_NAME, firstName, SECOND_NAME_FIELD_NAME, secondName);
+        List<Employee> result;
+
+        if (firstName != null && !firstName.isEmpty() && secondName != null && !secondName.isEmpty()) {
+            result = findObjectsFromViewByTwoFieldCondition(FIRST_NAME_FIELD_NAME, firstName,
+                    SECOND_NAME_FIELD_NAME, secondName);
+        } else if (firstName != null && !firstName.isEmpty()) {
+            result = findEmployeeByFirstName(firstName);
+        } else if (secondName != null && !secondName.isEmpty()) {
+            result = findEmployeeBySecondName(secondName);
+        } else {
+            result = findAllEmployees();
+        }
+
+        return result;
     }
 
     @Override
@@ -94,13 +107,13 @@ public class JdbcEmployeeDao extends JdbcDaoTableWithId<Employee> implements Emp
     }
 
     @Override
-    public void delEmployee(Employee employee) {
-        delRecord(employee);
+    public String delEmployee(Employee employee) {
+        return delRecord(employee);
     }
 
     @Override
-    public void delEmployee(int employeeId) {
-        delRecordById(employeeId);
+    public String delEmployee(int employeeId) {
+        return delRecordById(employeeId);
     }
 
     @Override

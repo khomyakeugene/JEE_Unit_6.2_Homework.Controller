@@ -8,7 +8,7 @@ import java.util.List;
 public interface CookedCourseDao {
     void addCookedCourse(Course course, Employee employee, float weight);
 
-    void delCookedCourse(CookedCourse cookedCourse);
+    String delCookedCourse(CookedCourse cookedCourse);
 
     List<CookedCourse> findAllCookedCourses();
 }

@@ -8,7 +8,7 @@ import java.util.List;
 public interface TableDao {
     Table addTable(Table table);
 
-    void delTable(Table table);
+    String delTable(Table table);
 
     Table findTableByNumber(int number);
 

@@ -8,7 +8,7 @@ import java.util.List;
 public interface PortionDao {
     Portion addPortion(Portion portion);
 
-    void delPortion(Portion portion);
+    String delPortion(Portion portion);
 
     List<Portion> findAllPortions();
 }

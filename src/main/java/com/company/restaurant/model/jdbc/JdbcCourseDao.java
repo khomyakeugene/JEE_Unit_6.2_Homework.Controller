@@ -45,8 +45,14 @@ public class JdbcCourseDao extends JdbcDaoTableWithId<Course> implements CourseD
         result.setCourseId(resultSet.getInt(COURSE_ID_FIELD_NAME));
         result.setCategoryId(resultSet.getInt(COURSE_CATEGORY_ID_FIELD_NAME));
         result.setName(resultSet.getString(NAME_FIELD_NAME));
-        result.setWeight(resultSet.getFloat(WEIGHT_FIELD_NAME));
-        result.setCost(resultSet.getFloat(COST_FIELD_NAME));
+        Float weight = resultSet.getFloat(WEIGHT_FIELD_NAME);
+        if (!resultSet.wasNull()) {
+            result.setWeight(weight);
+        }
+        Float cost = resultSet.getFloat(COST_FIELD_NAME);
+        if (!resultSet.wasNull()) {
+            result.setCost(cost);
+        }
         result.setCourseCategoryName(resultSet.getString(COURSE_CATEGORY_NAME_FIELD_NAME));
 
         return result;
@@ -85,12 +91,12 @@ public class JdbcCourseDao extends JdbcDaoTableWithId<Course> implements CourseD
     }
 
     @Override
-    public void delCourse(Course course) {
-        delRecord(course);
+    public String delCourse(Course course) {
+        return delRecord(course);
     }
 
     @Override
-    public void delCourse(String name) {
-        delRecordByName(name);
+    public String delCourse(String name) {
+        return delRecordByName(name);
     }
 }

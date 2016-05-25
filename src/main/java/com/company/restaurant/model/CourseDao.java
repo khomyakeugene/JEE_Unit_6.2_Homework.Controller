@@ -8,9 +8,9 @@ import java.util.List;
 public interface CourseDao {
     Course addCourse(Course course);
 
-    void delCourse(Course course);
+    String delCourse(Course course);
 
-    void delCourse(String name);
+    String delCourse(String name);
 
     Course findCourseByName(String name);
 

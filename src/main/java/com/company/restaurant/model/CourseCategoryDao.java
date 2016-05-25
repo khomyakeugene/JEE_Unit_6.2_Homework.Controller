@@ -8,7 +8,7 @@ import java.util.List;
 public interface CourseCategoryDao {
     CourseCategory addCourseCategory(String name);
 
-    void delCourseCategory(String name);
+    String delCourseCategory(String name);
 
     CourseCategory findCourseCategoryByName(String name);
 

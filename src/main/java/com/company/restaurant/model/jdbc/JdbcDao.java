@@ -23,6 +23,7 @@ public abstract class JdbcDao<T> {
 
     public static String toString(Object object) {
         String result;
+
         if (object == null) {
             result = "null";
         } else {
@@ -73,12 +74,16 @@ public abstract class JdbcDao<T> {
         return (objectList.size() > 0) ? objectList.get(0) : null;
     }
 
-    public void executeUpdate(String query) {
+    public String executeUpdate(String query) {
+        String result = null;
+
         try(Connection connection = dataSource.getConnection();
             Statement statement = connection.createStatement()) {
             statement.executeUpdate(query);
         } catch (SQLException e) {
-            databaseError(e);
+            result = e.getMessage();
         }
+
+        return result;
     }
 }
