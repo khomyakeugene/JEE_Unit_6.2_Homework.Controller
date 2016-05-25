@@ -12,5 +12,7 @@ public interface JobPositionDao {
 
     JobPosition findJobPositionByName(String name);
 
+    JobPosition findJobPositionById(int jobPositionId);
+
     List<JobPosition> findAllJobPositions();
 }

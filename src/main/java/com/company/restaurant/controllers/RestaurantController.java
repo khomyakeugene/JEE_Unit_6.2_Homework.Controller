@@ -89,6 +89,10 @@ public class RestaurantController {
         return jobPositionDao.findJobPositionByName(name);
     }
 
+    public JobPosition findJobPositionById(int jobPositionId) {
+        return jobPositionDao.findJobPositionById(jobPositionId);
+    }
+
     public List<JobPosition> findAllJobPositions() {
         return jobPositionDao.findAllJobPositions();
     }
@@ -132,6 +136,11 @@ public class RestaurantController {
     public CourseCategory findCourseCategoryByName(String name) {
         return courseCategoryDao.findCourseCategoryByName(name);
     }
+
+    public CourseCategory findCourseCategoryById(int CourseCategoryId) {
+        return courseCategoryDao.findCourseCategoryById(CourseCategoryId);
+    }
+
 
     public List<CourseCategory> findAllCourseCategories() {
         return courseCategoryDao.findAllCourseCategories();

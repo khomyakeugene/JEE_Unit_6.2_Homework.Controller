@@ -39,6 +39,11 @@ public class JdbcCourseCategoryDao extends JdbcDaoTableSimpleDic<CourseCategory>
     }
 
     @Override
+    public CourseCategory findCourseCategoryById(int CourseCategoryId) {
+        return findObjectById(CourseCategoryId);
+    }
+
+    @Override
     public List<CourseCategory> findAllCourseCategories() {
         return findAllObjects();
     }

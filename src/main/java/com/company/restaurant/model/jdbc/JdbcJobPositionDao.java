@@ -34,6 +34,11 @@ public class JdbcJobPositionDao extends JdbcDaoTableSimpleDic<JobPosition> imple
     }
 
     @Override
+    public JobPosition findJobPositionById(int jobPositionId) {
+        return findObjectById(jobPositionId);
+    }
+
+    @Override
     public List<JobPosition> findAllJobPositions() {
         return findAllObjects();
     }
