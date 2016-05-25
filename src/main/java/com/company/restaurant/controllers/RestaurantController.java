@@ -141,7 +141,6 @@ public class RestaurantController {
         return courseCategoryDao.findCourseCategoryById(CourseCategoryId);
     }
 
-
     public List<CourseCategory> findAllCourseCategories() {
         return courseCategoryDao.findAllCourseCategories();
     }
