@@ -22,6 +22,14 @@ public class JdbcOrderDao extends JdbcDaoTableWithId<Order> implements OrderDao 
     private static final String ORDER_NUMBER_FIELD_NAME = "order_number";
     private static final String ORDER_DATETIME_FIELD_NAME = "order_datetime";
     private static final String STATE_TYPE_NAME_FIELD_NAME = "state_type_name";
+    private static final String EMPLOYEE_JOB_POSITION_ID_FIELD_NAME = "employee_job_position_id";
+    private static final String EMPLOYEE_FIRST_NAME_FIELD_NAME = "employee_first_name";
+    private static final String EMPLOYEE_SECOND_NAME_FIELD_NAME = "employee_second_name";
+    private static final String EMPLOYEE_PHONE_NUMBER_FIELD_NAME = "employee_phone_number";
+    private static final String EMPLOYEE_SALARY_FIELD_NAME = "employee_salary";
+    private static final String EMPLOYEE_JOB_POSITION_NAME_FIELD_NAME = "employee_job_position_name";
+    private static final String TABLE_NUMBER_FIELD_NAME = "table_number";
+    private static final String TABLE_DESCRIPTION_FIELD_NAME = "table_description";
     private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY order_id";
 
     @Override
@@ -61,6 +69,18 @@ public class JdbcOrderDao extends JdbcDaoTableWithId<Order> implements OrderDao 
         result.setOrderNumber(resultSet.getString(ORDER_NUMBER_FIELD_NAME));
         result.setOrderDatetime(resultSet.getTime(ORDER_DATETIME_FIELD_NAME));
         result.setStateTypeName(resultSet.getString(STATE_TYPE_NAME_FIELD_NAME));
+        result.setEmployeeJobPositionId(resultSet.getInt(EMPLOYEE_JOB_POSITION_ID_FIELD_NAME));
+        result.setEmployeeFirstName(resultSet.getString(EMPLOYEE_FIRST_NAME_FIELD_NAME));
+        result.setEmployeeSecondName(resultSet.getString(EMPLOYEE_SECOND_NAME_FIELD_NAME));
+        result.setEmployeePhoneNumber(resultSet.getString(EMPLOYEE_PHONE_NUMBER_FIELD_NAME));
+        Float salary = resultSet.getFloat(EMPLOYEE_SALARY_FIELD_NAME);
+        if (!resultSet.wasNull()) {
+            result.setEmployeeSalary(salary);
+        }
+        result.setEmployeeJobPositionName(resultSet.getString(EMPLOYEE_JOB_POSITION_NAME_FIELD_NAME));
+        result.setTableNumber(resultSet.getInt(TABLE_NUMBER_FIELD_NAME));
+        result.setTableDescription(resultSet.getString(TABLE_DESCRIPTION_FIELD_NAME));
+
 
         return result;
     }
