@@ -38,7 +38,10 @@ public class JdbcEmployeeDao extends JdbcDaoTableWithId<Employee> implements Emp
         result.setFirstName(resultSet.getString(FIRST_NAME_FIELD_NAME));
         result.setSecondName(resultSet.getString(SECOND_NAME_FIELD_NAME));
         result.setPhoneNumber(resultSet.getString(PHONE_NUMBER_FIELD_NAME));
-        result.setSalary(resultSet.getFloat(SALARY_FIELD_NAME));
+        Float salary = resultSet.getFloat(SALARY_FIELD_NAME);
+        if (!resultSet.wasNull()) {
+            result.setSalary(salary);
+        }
 
         return result;
     }

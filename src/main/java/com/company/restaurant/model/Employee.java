@@ -9,7 +9,7 @@ public class Employee {
     private String firstName;
     private String secondName;
     private String phoneNumber;
-    private float salary;
+    private Float salary;
 
     public int getEmployeeId() {
         return employeeId;
@@ -51,11 +51,11 @@ public class Employee {
         this.phoneNumber = phoneNumber;
     }
 
-    public float getSalary() {
+    public Float getSalary() {
         return salary;
     }
 
-    public void setSalary(float salary) {
+    public void setSalary(Float salary) {
         this.salary = salary;
     }
 }
