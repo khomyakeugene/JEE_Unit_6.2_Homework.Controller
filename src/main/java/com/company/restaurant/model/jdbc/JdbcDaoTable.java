@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringJoiner;
 
 /**
  * Created by Yevhen on 21.05.2016.
@@ -56,14 +55,24 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
         return fieldQueryCondition(fieldName, value, "*");
     }
 
-    protected String twoFieldsQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2,
-                                           String selectFields) {
+    protected String twoFieldsFromTableQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2,
+                                                      String selectFields) {
         return String.format(SQL_SELECT_BY_TWO_FIELD_VALUE, selectFields, getTableName(), fieldName_1, JdbcDao.toString(value_1),
                 fieldName_2, JdbcDao.toString(value_2));
     }
 
-    private String twoFieldsQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2) {
-        return twoFieldsQueryCondition(fieldName_1, value_1, fieldName_2, value_2, "*");
+    private String twoFieldsFromTableQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2) {
+        return twoFieldsFromTableQueryCondition(fieldName_1, value_1, fieldName_2, value_2, "*");
+    }
+
+    protected String twoFieldsFromViewQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2,
+                                                      String selectFields) {
+        return String.format(SQL_SELECT_BY_TWO_FIELD_VALUE, selectFields, getViewName(), fieldName_1, JdbcDao.toString(value_1),
+                fieldName_2, JdbcDao.toString(value_2));
+    }
+
+    private String twoFieldsFromViewQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2) {
+        return twoFieldsFromViewQueryCondition(fieldName_1, value_1, fieldName_2, value_2, "*");
     }
 
     public T findObjectByFieldCondition(String fieldName, Object value) {
@@ -75,11 +84,15 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     }
 
     protected T findObjectByTwoFieldCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2) {
-        return createObjectFromQuery(twoFieldsQueryCondition(fieldName_1, value_1, fieldName_2, value_2));
+        return createObjectFromQuery(twoFieldsFromTableQueryCondition(fieldName_1, value_1, fieldName_2, value_2));
     }
 
-    protected List<T> findObjectsByTwoFieldCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2) {
-        return createObjectListFromQuery(twoFieldsQueryCondition(fieldName_1, value_1, fieldName_2, value_2));
+    protected List<T> findObjectsFromTableByTwoFieldCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2) {
+        return createObjectListFromQuery(twoFieldsFromTableQueryCondition(fieldName_1, value_1, fieldName_2, value_2));
+    }
+
+    protected List<T> findObjectsFromViewByTwoFieldCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2) {
+        return createObjectListFromQuery(twoFieldsFromViewQueryCondition(fieldName_1, value_1, fieldName_2, value_2));
     }
 
     protected List<T> findAllObjects() {

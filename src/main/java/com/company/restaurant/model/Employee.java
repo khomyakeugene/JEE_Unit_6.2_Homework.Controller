@@ -10,6 +10,7 @@ public class Employee {
     private String secondName;
     private String phoneNumber;
     private Float salary;
+    private String jobPositionName;
 
     public int getEmployeeId() {
         return employeeId;
@@ -57,5 +58,13 @@ public class Employee {
 
     public void setSalary(Float salary) {
         this.salary = salary;
+    }
+
+    public String getJobPositionName() {
+        return jobPositionName;
+    }
+
+    public void setJobPositionName(String jobPositionName) {
+        this.jobPositionName = jobPositionName;
     }
 }

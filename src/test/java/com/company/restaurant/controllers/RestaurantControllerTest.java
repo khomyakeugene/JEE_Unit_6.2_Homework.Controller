@@ -134,7 +134,7 @@ public class RestaurantControllerTest {
         restaurantController.delJobPosition(name);
     }
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addFindDelEmployeeTest() throws Exception {
         String firstName = Util.getRandomString();
         String secondName = Util.getRandomString();
@@ -145,7 +145,8 @@ public class RestaurantControllerTest {
         employee.setPhoneNumber(Util.getRandomString());
         employee.setSalary(Util.getRandomFloat());
 
-        int employeeId = restaurantController.addEmployee(employee).getEmployeeId();
+        employee = restaurantController.addEmployee(employee);
+        int employeeId = employee.getEmployeeId();
 
         // Select test <employee> and check
         Employee employeeByFirstName = restaurantController.findEmployeeByFirstName(firstName).get(0);

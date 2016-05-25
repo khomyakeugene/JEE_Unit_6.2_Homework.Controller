@@ -74,7 +74,7 @@ public abstract class JdbcDaoLinkTable<T extends LinkObject> extends JdbcDaoTabl
     }
 
     private String twoFieldsQueryCondition(String selectFields, int firstId, int secondId) {
-        return twoFieldsQueryCondition(firstIdFieldName, Integer.toString(firstId), secondIdFieldName,
+        return twoFieldsFromTableQueryCondition(firstIdFieldName, Integer.toString(firstId), secondIdFieldName,
                 Integer.toString(secondId), selectFields);
     }
 

@@ -14,17 +14,20 @@ import java.util.Map;
  */
 public class JdbcEmployeeDao extends JdbcDaoTableWithId<Employee> implements EmployeeDao {
     private static final String EMPLOYEE_TABLE_NAME = "employee";
+    private static final String EMPLOYEE_VIEW_NAME = "v_employee";
     private static final String EMPLOYEE_ID_FIELD_NAME = "employee_id";
     private static final String JOB_POSITION_ID_FIELD_NAME = "job_position_id";
     private static final String FIRST_NAME_FIELD_NAME = "first_name";
     private static final String SECOND_NAME_FIELD_NAME = "second_name";
     private static final String PHONE_NUMBER_FIELD_NAME = "phone_number";
     private static final String SALARY_FIELD_NAME = "salary";
+    private static final String JOB_POSITION_NAME_FIELD_NAME = "job_position_name";
     private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY second_name, first_name";
 
     @Override
     protected void initMetadata() {
         this.tableName = EMPLOYEE_TABLE_NAME;
+        this.viewName = EMPLOYEE_VIEW_NAME;
         this.idFieldName = EMPLOYEE_ID_FIELD_NAME;
         this.nameFieldName = SECOND_NAME_FIELD_NAME;
         this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
@@ -42,6 +45,7 @@ public class JdbcEmployeeDao extends JdbcDaoTableWithId<Employee> implements Emp
         if (!resultSet.wasNull()) {
             result.setSalary(salary);
         }
+        result.setJobPositionName(resultSet.getString(JOB_POSITION_NAME_FIELD_NAME));
 
         return result;
     }
@@ -58,7 +62,7 @@ public class JdbcEmployeeDao extends JdbcDaoTableWithId<Employee> implements Emp
 
     @Override
     public List<Employee> findEmployeeByFirstAndSecondName(String firstName, String secondName) {
-        return findObjectsByTwoFieldCondition(FIRST_NAME_FIELD_NAME, firstName, SECOND_NAME_FIELD_NAME, secondName);
+        return findObjectsFromViewByTwoFieldCondition(FIRST_NAME_FIELD_NAME, firstName, SECOND_NAME_FIELD_NAME, secondName);
     }
 
     @Override
