@@ -76,6 +76,11 @@ public class JdbcCourseDao extends JdbcDaoTableWithId<Course> implements CourseD
     }
 
     @Override
+    public Course findCourseById(int courseId) {
+        return findObjectById(courseId);
+    }
+
+    @Override
     public List<Course> findAllCourses() {
         return findAllObjects();
     }

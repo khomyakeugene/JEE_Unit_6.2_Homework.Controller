@@ -161,6 +161,10 @@ public class RestaurantController {
         return courseDao.findCourseByName(name);
     }
 
+    public Course findCourseById(int courseId) {
+        return courseDao.findCourseById(courseId);
+    }
+
     public List<Course> findAllCourses() {
         return courseDao.findAllCourses();
     }

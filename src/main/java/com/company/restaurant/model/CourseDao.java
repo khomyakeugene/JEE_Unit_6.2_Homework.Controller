@@ -14,6 +14,8 @@ public interface CourseDao {
 
     Course findCourseByName(String name);
 
+    Course findCourseById(int courseId);
+
     List<Course> findAllCourses();
 
 }
