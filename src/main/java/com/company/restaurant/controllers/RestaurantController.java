@@ -181,6 +181,10 @@ public class RestaurantController {
         return menuDao.findMenuByName(name);
     }
 
+    public Menu findMenuById(int menuId) {
+        return menuDao.findMenuById(menuId);
+    }
+
     public List<Menu> findAllMenus() {
         return menuDao.findAllMenus();
     }

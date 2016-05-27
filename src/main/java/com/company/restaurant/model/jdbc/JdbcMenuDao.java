@@ -44,6 +44,11 @@ public class JdbcMenuDao extends JdbcDaoTableSimpleDic<Menu> implements MenuDao 
     }
 
     @Override
+    public Menu findMenuById(int menuId) {
+        return findObjectById(menuId);
+    }
+
+    @Override
     public List<Menu> findAllMenus() {
         return findAllObjects();
     }

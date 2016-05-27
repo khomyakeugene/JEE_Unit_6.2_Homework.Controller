@@ -12,6 +12,8 @@ public interface MenuDao {
 
     Menu findMenuByName(String name);
 
+    Menu findMenuById(int menuId);
+
     List<Menu> findAllMenus();
 
     void addCourseToMenu(Menu menu, Course course);
