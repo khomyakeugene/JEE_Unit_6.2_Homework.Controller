@@ -8,7 +8,7 @@ public class FloatLinkObject extends LinkObject  {
         return Float.parseFloat(linkData);
     }
 
-    public void setFloatLinkData(float floatValue) {
-        this.linkData = Float.toString(floatValue);
+    public void setFloatLinkData(Float floatValue) {
+        this.linkData = (floatValue == null) ? null : Float.toString(floatValue);
     }
 }

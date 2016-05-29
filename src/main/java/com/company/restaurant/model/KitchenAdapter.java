@@ -12,7 +12,7 @@ public class KitchenAdapter {
         this.cookedCourseDao = cookedCourseDao;
     }
 
-    public void addCookedCourse(Course course, Employee employee, float weight) {
+    public void addCookedCourse(Course course, Employee employee, Float weight) {
         cookedCourseDao.addCookedCourse(course, employee, weight);
     }
 

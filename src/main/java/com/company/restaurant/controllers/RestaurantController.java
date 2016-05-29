@@ -277,7 +277,7 @@ public class RestaurantController {
         return orderAdapter.findOrderCourseByCourseId(order, courseId);
     }
 
-    public void addCookedCourse(Course course, Employee employee, float weight) {
+    public void addCookedCourse(Course course, Employee employee, Float weight) {
         kitchenAdapter.addCookedCourse(course, employee, weight);
     }
 

@@ -71,8 +71,8 @@ public class JdbcCookedCourseDao extends JdbcDaoLinkTable<CookedCourse> implemen
     }
 
     @Override
-    public void addCookedCourse(Course course, Employee employee, float weight) {
-        addRecord(course.getCourseId(), employee.getEmployeeId(), Float.toString(weight));
+    public void addCookedCourse(Course course, Employee employee, Float weight) {
+        addRecord(course.getCourseId(), employee.getEmployeeId(), (weight == null) ? null : weight.toString());
     }
 
     @Override
