@@ -239,8 +239,10 @@ public class RestaurantControllerTest {
         restaurantController.addCourseToMenu(menu, course2);
 
         for (MenuCourseList menuCourseList : restaurantController.findMenuCourses(menu)) {
+            restaurantController.findMenuCourseByCourseId(menu, menuCourseList.getCourseId());
             System.out.println(menuCourseList.getCourseName() + ": " + menuCourseList.getCourseCategoryName());
         }
+
 
         restaurantController.delCourseFromMenu(menu, course1);
         restaurantController.delCourseFromMenu(menu, course2);

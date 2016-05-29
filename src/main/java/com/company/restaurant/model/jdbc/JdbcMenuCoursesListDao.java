@@ -90,6 +90,6 @@ public class JdbcMenuCoursesListDao extends JdbcDaoLinkTable<MenuCourseList> imp
 
     @Override
     public MenuCourseList findMenuCourseByCourseId(Menu menu, int courseId) {
-        return findObjectByTwoFieldCondition(MENU_ID_FIELD_NAME, menu.getId(), COURSE_ID_FIELD_NAME, courseId);
+        return findObjectFromViewByTwoFieldCondition(MENU_ID_FIELD_NAME, menu.getId(), COURSE_ID_FIELD_NAME, courseId);
     }
 }

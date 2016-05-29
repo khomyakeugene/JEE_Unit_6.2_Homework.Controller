@@ -66,7 +66,7 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     }
 
     protected String twoFieldsFromViewQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2,
-                                                      String selectFields) {
+                                                     String selectFields) {
         return String.format(SQL_SELECT_BY_TWO_FIELD_VALUE, selectFields, getViewName(), fieldName_1, JdbcDao.toString(value_1),
                 fieldName_2, JdbcDao.toString(value_2));
     }
@@ -87,12 +87,24 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
         return createObjectFromQuery(twoFieldsFromTableQueryCondition(fieldName_1, value_1, fieldName_2, value_2));
     }
 
-    protected List<T> findObjectsFromTableByTwoFieldCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2) {
+    protected List<T> findObjectsFromTableByTwoFieldCondition(String fieldName_1, Object value_1, String fieldName_2,
+                                                              Object value_2) {
         return createObjectListFromQuery(twoFieldsFromTableQueryCondition(fieldName_1, value_1, fieldName_2, value_2));
     }
 
-    protected List<T> findObjectsFromViewByTwoFieldCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2) {
+    protected T findObjectFromTableByTwoFieldCondition(String fieldName_1, Object value_1, String fieldName_2,
+                                                       Object value_2) {
+        return createObjectFromQuery(twoFieldsFromTableQueryCondition(fieldName_1, value_1, fieldName_2, value_2));
+    }
+
+    protected List<T> findObjectsFromViewByTwoFieldCondition(String fieldName_1, Object value_1, String fieldName_2,
+                                                             Object value_2) {
         return createObjectListFromQuery(twoFieldsFromViewQueryCondition(fieldName_1, value_1, fieldName_2, value_2));
+    }
+
+    protected T findObjectFromViewByTwoFieldCondition(String fieldName_1, Object value_1, String fieldName_2,
+                                                             Object value_2) {
+        return createObjectFromQuery(twoFieldsFromViewQueryCondition(fieldName_1, value_1, fieldName_2, value_2));
     }
 
     protected List<T> findAllObjects() {
@@ -102,8 +114,8 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     public String getOneFieldByFieldCondition(String selectedField, String fieldName, Object value) {
         String result = null;
 
-        try(Connection connection = dataSource.getConnection();
-            Statement statement = connection.createStatement()) {
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(fieldQueryCondition(fieldName, value, selectedField));
             if (resultSet.next()) {
                 result = resultSet.getString(1);
@@ -122,8 +134,8 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     public String delRecordByFieldCondition(String fieldName, Object value) {
         String result = null;
 
-        try(Connection connection = dataSource.getConnection();
-            Statement statement = connection.createStatement()) {
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(buildDeleteExpression(fieldName, value));
         } catch (SQLException e) {
             result = e.getMessage();
@@ -137,7 +149,11 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
 
         // Exclude null-value data
         Map<String, Object> result = new HashMap<>();
-        objectToDBMap.forEach((k, v) -> {if (v != null) {result.put(k,v);}});
+        objectToDBMap.forEach((k, v) -> {
+            if (v != null) {
+                result.put(k, v);
+            }
+        });
 
         return result;
     }
@@ -146,9 +162,9 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
         Map<String, Object> clarifiedDBMap = getObjectToDBMap(object);
 
         String fieldSequence = String.join(",",
-                (CharSequence[])clarifiedDBMap.keySet().stream().toArray(String[]::new));
+                (CharSequence[]) clarifiedDBMap.keySet().stream().toArray(String[]::new));
         String valueSequence = String.join(",",
-                (CharSequence[])clarifiedDBMap.values().stream().map(v -> (JdbcDao.toString(v))).toArray(String[]::new));
+                (CharSequence[]) clarifiedDBMap.values().stream().map(v -> (JdbcDao.toString(v))).toArray(String[]::new));
 
         return String.format(pattern, fieldSequence, valueSequence);
     }
