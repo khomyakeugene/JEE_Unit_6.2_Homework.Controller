@@ -8,7 +8,7 @@ import java.util.List;
 public interface WarehouseDao {
     void addIngredientToWarehouse(Ingredient ingredient, Portion portion, float amount);
 
-    void takeIngredientFromWarehouse(Ingredient ingredient, float amount);
+    void takeIngredientFromWarehouse(Ingredient ingredient, Portion portion, float amount);
 
     List<Warehouse> findIngredientInWarehouseByName(String name);
 

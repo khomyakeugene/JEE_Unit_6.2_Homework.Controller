@@ -71,9 +71,8 @@ public class JdbcWarehouseDao extends JdbcDaoAmountLinkTable<Warehouse> implemen
     }
 
     @Override
-    public void takeIngredientFromWarehouse(Ingredient ingredient, float amount) {
-        decreaseAmount(ingredient.getIngredient(), findObjectByFieldCondition(INGREDIENT_ID_FIELD_NAME,
-                ingredient.getIngredient()).getPortionId(), amount);
+    public void takeIngredientFromWarehouse(Ingredient ingredient, Portion portion, float amount) {
+        decreaseAmount(ingredient.getIngredient(), portion.getPortionId(), amount);
     }
 
     @Override

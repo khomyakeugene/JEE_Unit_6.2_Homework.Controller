@@ -289,8 +289,8 @@ public class RestaurantController {
         warehouseAdapter.addIngredientToWarehouse(ingredient, portion, amount);
     }
 
-    public void takeIngredientFromWarehouse(Ingredient ingredient, float amount) {
-        warehouseAdapter.takeIngredientFromWarehouse(ingredient, amount);
+    public void takeIngredientFromWarehouse(Ingredient ingredient, Portion portion, float amount) {
+        warehouseAdapter.takeIngredientFromWarehouse(ingredient, portion, amount);
     }
 
     public List<Warehouse> findIngredientInWarehouseByName(String name) {

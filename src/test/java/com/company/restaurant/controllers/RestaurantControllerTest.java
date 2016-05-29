@@ -354,7 +354,7 @@ public class RestaurantControllerTest {
         for (Ingredient ingredient: restaurantController.getWarehouseAdapter().getIngredientDao().findAllIngredients()) {
             for (Portion portion : restaurantController.getWarehouseAdapter().getPortionDao().findAllPortions()) {
                 restaurantController.addIngredientToWarehouse(ingredient, portion, Util.getRandomFloat());
-                restaurantController.takeIngredientFromWarehouse(ingredient, Util.getRandomFloat());
+                restaurantController.takeIngredientFromWarehouse(ingredient, portion, Util.getRandomFloat());
             }
 
             System.out.println("Warehouse: " + ingredient.getName() + " : ");
