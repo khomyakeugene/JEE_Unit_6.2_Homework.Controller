@@ -4,7 +4,9 @@ import com.company.restaurant.model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Yevhen on 23.05.2016.
@@ -27,9 +29,19 @@ public class JdbcOrderCourseDao extends JdbcDaoQuantityLinkTable<OrderCourse> im
     protected void initMetadata() {
         this.tableName = ORDER_COURSE_TABLE_NAME;
         this.viewName = ORDER_COURSE_VIEW_NAME;
+        this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
         this.firstIdFieldName = COURSE_ID_FIELD_NAME;
         this.secondIdFieldName = ORDER_ID_FIELD_NAME;
         this.thirdFieldName = QUANTITY_FIELD_NAME;
+    }
+
+    @Override
+    protected Map<String, Object> objectToDBMap(OrderCourse orderCourse) {
+        HashMap<String, Object> result = new HashMap<>();
+
+        result.put(QUANTITY_FIELD_NAME, orderCourse.getCourseQuantity());
+
+        return result;
     }
 
     @Override
@@ -60,5 +72,11 @@ public class JdbcOrderCourseDao extends JdbcDaoQuantityLinkTable<OrderCourse> im
     @Override
     public List<OrderCourse> findAllOrderCourses(Order order) {
         return findObjectsByFieldCondition(ORDER_ID_FIELD_NAME, order.getOrderId());
+    }
+
+    @Override
+    public OrderCourse findOrderCourseByCourseId(Order order, int courseId) {
+        return findObjectFromViewByTwoFieldCondition(COURSE_ID_FIELD_NAME, courseId, ORDER_ID_FIELD_NAME,
+                order.getOrderId());
     }
 }

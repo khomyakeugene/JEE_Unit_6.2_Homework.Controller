@@ -165,4 +165,8 @@ public class OrderAdapter {
     public List<Order> findOrderByNumber(String orderNumber) {
         return orderDao.findOrderByNumber(orderNumber);
     }
+
+    public OrderCourse findOrderCourseByCourseId(Order order, int courseId) {
+        return orderCourseDao.findOrderCourseByCourseId(order, courseId);
+    }
 }

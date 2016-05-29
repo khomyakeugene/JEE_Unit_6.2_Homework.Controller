@@ -209,7 +209,6 @@ public class RestaurantController {
         return menuDao.findMenuCourseByCourseId(menu, courseId);
     }
 
-
     Table addTable(Table table) {
         return tableDao.addTable(table);
     }
@@ -272,6 +271,10 @@ public class RestaurantController {
 
     public List<OrderCourse> findAllOrderCourses(Order order) {
         return orderAdapter.findAllOrderCourses(order);
+    }
+
+    OrderCourse findOrderCourseByCourseId(Order order, int courseId) {
+        return orderAdapter.findOrderCourseByCourseId(order, courseId);
     }
 
     public void addCookedCourse(Course course, Employee employee, float weight) {

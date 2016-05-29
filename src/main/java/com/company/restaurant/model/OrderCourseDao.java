@@ -11,4 +11,6 @@ public interface OrderCourseDao {
     void takeCourseFromOrder(Order order, Course course, int quantity);
 
     List<OrderCourse> findAllOrderCourses(Order order);
+
+    OrderCourse findOrderCourseByCourseId(Order order, int courseId);
 }
