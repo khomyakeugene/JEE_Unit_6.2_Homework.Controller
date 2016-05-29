@@ -293,7 +293,7 @@ public class RestaurantController {
         warehouseAdapter.takeIngredientFromWarehouse(ingredient, amount);
     }
 
-    public Warehouse findIngredientInWarehouseByName(String name) {
+    public List<Warehouse> findIngredientInWarehouseByName(String name) {
         return warehouseAdapter.findIngredientInWarehouseByName(name);
     }
 

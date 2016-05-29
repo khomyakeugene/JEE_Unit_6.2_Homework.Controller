@@ -38,7 +38,7 @@ public class WarehouseAdapter {
         warehouseDao.takeIngredientFromWarehouse(ingredient, amount);
     }
 
-    public Warehouse findIngredientInWarehouseByName(String name) {
+    public List<Warehouse> findIngredientInWarehouseByName(String name) {
         return warehouseDao.findIngredientInWarehouseByName(name);
     }
 

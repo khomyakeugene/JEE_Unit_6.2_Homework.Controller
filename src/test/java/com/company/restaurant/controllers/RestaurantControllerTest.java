@@ -356,6 +356,11 @@ public class RestaurantControllerTest {
                 restaurantController.addIngredientToWarehouse(ingredient, portion, Util.getRandomFloat());
                 restaurantController.takeIngredientFromWarehouse(ingredient, Util.getRandomFloat());
             }
+
+            System.out.println("Warehouse: " + ingredient.getName() + " : ");
+            for (Warehouse warehouse : restaurantController.findIngredientInWarehouseByName(ingredient.getName())) {
+                System.out.println(warehouse.getPortionDescription() + ": " + warehouse.getAmount());
+            }
         }
 
         System.out.println("Warehouse all ingredients:");
@@ -364,7 +369,8 @@ public class RestaurantControllerTest {
         }
         System.out.println("Warehouse elapsing ingredients:");
         for (Warehouse warehouse : restaurantController.findAllElapsingWarehouseIngredients((float)500.0)) {
-            System.out.println(warehouse.getIngredientName() + ": " + warehouse.getAmount());
+            System.out.println(warehouse.getIngredientName() + ": " + warehouse.getPortionDescription() + ": " +
+                    warehouse.getAmount());
         }
     }
 }
