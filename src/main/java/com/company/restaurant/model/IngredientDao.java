@@ -11,4 +11,6 @@ public interface IngredientDao {
     String delIngredient(String name);
 
     List<Ingredient> findAllIngredients();
+
+    Ingredient findIngredientById(int ingredientId);
 }

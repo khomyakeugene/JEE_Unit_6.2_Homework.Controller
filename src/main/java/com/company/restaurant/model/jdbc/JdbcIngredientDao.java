@@ -29,6 +29,11 @@ public class JdbcIngredientDao extends JdbcDaoTableSimpleDic<Ingredient> impleme
     }
 
     @Override
+    public Ingredient findIngredientById(int ingredientId) {
+        return findObjectById(ingredientId);
+    }
+
+    @Override
     protected Ingredient newObject() {
         return new Ingredient();
     }
