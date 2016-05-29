@@ -273,7 +273,7 @@ public class RestaurantController {
         return orderAdapter.findAllOrderCourses(order);
     }
 
-    OrderCourse findOrderCourseByCourseId(Order order, int courseId) {
+    public OrderCourse findOrderCourseByCourseId(Order order, int courseId) {
         return orderAdapter.findOrderCourseByCourseId(order, courseId);
     }
 
