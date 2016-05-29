@@ -12,6 +12,8 @@ public interface WarehouseDao {
 
     List<Warehouse> findIngredientInWarehouseByName(String name);
 
+    List<Warehouse> findIngredientInWarehouseById(int ingredientId);
+
     List<Warehouse> findAllWarehouseIngredients();
 
     List<Warehouse> findAllElapsingWarehouseIngredients(float limit);

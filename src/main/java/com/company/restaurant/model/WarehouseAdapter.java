@@ -42,6 +42,10 @@ public class WarehouseAdapter {
         return warehouseDao.findIngredientInWarehouseByName(name);
     }
 
+    public List<Warehouse> findIngredientInWarehouseById(int ingredientId) {
+        return warehouseDao.findIngredientInWarehouseById(ingredientId);
+    }
+
     public List<Warehouse> findAllWarehouseIngredients() {
         return warehouseDao.findAllWarehouseIngredients();
     }

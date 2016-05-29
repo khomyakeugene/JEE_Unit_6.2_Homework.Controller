@@ -297,6 +297,10 @@ public class RestaurantController {
         return warehouseAdapter.findIngredientInWarehouseByName(name);
     }
 
+    public List<Warehouse> findIngredientInWarehouseById(int ingredientId) {
+        return warehouseAdapter.findIngredientInWarehouseById(ingredientId);
+    }
+
     public List<Warehouse> findAllWarehouseIngredients() {
         return warehouseAdapter.findAllWarehouseIngredients();
     }
