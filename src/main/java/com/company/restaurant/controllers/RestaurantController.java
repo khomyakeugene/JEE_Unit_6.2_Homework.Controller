@@ -177,6 +177,10 @@ public class RestaurantController {
         return menuDao.delMenu(name);
     }
 
+    public String delMenu(Menu menu) {
+        return menuDao.delMenu(menu);
+    }
+
     public Menu findMenuByName(String name) {
         return menuDao.findMenuByName(name);
     }

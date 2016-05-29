@@ -10,6 +10,8 @@ public interface MenuDao {
 
     String delMenu(String name);
 
+    String delMenu(Menu menu);
+
     Menu findMenuByName(String name);
 
     Menu findMenuById(int menuId);
