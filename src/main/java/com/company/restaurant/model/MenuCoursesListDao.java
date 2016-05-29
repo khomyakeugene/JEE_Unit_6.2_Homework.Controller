@@ -11,4 +11,6 @@ public interface MenuCoursesListDao {
     String delCourseFromMenu(Menu menu, Course course);
 
     List<MenuCourseList> findMenuCourses(Menu menu);
+
+    MenuCourseList findMenuCourseByCourseId(Menu menu, int courseId);
 }

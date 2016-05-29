@@ -205,6 +205,11 @@ public class RestaurantController {
         return menuDao.findMenuCourses(menu);
     }
 
+    public MenuCourseList findMenuCourseByCourseId(Menu menu, int courseId) {
+        return menuDao.findMenuCourseByCourseId(menu, courseId);
+    }
+
+
     Table addTable(Table table) {
         return tableDao.addTable(table);
     }

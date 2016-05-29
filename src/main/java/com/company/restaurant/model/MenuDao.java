@@ -23,4 +23,6 @@ public interface MenuDao {
     void delCourseFromMenu(Menu menu, Course course);
 
     List<MenuCourseList> findMenuCourses(Menu menu);
+
+    MenuCourseList findMenuCourseByCourseId(Menu menu, int courseId);
 }

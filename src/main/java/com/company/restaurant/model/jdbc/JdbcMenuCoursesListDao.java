@@ -87,4 +87,9 @@ public class JdbcMenuCoursesListDao extends JdbcDaoLinkTable<MenuCourseList> imp
     public List<MenuCourseList> findMenuCourses(Menu menu) {
         return findObjectsByFieldCondition(MENU_ID_FIELD_NAME, menu.getId());
     }
+
+    @Override
+    public MenuCourseList findMenuCourseByCourseId(Menu menu, int courseId) {
+        return findObjectByTwoFieldCondition(MENU_ID_FIELD_NAME, menu.getId(), COURSE_ID_FIELD_NAME, courseId);
+    }
 }
