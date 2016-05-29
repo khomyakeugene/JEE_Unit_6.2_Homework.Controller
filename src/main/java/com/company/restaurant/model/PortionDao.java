@@ -11,4 +11,6 @@ public interface PortionDao {
     String delPortion(Portion portion);
 
     List<Portion> findAllPortions();
+
+    Portion findPortionById(int portionId);
 }

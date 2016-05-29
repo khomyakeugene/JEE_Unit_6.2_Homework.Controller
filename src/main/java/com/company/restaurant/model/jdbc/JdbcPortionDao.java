@@ -72,4 +72,9 @@ public class JdbcPortionDao extends JdbcDaoTableWithId<Portion> implements Porti
     public List<Portion> findAllPortions() {
         return findAllObjects();
     }
+
+    @Override
+    public Portion findPortionById(int portionId) {
+        return findObjectById(portionId);
+    }
 }
