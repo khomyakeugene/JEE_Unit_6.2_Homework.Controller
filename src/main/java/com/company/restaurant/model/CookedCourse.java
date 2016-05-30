@@ -1,12 +1,14 @@
 package com.company.restaurant.model;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
  * Created by Yevhen on 23.05.2016.
  */
 public class CookedCourse extends FloatLinkObject {
-    private Date cookDatetime;
+    private Timestamp cookDatetime;
     private int courseCategoryId;
     private String courseName;
     private float courseWeight;
@@ -41,11 +43,11 @@ public class CookedCourse extends FloatLinkObject {
         setFloatLinkData(cookWeight);
     }
 
-    public Date getCookDatetime() {
+    public Timestamp getCookDatetime() {
         return cookDatetime;
     }
 
-    public void setCookDatetime(Date cookDatetime) {
+    public void setCookDatetime(Timestamp cookDatetime) {
         this.cookDatetime = cookDatetime;
     }
 

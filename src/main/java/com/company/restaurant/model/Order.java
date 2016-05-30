@@ -1,5 +1,6 @@
 package com.company.restaurant.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ public class Order {
     private int employeeId;
     private String stateType;
     private String orderNumber;
-    private Date orderDatetime;
+    private Timestamp orderDatetime;
     private String stateTypeName;
     private int employeeJobPositionId;
     private String employeeFirstName;
@@ -63,11 +64,11 @@ public class Order {
         this.orderNumber = orderNumber;
     }
 
-    public Date getOrderDatetime() {
+    public Timestamp getOrderDatetime() {
         return orderDatetime;
     }
 
-    public void setOrderDatetime(Date orderDatetime) {
+    public void setOrderDatetime(Timestamp orderDatetime) {
         this.orderDatetime = orderDatetime;
     }
 

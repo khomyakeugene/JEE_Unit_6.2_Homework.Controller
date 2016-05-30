@@ -67,7 +67,7 @@ public class JdbcOrderDao extends JdbcDaoTableWithId<Order> implements OrderDao 
         result.setStateType(resultSet.getString(STATE_TYPE_FIELD_NAME));
         result.setEmployeeId(resultSet.getInt(EMPLOYEE_ID_FIELD_NAME));
         result.setOrderNumber(resultSet.getString(ORDER_NUMBER_FIELD_NAME));
-        result.setOrderDatetime(resultSet.getDate(ORDER_DATETIME_FIELD_NAME));
+        result.setOrderDatetime(resultSet.getTimestamp(ORDER_DATETIME_FIELD_NAME));
         result.setStateTypeName(resultSet.getString(STATE_TYPE_NAME_FIELD_NAME));
         result.setEmployeeJobPositionId(resultSet.getInt(EMPLOYEE_JOB_POSITION_ID_FIELD_NAME));
         result.setEmployeeFirstName(resultSet.getString(EMPLOYEE_FIRST_NAME_FIELD_NAME));
