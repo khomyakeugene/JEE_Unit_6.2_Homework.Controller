@@ -52,7 +52,7 @@ public class JdbcCookedCourseDao extends JdbcDaoLinkTable<CookedCourse> implemen
         result.setCourseName(resultSet.getString(COURSE_NAME_FIELD_NAME));
         result.setCourseWeight(resultSet.getFloat(COURSE_WEIGHT_FIELD_NAME));
         result.setCourseCost(resultSet.getFloat(COURSE_COST_FIELD_NAME));
-         result.setEmployeeJobPositionId(resultSet.getInt(EMPLOYEE_JOB_POSITION_ID_FIELD_NAME));
+        result.setEmployeeJobPositionId(resultSet.getInt(EMPLOYEE_JOB_POSITION_ID_FIELD_NAME));
         result.setEmployeeFirstName(resultSet.getString(EMPLOYEE_FIRST_NAME_FIELD_NAME));
         result.setEmployeeSecondName(resultSet.getString(EMPLOYEE_SECOND_NAME_FIELD_NAME));
         result.setEmployeePhoneNumber(resultSet.getString(EMPLOYEE_PHONE_NUMBER_FIELD_NAME));
