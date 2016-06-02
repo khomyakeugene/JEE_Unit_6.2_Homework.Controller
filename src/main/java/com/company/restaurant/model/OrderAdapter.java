@@ -102,6 +102,10 @@ public class OrderAdapter {
         return orderDao.updOrderState(order, orderClosedState(order));
     }
 
+    public List<Order> findAllOrders() {
+        return orderDao.findAllOrders();
+    }
+
     public List<Order> findAllOrders(String stateType) {
         return orderDao.findAllOrders(stateType);
     }
@@ -133,7 +137,7 @@ public class OrderAdapter {
         return result;
     }
 
-    public String  addCourseToOrder(Order order, Course course) {
+    public String addCourseToOrder(Order order, Course course) {
         return addCourseToOrder(order, course, 1);
     }
 

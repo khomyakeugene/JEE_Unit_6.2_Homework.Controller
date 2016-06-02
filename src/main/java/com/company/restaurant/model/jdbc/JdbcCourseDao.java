@@ -22,7 +22,7 @@ public class JdbcCourseDao extends JdbcDaoTableWithId<Course> implements CourseD
     private static final String WEIGHT_FIELD_NAME = "weight";
     private static final String COST_FIELD_NAME = "cost";
     private static final String COURSE_CATEGORY_NAME_FIELD_NAME = "course_category_name";
-    private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY name";
+    private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY course_id";
 
     private CourseCategoryDao courseCategoryDao;
 

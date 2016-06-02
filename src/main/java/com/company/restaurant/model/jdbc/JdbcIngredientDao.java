@@ -11,7 +11,7 @@ import java.util.List;
 public class JdbcIngredientDao extends JdbcDaoTableSimpleDic<Ingredient> implements IngredientDao {
     private static final String INGREDIENT_DIC_TABLE_NAME = "ingredient";
     private static final String INGREDIENT_ID_FIELD_NAME = "ingredient_id";
-    private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY name";
+    private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY ingredient_id";
 
     @Override
     public Ingredient addIngredient(String name) {

@@ -17,7 +17,7 @@ public class JdbcTableDao extends JdbcDaoTableWithId<Table> implements TableDao 
     private static final String TABLE_ID_FIELD_NAME = "table_id";
     private static final String NUMBER_FIELD_NAME = "number";
     private static final String DESCRIPTION_FIELD_NAME = "description";
-    private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY number";
+    private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY table_id";
 
     @Override
     protected void initMetadata() {

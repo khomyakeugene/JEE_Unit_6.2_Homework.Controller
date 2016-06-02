@@ -18,6 +18,7 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     private static final String SQL_DELETE_EXPRESSION_PATTERN = "DELETE FROM \"%s\" WHERE (%s = %s)";
     private static final String SQL_UPDATE_BY_FIELD_VALUE = "UPDATE \"%s\" SET %s WHERE (%s = %s)";
     private static final String SQL_UPDATE_SET_SECTION_PART_PATTERN = "%s = %s";
+    private static final String SQL_ALL_FIELDS_WILDCARD = "*";
 
     protected String tableName;
     protected String viewName;
@@ -40,39 +41,45 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     }
 
     private String orderByCondition() {
-        return (orderByCondition == null) ? "" : orderByCondition;
+        return (orderByCondition == null) ? "" : " " + orderByCondition;
     }
 
+    private String orderByCondition(String selectFields) {
+        return (selectFields.equals(SQL_ALL_FIELD_OF_ALL_RECORDS)) ? orderByCondition() : "";
+    }
+
+
     private String allQueryCondition() {
-        return String.format(SQL_ALL_FIELD_OF_ALL_RECORDS, getViewName()) + " " + orderByCondition();
+        return String.format(SQL_ALL_FIELD_OF_ALL_RECORDS, getViewName()) + orderByCondition();
     }
 
     private String fieldQueryCondition(String fieldName, Object value, String selectFields) {
-        return String.format(SQL_SELECT_BY_FIELD_VALUE, selectFields, getViewName(), fieldName, JdbcDao.toString(value));
+        return String.format(SQL_SELECT_BY_FIELD_VALUE, selectFields, getViewName(), fieldName,
+                JdbcDao.toString(value)) + orderByCondition(selectFields);
     }
 
     private String fieldQueryCondition(String fieldName, Object value) {
-        return fieldQueryCondition(fieldName, value, "*");
+        return fieldQueryCondition(fieldName, value, SQL_ALL_FIELDS_WILDCARD);
     }
 
     protected String twoFieldsFromTableQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2,
                                                       String selectFields) {
         return String.format(SQL_SELECT_BY_TWO_FIELD_VALUE, selectFields, getTableName(), fieldName_1, JdbcDao.toString(value_1),
-                fieldName_2, JdbcDao.toString(value_2));
+                fieldName_2, JdbcDao.toString(value_2)) + orderByCondition(selectFields);
     }
 
     private String twoFieldsFromTableQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2) {
-        return twoFieldsFromTableQueryCondition(fieldName_1, value_1, fieldName_2, value_2, "*");
+        return twoFieldsFromTableQueryCondition(fieldName_1, value_1, fieldName_2, value_2, SQL_ALL_FIELDS_WILDCARD);
     }
 
     protected String twoFieldsFromViewQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2,
                                                      String selectFields) {
-        return String.format(SQL_SELECT_BY_TWO_FIELD_VALUE, selectFields, getViewName(), fieldName_1, JdbcDao.toString(value_1),
-                fieldName_2, JdbcDao.toString(value_2));
+        return String.format(SQL_SELECT_BY_TWO_FIELD_VALUE, selectFields, getViewName(), fieldName_1,
+                JdbcDao.toString(value_1), fieldName_2, JdbcDao.toString(value_2)) + orderByCondition(selectFields);
     }
 
     private String twoFieldsFromViewQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2) {
-        return twoFieldsFromViewQueryCondition(fieldName_1, value_1, fieldName_2, value_2, "*");
+        return twoFieldsFromViewQueryCondition(fieldName_1, value_1, fieldName_2, value_2, SQL_ALL_FIELDS_WILDCARD);
     }
 
     public T findObjectByFieldCondition(String fieldName, Object value) {

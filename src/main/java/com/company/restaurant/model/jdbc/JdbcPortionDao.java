@@ -19,7 +19,7 @@ public class JdbcPortionDao extends JdbcDaoTableWithId<Portion> implements Porti
     private static final String MEASURING_TYPE_FIELD_NAME = "measuring_type_id";
     private static final String AMOUNT_FIELD_NAME = "amount";
     private static final String DESCRIPTION_FIELD_NAME = "description";
-    private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY description";
+    private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY portion_id";
 
     @Override
     protected void initMetadata() {

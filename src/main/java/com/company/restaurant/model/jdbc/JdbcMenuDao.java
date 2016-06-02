@@ -10,11 +10,13 @@ import java.util.List;
 public class JdbcMenuDao extends JdbcDaoTableSimpleDic<Menu> implements MenuDao {
     private static final String MENU_TABLE_NAME = "menu";
     private static final String MENU_ID_FIELD_NAME = "menu_id";
+    private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY menu_id";
 
     private MenuCoursesListDao menuCourseListDao;
 
     public void setMenuCourseListDao(MenuCoursesListDao menuCourseListDao) {
         this.menuCourseListDao = menuCourseListDao;
+        this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
     }
 
     @Override

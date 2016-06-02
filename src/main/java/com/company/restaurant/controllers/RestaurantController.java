@@ -245,6 +245,10 @@ public class RestaurantController {
         return orderAdapter.closeOrder(order);
     }
 
+    public List<Order> findAllOrders() {
+        return orderAdapter.findAllOrders();
+    }
+
     public List<Order> findAllOrders(String stateType) {
         return orderAdapter.findAllOrders(stateType);
     }

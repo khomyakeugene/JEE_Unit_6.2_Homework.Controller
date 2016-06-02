@@ -22,7 +22,7 @@ public class JdbcEmployeeDao extends JdbcDaoTableWithId<Employee> implements Emp
     private static final String PHONE_NUMBER_FIELD_NAME = "phone_number";
     private static final String SALARY_FIELD_NAME = "salary";
     private static final String JOB_POSITION_NAME_FIELD_NAME = "job_position_name";
-    private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY second_name, first_name";
+    private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY employee_id";
 
     @Override
     protected void initMetadata() {
