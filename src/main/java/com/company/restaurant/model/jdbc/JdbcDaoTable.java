@@ -45,7 +45,7 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
     }
 
     private String orderByCondition(String selectFields) {
-        return (selectFields.equals(SQL_ALL_FIELD_OF_ALL_RECORDS)) ? orderByCondition() : "";
+        return (selectFields.equals(SQL_ALL_FIELDS_WILDCARD)) ? orderByCondition() : "";
     }
 
 
@@ -72,8 +72,8 @@ public abstract class JdbcDaoTable<T> extends JdbcDao<T> {
         return twoFieldsFromTableQueryCondition(fieldName_1, value_1, fieldName_2, value_2, SQL_ALL_FIELDS_WILDCARD);
     }
 
-    protected String twoFieldsFromViewQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2,
-                                                     String selectFields) {
+    private String twoFieldsFromViewQueryCondition(String fieldName_1, Object value_1, String fieldName_2, Object value_2,
+                                                   String selectFields) {
         return String.format(SQL_SELECT_BY_TWO_FIELD_VALUE, selectFields, getViewName(), fieldName_1,
                 JdbcDao.toString(value_1), fieldName_2, JdbcDao.toString(value_2)) + orderByCondition(selectFields);
     }

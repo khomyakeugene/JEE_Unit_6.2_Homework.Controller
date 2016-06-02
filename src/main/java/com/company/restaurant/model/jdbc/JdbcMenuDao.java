@@ -16,13 +16,15 @@ public class JdbcMenuDao extends JdbcDaoTableSimpleDic<Menu> implements MenuDao 
 
     public void setMenuCourseListDao(MenuCoursesListDao menuCourseListDao) {
         this.menuCourseListDao = menuCourseListDao;
-        this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
     }
 
     @Override
     protected void initMetadata() {
+        super.initMetadata();
+
         this.tableName = MENU_TABLE_NAME;
         this.idFieldName = MENU_ID_FIELD_NAME;
+        this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
     }
 
     @Override

@@ -40,6 +40,8 @@ public class JdbcIngredientDao extends JdbcDaoTableSimpleDic<Ingredient> impleme
 
     @Override
     protected void initMetadata() {
+        super.initMetadata();
+
         this.tableName = INGREDIENT_DIC_TABLE_NAME;
         this.idFieldName = INGREDIENT_ID_FIELD_NAME;
         this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;

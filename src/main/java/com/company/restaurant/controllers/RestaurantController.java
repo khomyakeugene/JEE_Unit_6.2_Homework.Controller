@@ -217,6 +217,10 @@ public class RestaurantController {
         return tableDao.delTable(table);
     }
 
+    public Table findTableById(int tableId) {
+        return tableDao.findTableById(tableId);
+    }
+
     public Table findTableByNumber(int number) {
         return tableDao.findTableByNumber(number);
     }

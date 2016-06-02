@@ -10,6 +10,8 @@ public interface TableDao {
 
     String delTable(Table table);
 
+    Table findTableById(int tableId);
+
     Table findTableByNumber(int number);
 
     List<Table> findAllTables();

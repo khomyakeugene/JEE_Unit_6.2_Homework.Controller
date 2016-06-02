@@ -14,6 +14,8 @@ public class JdbcCourseCategoryDao extends JdbcDaoTableSimpleDic<CourseCategory>
 
     @Override
     protected void initMetadata() {
+        super.initMetadata();
+
         this.tableName = COURSE_CATEGORY_DIC_TABLE_NAME;
         this.idFieldName = COURSE_CATEGORY_ID_FIELD_NAME;
     }

@@ -136,6 +136,12 @@ public class RestaurantControllerTest {
 
     @Test//(timeout = 2000)
     public void addFindDelEmployeeTest() throws Exception {
+        for (JobPosition jobPosition : restaurantController.findAllJobPositions()) {
+            System.out.println("Job position Id :" + jobPosition.getId() +
+                    ", Job position name :" + jobPosition.getName());
+        }
+
+
         String firstName = Util.getRandomString();
         String secondName = Util.getRandomString();
         Employee employee = new Employee();
@@ -317,6 +323,18 @@ public class RestaurantControllerTest {
         restaurantController.delCourse(courseName1);
         restaurantController.delCourse(courseName2);
         // ----------------------------
+
+        for (Order o : restaurantController.findAllOrders()) {
+            System.out.println("Order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
+        }
+
+        for (Order o : restaurantController.findAllOpenOrders()) {
+            System.out.println("Open order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
+        }
+
+        for (Order o : restaurantController.findAllClosedOrders()) {
+            System.out.println("Closed order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
+        }
 
         restaurantController.delOrder(order);
         assertTrue(restaurantController.findOrderById(orderId) == null);

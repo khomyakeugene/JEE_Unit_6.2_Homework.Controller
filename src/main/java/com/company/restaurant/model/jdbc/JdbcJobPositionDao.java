@@ -16,9 +16,11 @@ public class JdbcJobPositionDao extends JdbcDaoTableSimpleDic<JobPosition> imple
 
     @Override
     protected void initMetadata() {
+        super.initMetadata();
+
         this.tableName = JOB_POSITION_DIC_TABLE_NAME;
         this.idFieldName = JOB_POSITION_ID_FIELD_NAME;
-        this.orderByCondition = JOB_POSITION_ID_FIELD_NAME;
+        this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
     }
 
     @Override

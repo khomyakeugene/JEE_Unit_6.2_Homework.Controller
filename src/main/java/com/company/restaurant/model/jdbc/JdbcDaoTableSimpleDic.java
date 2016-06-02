@@ -14,7 +14,8 @@ public abstract class JdbcDaoTableSimpleDic<T extends SimpleDic> extends JdbcDao
     private static final String NAME_FIELD_NAME = "name";
     private static final String DEFAULT_ORDER_BY_CONDITION = "ORDER BY name";
 
-    public JdbcDaoTableSimpleDic() {
+    @Override
+    protected void initMetadata() {
         this.nameFieldName = NAME_FIELD_NAME;
         this.orderByCondition = DEFAULT_ORDER_BY_CONDITION;
     }

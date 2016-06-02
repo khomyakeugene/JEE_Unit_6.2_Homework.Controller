@@ -38,6 +38,11 @@ public class JdbcTableDao extends JdbcDaoTableWithId<Table> implements TableDao 
     }
 
     @Override
+    public Table findTableById(int tableId) {
+        return findObjectById(tableId);
+    }
+
+    @Override
     public Table findTableByNumber(int number) {
         return findObjectByName(Integer.toString(number));
     }
