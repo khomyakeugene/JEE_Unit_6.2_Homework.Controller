@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.company</groupId>
-    <artifactId>JEE_Unit_6.2_Homework.Controller</artifactId>
+    <artifactId>Restaurant.Controller</artifactId>
     <packaging>jar</packaging>
     <version>1.0</version>
 
