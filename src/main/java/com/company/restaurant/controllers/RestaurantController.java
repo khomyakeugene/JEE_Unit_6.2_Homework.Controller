@@ -1,5 +1,9 @@
 package com.company.restaurant.controllers;
 
+import com.company.restaurant.adapters.KitchenAdapter;
+import com.company.restaurant.adapters.OrderAdapter;
+import com.company.restaurant.adapters.WarehouseAdapter;
+import com.company.restaurant.dao.*;
 import com.company.restaurant.model.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

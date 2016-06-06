@@ -26,79 +26,79 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.jdbc.JdbcJobPositionDao" id="jobPositionDao">
+    <bean class="com.company.restaurant.dao.jdbc.JdbcJobPositionDao" id="jobPositionDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.jdbc.JdbcEmployeeDao" id="employeeDao">
+    <bean class="com.company.restaurant.dao.jdbc.JdbcEmployeeDao" id="employeeDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.jdbc.JdbcCourseCategoryDao" id="courseCategoryDicDao">
+    <bean class="com.company.restaurant.dao.jdbc.JdbcCourseCategoryDao" id="courseCategoryDicDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.jdbc.JdbcCourseDao" id="courseDao">
+    <bean class="com.company.restaurant.dao.jdbc.JdbcCourseDao" id="courseDao">
         <property name="dataSource" ref="dataSource"/>
         <property name="courseCategoryDao" ref="courseCategoryDicDao"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.jdbc.JdbcMenuCoursesListDao" id="menuCourseListDao">
+    <bean class="com.company.restaurant.dao.jdbc.JdbcMenuCoursesListDao" id="menuCourseListDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.jdbc.JdbcMenuDao" id="menuDao">
+    <bean class="com.company.restaurant.dao.jdbc.JdbcMenuDao" id="menuDao">
         <property name="dataSource" ref="dataSource"/>
         <property name="menuCourseListDao" ref="menuCourseListDao"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.jdbc.JdbcTableDao" id="tableDao">
+    <bean class="com.company.restaurant.dao.jdbc.JdbcTableDao" id="tableDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.jdbc.JdbcStateGraphDao" id="stateGraphDao">
+    <bean class="com.company.restaurant.dao.jdbc.JdbcStateGraphDao" id="stateGraphDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.StateGraphRules" id="stateGraphRules">
+    <bean class="com.company.restaurant.adapters.StateGraphRules" id="stateGraphRules">
         <property name="stateGraphDao" ref="stateGraphDao"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.jdbc.JdbcOrderDao" id="orderDao">
+    <bean class="com.company.restaurant.dao.jdbc.JdbcOrderDao" id="orderDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.OrderAdapter" id="orderAdapter">
+    <bean class="com.company.restaurant.adapters.OrderAdapter" id="orderAdapter">
         <property name="orderDao" ref="orderDao"/>
         <property name="stateGraphRules" ref="stateGraphRules"/>
         <property name="orderCourseDao" ref="orderCourseDao"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.jdbc.JdbcOrderCourseDao" id="orderCourseDao">
+    <bean class="com.company.restaurant.dao.jdbc.JdbcOrderCourseDao" id="orderCourseDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.jdbc.JdbcCookedCourseDao" id="cookedCourseDao">
+    <bean class="com.company.restaurant.dao.jdbc.JdbcCookedCourseDao" id="cookedCourseDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.KitchenAdapter" id="kitchenAdapter">
+    <bean class="com.company.restaurant.adapters.KitchenAdapter" id="kitchenAdapter">
         <property name="cookedCourseDao" ref="cookedCourseDao"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.jdbc.JdbcIngredientDao" id="ingredientDao">
+    <bean class="com.company.restaurant.dao.jdbc.JdbcIngredientDao" id="ingredientDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.jdbc.JdbcPortionDao" id="portionDao">
+    <bean class="com.company.restaurant.dao.jdbc.JdbcPortionDao" id="portionDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.jdbc.JdbcWarehouseDao" id="warehouseDao">
+    <bean class="com.company.restaurant.dao.jdbc.JdbcWarehouseDao" id="warehouseDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.model.WarehouseAdapter" id="warehouseAdapter">
+    <bean class="com.company.restaurant.adapters.WarehouseAdapter" id="warehouseAdapter">
         <property name="warehouseDao" ref="warehouseDao"/>
         <property name="ingredientDao" ref="ingredientDao"/>
         <property name="portionDao" ref="portionDao"/>
