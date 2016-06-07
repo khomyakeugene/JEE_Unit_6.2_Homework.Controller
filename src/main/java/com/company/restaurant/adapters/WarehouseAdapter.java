@@ -21,16 +21,8 @@ public class WarehouseAdapter {
         this.warehouseDao = warehouseDao;
     }
 
-    public IngredientDao getIngredientDao() {
-        return ingredientDao;
-    }
-
     public void setIngredientDao(IngredientDao ingredientDao) {
         this.ingredientDao = ingredientDao;
-    }
-
-    public PortionDao getPortionDao() {
-        return portionDao;
     }
 
     public void setPortionDao(PortionDao portionDao) {
@@ -59,5 +51,21 @@ public class WarehouseAdapter {
 
     public List<Warehouse> findAllElapsingWarehouseIngredients(float limit) {
         return warehouseDao.findAllElapsingWarehouseIngredients(limit);
+    }
+
+    public List<Ingredient> findAllIngredients() {
+        return ingredientDao.findAllIngredients();
+    }
+
+    public Ingredient findIngredientById(int ingredientId) {
+        return ingredientDao.findIngredientById(ingredientId);
+    }
+
+    public List<Portion> findAllPortions() {
+        return portionDao.findAllPortions();
+    }
+
+    public Portion findPortionById(int portionId) {
+        return portionDao.findPortionById(portionId);
     }
 }

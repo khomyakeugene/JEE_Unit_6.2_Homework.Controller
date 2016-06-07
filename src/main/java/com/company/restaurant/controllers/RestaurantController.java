@@ -77,10 +77,6 @@ public class RestaurantController {
         this.warehouseAdapter = warehouseAdapter;
     }
 
-    public WarehouseAdapter getWarehouseAdapter() {
-        return warehouseAdapter;
-    }
-
     public JobPosition addJobPosition(String name) {
         return jobPositionDao.addJobPosition(name);
     }
@@ -319,5 +315,21 @@ public class RestaurantController {
 
     public List<Warehouse> findAllElapsingWarehouseIngredients(float limit) {
         return warehouseAdapter.findAllElapsingWarehouseIngredients(limit);
+    }
+
+    public List<Ingredient> findAllIngredients() {
+        return warehouseAdapter.findAllIngredients();
+    }
+
+    public Ingredient findIngredientById(int ingredientId) {
+        return warehouseAdapter.findIngredientById(ingredientId);
+    }
+
+    public List<Portion> findAllPortions() {
+        return warehouseAdapter.findAllPortions();
+    }
+
+    public Portion findPortionById(int portionId) {
+        return warehouseAdapter.findPortionById(portionId);
     }
 }

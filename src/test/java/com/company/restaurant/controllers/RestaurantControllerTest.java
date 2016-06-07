@@ -367,11 +367,19 @@ public class RestaurantControllerTest {
 
     @Test(timeout = 10000)
     public void addFindDelWarehouseTest() throws Exception {
-        for (Ingredient ingredient: restaurantController.getWarehouseAdapter().getIngredientDao().findAllIngredients()) {
-            for (Portion portion : restaurantController.getWarehouseAdapter().getPortionDao().findAllPortions()) {
+        for (Ingredient ingredient: restaurantController.findAllIngredients()) {
+            for (Portion portion : restaurantController.findAllPortions()) {
                 restaurantController.addIngredientToWarehouse(ingredient, portion, Util.getRandomFloat());
                 restaurantController.takeIngredientFromWarehouse(ingredient, portion, Util.getRandomFloat());
+
+                System.out.println("restaurantController.findPortionById(" + portion.getPortionId() + ") test ...");
+                assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(portion,
+                        restaurantController.findPortionById(portion.getPortionId())));
             }
+
+            System.out.println("restaurantController.findIngredientById(" + ingredient.getId() + ") test ...");
+            assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(ingredient,
+                    restaurantController.findIngredientById(ingredient.getId())));
 
             System.out.println("Warehouse: " + ingredient.getName() + " : ");
             for (Warehouse warehouse : restaurantController.findIngredientInWarehouseByName(ingredient.getName())) {
