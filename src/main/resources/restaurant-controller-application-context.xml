@@ -60,7 +60,7 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.rules.StateGraphRules" id="stateGraphRules">
+    <bean class="com.company.restaurant.controllers.StateGraphRules" id="stateGraphRules">
         <property name="stateGraphDao" ref="stateGraphDao"/>
     </bean>
 
