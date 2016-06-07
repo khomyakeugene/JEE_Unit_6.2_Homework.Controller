@@ -47,6 +47,10 @@ public class EmployeeController extends BasicTransactionManagerController   {
         return employeeDao.delEmployee(employee);
     }
 
+    public String delEmployee(int employeeId) {
+        return employeeDao.delEmployee(employeeId);
+    }
+
     public List<Employee> findAllEmployees() {
         return employeeDao.findAllEmployees();
     }

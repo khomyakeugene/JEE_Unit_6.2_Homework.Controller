@@ -197,6 +197,7 @@ public class RestaurantControllerTest {
         assertTrue(employeeController.findEmployeeById(employeeId) == null);
         // Test delete of non-existent data
         employeeController.delEmployee(employee);
+        employeeController.delEmployee(employee.getEmployeeId());
     }
 
     @Test(timeout = 2000)
