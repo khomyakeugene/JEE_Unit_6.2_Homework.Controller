@@ -1,6 +1,9 @@
 package com.company.restaurant.controllers;
 
-import com.company.restaurant.dao.*;
+import com.company.restaurant.dao.CourseCategoryDao;
+import com.company.restaurant.dao.CourseDao;
+import com.company.restaurant.dao.MenuDao;
+import com.company.restaurant.dao.TableDao;
 import com.company.restaurant.model.*;
 
 import java.util.List;
@@ -9,24 +12,10 @@ import java.util.List;
  * Created by Yevhen on 19.05.2016.
  */
 public class RestaurantController extends BasicTransactionManagerController {
-    private JobPositionDao jobPositionDao;
-    private EmployeeDao employeeDao;
     private CourseCategoryDao courseCategoryDao;
     private CourseDao courseDao;
     private MenuDao menuDao;
     private TableDao tableDao;
-
-    public static RestaurantController getInstance() {
-        return applicationContext.getBean(RestaurantController.class);
-    }
-
-    public void setJobPositionDao(JobPositionDao jobPositionDao) {
-        this.jobPositionDao = jobPositionDao;
-    }
-
-    public void setEmployeeDao(EmployeeDao employeeDao) {
-        this.employeeDao = employeeDao;
-    }
 
     public void setCourseCategoryDao(CourseCategoryDao courseCategoryDao) {
         this.courseCategoryDao = courseCategoryDao;
@@ -42,54 +31,6 @@ public class RestaurantController extends BasicTransactionManagerController {
 
     public void setTableDao(TableDao tableDao) {
         this.tableDao = tableDao;
-    }
-
-    public JobPosition addJobPosition(String name) {
-        return jobPositionDao.addJobPosition(name);
-    }
-
-    public String delJobPosition(String name) {
-        return jobPositionDao.delJobPosition(name);
-    }
-
-    public JobPosition findJobPositionByName(String name) {
-        return jobPositionDao.findJobPositionByName(name);
-    }
-
-    public JobPosition findJobPositionById(int jobPositionId) {
-        return jobPositionDao.findJobPositionById(jobPositionId);
-    }
-
-    public List<JobPosition> findAllJobPositions() {
-        return jobPositionDao.findAllJobPositions();
-    }
-
-    public Employee addEmployee(Employee employee) {
-        return employeeDao.addEmployee(employee);
-    }
-
-    public String delEmployee(Employee employee) {
-        return employeeDao.delEmployee(employee);
-    }
-
-    public List<Employee> findAllEmployees() {
-        return employeeDao.findAllEmployees();
-    }
-
-    public List<Employee> findEmployeeByFirstName(String firstName) {
-        return employeeDao.findEmployeeByFirstName(firstName);
-    }
-
-    public List<Employee> findEmployeeBySecondName(String lastName) {
-        return employeeDao.findEmployeeBySecondName(lastName);
-    }
-
-    public List<Employee> findEmployeeByFirstAndSecondName(String firstName, String secondName) {
-        return employeeDao.findEmployeeByFirstAndSecondName(firstName, secondName);
-    }
-
-    public Employee findEmployeeById(int id) {
-        return employeeDao.findEmployeeById(id);
     }
 
     public CourseCategory addCourseCategory(String name) {

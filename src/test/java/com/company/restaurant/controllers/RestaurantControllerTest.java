@@ -5,6 +5,8 @@ import com.company.util.ObjectService;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import static org.junit.Assert.assertTrue;
 
@@ -12,7 +14,10 @@ import static org.junit.Assert.assertTrue;
  * Created by Yevhen on 20.05.2016.
  */
 public class RestaurantControllerTest {
+    private final static String APPLICATION_CONTEXT_NAME = "restaurant-controller-application-context.xml";
+
     private static RestaurantController restaurantController;
+    private static EmployeeController employeeController;
     private static WarehouseController warehouseController;
     private static KitchenController kitchenController;
     private static OrderController orderController;
@@ -26,11 +31,11 @@ public class RestaurantControllerTest {
     private static Course testCourse;
 
     private static Employee employee() {
-        return restaurantController.findAllEmployees().get(0);
+        return employeeController.findAllEmployees().get(0);
     }
 
     private int jobPositionId() {
-        return restaurantController.findAllJobPositions().get(0).getId();
+        return employeeController.findAllJobPositions().get(0).getId();
     }
 
     private static int courseCategoryId() {
@@ -106,10 +111,13 @@ public class RestaurantControllerTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        restaurantController = RestaurantController.getInstance();
-        warehouseController = WarehouseController.getInstance();
-        kitchenController = KitchenController.getInstance();
-        orderController = OrderController.getInstance();
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_NAME);
+
+        restaurantController = applicationContext.getBean(RestaurantController.class);
+        employeeController = applicationContext.getBean(EmployeeController.class);
+        warehouseController = applicationContext.getBean(WarehouseController.class);
+        kitchenController = applicationContext.getBean(KitchenController.class);
+        orderController = applicationContext.getBean(OrderController.class);
 
         prepareTestCourse();
         prepareClosedOrder();
@@ -126,20 +134,22 @@ public class RestaurantControllerTest {
     @Test(timeout = 2000)
     public void addFindDelJobPosition() throws Exception {
         String name = Util.getRandomString();
-        JobPosition jobPosition = restaurantController.addJobPosition(name);
+        JobPosition jobPosition = employeeController.addJobPosition(name);
 
-        JobPosition jobPositionByName = restaurantController.findJobPositionByName(name);
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(jobPosition, jobPositionByName));
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(jobPosition,
+                employeeController.findJobPositionByName(jobPosition.getName())));
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(jobPosition,
+                employeeController.findJobPositionById(jobPosition.getId())));
 
-        restaurantController.delJobPosition(name);
-        assertTrue(restaurantController.findJobPositionByName(name) == null);
+        employeeController.delJobPosition(name);
+        assertTrue(employeeController.findJobPositionByName(name) == null);
         // Test delete of non-existent data
-        restaurantController.delJobPosition(name);
+        employeeController.delJobPosition(name);
     }
 
     @Test//(timeout = 2000)
     public void addFindDelEmployeeTest() throws Exception {
-        for (JobPosition jobPosition : restaurantController.findAllJobPositions()) {
+        for (JobPosition jobPosition : employeeController.findAllJobPositions()) {
             System.out.println("Job position Id :" + jobPosition.getId() +
                     ", Job position name :" + jobPosition.getName());
         }
@@ -154,27 +164,27 @@ public class RestaurantControllerTest {
         employee.setPhoneNumber(Util.getRandomString());
         employee.setSalary(Util.getRandomFloat());
 
-        employee = restaurantController.addEmployee(employee);
+        employee = employeeController.addEmployee(employee);
         int employeeId = employee.getEmployeeId();
 
         // Select test <employee> and check
-        Employee employeeByFirstName = restaurantController.findEmployeeByFirstName(firstName).get(0);
+        Employee employeeByFirstName = employeeController.findEmployeeByFirstName(firstName).get(0);
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(employee, employeeByFirstName));
 
-        Employee employeeBySecondName = restaurantController.findEmployeeBySecondName(secondName).get(0);
+        Employee employeeBySecondName = employeeController.findEmployeeBySecondName(secondName).get(0);
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(employee, employeeBySecondName));
 
         Employee employeeByFirstAndSecondName =
-                restaurantController.findEmployeeByFirstAndSecondName(firstName, secondName).get(0);
+                employeeController.findEmployeeByFirstAndSecondName(firstName, secondName).get(0);
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(employee, employeeByFirstAndSecondName));
 
-        Employee employeeById = restaurantController.findEmployeeById(employeeId);
+        Employee employeeById = employeeController.findEmployeeById(employeeId);
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(employee, employeeById));
 
-        restaurantController.delEmployee(employee);
-        assertTrue(restaurantController.findEmployeeById(employeeId) == null);
+        employeeController.delEmployee(employee);
+        assertTrue(employeeController.findEmployeeById(employeeId) == null);
         // Test delete of non-existent data
-        restaurantController.delEmployee(employee);
+        employeeController.delEmployee(employee);
     }
 
     @Test(timeout = 2000)
@@ -182,8 +192,10 @@ public class RestaurantControllerTest {
         String name = Util.getRandomString();
         CourseCategory courseCategory = restaurantController.addCourseCategory(name);
 
-        CourseCategory courseCategoryByName = restaurantController.findCourseCategoryByName(name);
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(courseCategory, courseCategoryByName));
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(courseCategory,
+                restaurantController.findCourseCategoryByName(courseCategory.getName())));
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(courseCategory,
+                restaurantController.findCourseCategoryById(courseCategory.getId())));
 
         restaurantController.delCourseCategory(name);
         assertTrue(restaurantController.findCourseCategoryByName(name) == null);
@@ -201,15 +213,17 @@ public class RestaurantControllerTest {
         course.setCost(Util.getRandomFloat());
         course = restaurantController.addCourse(course);
 
-        Course courseByName = restaurantController.findCourseByName(name);
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course, courseByName));
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course,
+                restaurantController.findCourseByName(course.getName())));
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course,
+                restaurantController.findCourseById(course.getCourseId())));
 
         restaurantController.delCourse(name);
         assertTrue(restaurantController.findCourseByName(name) == null);
         // Test delete by "the whole object"
         course = restaurantController.addCourse(course);
-        courseByName = restaurantController.findCourseByName(name);
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course, courseByName));
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course,
+                restaurantController.findCourseByName(name)));
         restaurantController.delCourse(course);
         assertTrue(restaurantController.findCourseByName(name) == null);
         // Test delete of non-existent data

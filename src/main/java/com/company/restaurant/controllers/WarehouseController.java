@@ -26,10 +26,6 @@ public class WarehouseController extends BasicTransactionManagerController {
         this.portionDao = portionDao;
     }
 
-    public static WarehouseController getInstance() {
-        return applicationContext.getBean(WarehouseController.class);
-    }
-
     public void addIngredientToWarehouse(Ingredient ingredient, Portion portion, float amount) {
         warehouseDao.addIngredientToWarehouse(ingredient, portion, amount);
     }

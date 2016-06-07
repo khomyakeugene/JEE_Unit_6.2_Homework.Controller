@@ -14,10 +14,6 @@ public class KitchenController extends BasicTransactionManagerController {
         this.cookedCourseDao = cookedCourseDao;
     }
 
-    public static KitchenController getInstance() {
-        return applicationContext.getBean(KitchenController.class);
-    }
-
     public void addCookedCourse(Course course, Employee employee, Float weight) {
         cookedCourseDao.addCookedCourse(course, employee, weight);
     }

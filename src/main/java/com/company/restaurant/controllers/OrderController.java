@@ -1,9 +1,11 @@
 package com.company.restaurant.controllers;
 
-import com.company.restaurant.rules.StateGraphRules;
 import com.company.restaurant.dao.OrderCourseDao;
 import com.company.restaurant.dao.OrderDao;
-import com.company.restaurant.model.*;
+import com.company.restaurant.model.Course;
+import com.company.restaurant.model.Order;
+import com.company.restaurant.model.OrderCourse;
+import com.company.restaurant.rules.StateGraphRules;
 import com.company.util.DataIntegrityException;
 
 import java.util.List;
@@ -33,10 +35,6 @@ public class OrderController extends BasicTransactionManagerController  {
 
     public void setOrderCourseDao(OrderCourseDao orderCourseDao) {
         this.orderCourseDao = orderCourseDao;
-    }
-
-    public static OrderController getInstance() {
-        return applicationContext.getBean(OrderController.class);
     }
 
     private String orderCreationState() {
