@@ -1,10 +1,11 @@
 package com.company.restaurant.controllers;
 
-import com.company.restaurant.dao.CourseCategoryDao;
-import com.company.restaurant.dao.CourseDao;
 import com.company.restaurant.dao.MenuDao;
 import com.company.restaurant.dao.TableDao;
-import com.company.restaurant.model.*;
+import com.company.restaurant.model.Course;
+import com.company.restaurant.model.Menu;
+import com.company.restaurant.model.MenuCourseList;
+import com.company.restaurant.model.Table;
 
 import java.util.List;
 
@@ -12,18 +13,8 @@ import java.util.List;
  * Created by Yevhen on 19.05.2016.
  */
 public class RestaurantController extends BasicTransactionManagerController {
-    private CourseCategoryDao courseCategoryDao;
-    private CourseDao courseDao;
     private MenuDao menuDao;
     private TableDao tableDao;
-
-    public void setCourseCategoryDao(CourseCategoryDao courseCategoryDao) {
-        this.courseCategoryDao = courseCategoryDao;
-    }
-
-    public void setCourseDao(CourseDao courseDao) {
-        this.courseDao = courseDao;
-    }
 
     public void setMenuDao(MenuDao menuDao) {
         this.menuDao = menuDao;
@@ -31,50 +22,6 @@ public class RestaurantController extends BasicTransactionManagerController {
 
     public void setTableDao(TableDao tableDao) {
         this.tableDao = tableDao;
-    }
-
-    public CourseCategory addCourseCategory(String name) {
-        return courseCategoryDao.addCourseCategory(name);
-    }
-
-    public String delCourseCategory(String name) {
-        return courseCategoryDao.delCourseCategory(name);
-    }
-
-    public CourseCategory findCourseCategoryByName(String name) {
-        return courseCategoryDao.findCourseCategoryByName(name);
-    }
-
-    public CourseCategory findCourseCategoryById(int CourseCategoryId) {
-        return courseCategoryDao.findCourseCategoryById(CourseCategoryId);
-    }
-
-    public List<CourseCategory> findAllCourseCategories() {
-        return courseCategoryDao.findAllCourseCategories();
-    }
-
-    public Course addCourse(Course course) {
-        return courseDao.addCourse(course);
-    }
-
-    public String delCourse(Course course) {
-        return courseDao.delCourse(course);
-    }
-
-    public String delCourse(String name) {
-        return courseDao.delCourse(name);
-    }
-
-    public Course findCourseByName(String name) {
-        return courseDao.findCourseByName(name);
-    }
-
-    public Course findCourseById(int courseId) {
-        return courseDao.findCourseById(courseId);
-    }
-
-    public List<Course> findAllCourses() {
-        return courseDao.findAllCourses();
     }
 
     public Menu addMenu(String name) {
@@ -117,7 +64,7 @@ public class RestaurantController extends BasicTransactionManagerController {
         return menuDao.findMenuCourseByCourseId(menu, courseId);
     }
 
-    Table addTable(Table table) {
+    public Table addTable(Table table) {
         return tableDao.addTable(table);
     }
 

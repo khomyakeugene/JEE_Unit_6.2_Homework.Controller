@@ -21,6 +21,7 @@ public class RestaurantControllerTest {
     private static WarehouseController warehouseController;
     private static KitchenController kitchenController;
     private static OrderController orderController;
+    private static CourseController courseController;
 
     private static int closedOrderId;
     private static Order closedOrder;
@@ -39,7 +40,7 @@ public class RestaurantControllerTest {
     }
 
     private static int courseCategoryId() {
-        return restaurantController.findAllCourseCategories().get(0).getId();
+        return courseController.findAllCourseCategories().get(0).getId();
     }
 
     private static int employeeId() {
@@ -57,13 +58,13 @@ public class RestaurantControllerTest {
         testCourse.setWeight(Util.getRandomFloat());
         testCourse.setCost(Util.getRandomFloat());
 
-        testCourse = restaurantController.addCourse(testCourse);
+        testCourse = courseController.addCourse(testCourse);
 
         return testCourse;
     }
 
     private static void delTestCourse() {
-        restaurantController.delCourse(testCourse);
+        courseController.delCourse(testCourse);
     }
 
     private static void prepareClosedOrder() throws Exception {
@@ -80,7 +81,7 @@ public class RestaurantControllerTest {
         closedOrderCourse1.setName(closedOrderCourseName1);
         closedOrderCourse1.setWeight(Util.getRandomFloat());
         closedOrderCourse1.setCost(Util.getRandomFloat());
-        closedOrderCourse1 = restaurantController.addCourse(closedOrderCourse1);
+        closedOrderCourse1 = courseController.addCourse(closedOrderCourse1);
 
         closedOrderCourseName2 = Util.getRandomString();
         closedOrderCourse2 = new Course();
@@ -88,7 +89,7 @@ public class RestaurantControllerTest {
         closedOrderCourse2.setName(closedOrderCourseName2);
         closedOrderCourse2.setWeight(Util.getRandomFloat());
         closedOrderCourse2.setCost(Util.getRandomFloat());
-        closedOrderCourse2 = restaurantController.addCourse(closedOrderCourse2);
+        closedOrderCourse2 = courseController.addCourse(closedOrderCourse2);
         // ----------
 
         orderController.addCourseToOrder(order, closedOrderCourse1, 1);
@@ -105,8 +106,8 @@ public class RestaurantControllerTest {
         orderController.delOrder(order);
 
         // Delete course for closed order
-        restaurantController.delCourse(closedOrderCourseName1);
-        restaurantController.delCourse(closedOrderCourseName2);
+        courseController.delCourse(closedOrderCourseName1);
+        courseController.delCourse(closedOrderCourseName2);
     }
 
     @BeforeClass
@@ -118,6 +119,7 @@ public class RestaurantControllerTest {
         warehouseController = applicationContext.getBean(WarehouseController.class);
         kitchenController = applicationContext.getBean(KitchenController.class);
         orderController = applicationContext.getBean(OrderController.class);
+        courseController = applicationContext.getBean(CourseController.class);
 
         prepareTestCourse();
         prepareClosedOrder();
@@ -190,17 +192,17 @@ public class RestaurantControllerTest {
     @Test(timeout = 2000)
     public void addFindDelCourseCategoryTest() throws Exception {
         String name = Util.getRandomString();
-        CourseCategory courseCategory = restaurantController.addCourseCategory(name);
+        CourseCategory courseCategory = courseController.addCourseCategory(name);
 
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(courseCategory,
-                restaurantController.findCourseCategoryByName(courseCategory.getName())));
+                courseController.findCourseCategoryByName(courseCategory.getName())));
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(courseCategory,
-                restaurantController.findCourseCategoryById(courseCategory.getId())));
+                courseController.findCourseCategoryById(courseCategory.getId())));
 
-        restaurantController.delCourseCategory(name);
-        assertTrue(restaurantController.findCourseCategoryByName(name) == null);
+        courseController.delCourseCategory(name);
+        assertTrue(courseController.findCourseCategoryByName(name) == null);
         // Test delete of non-existent data
-        restaurantController.delCourseCategory(name);
+        courseController.delCourseCategory(name);
     }
 
     @Test(timeout = 2000)
@@ -211,26 +213,26 @@ public class RestaurantControllerTest {
         course.setName(name);
         course.setWeight(Util.getRandomFloat());
         course.setCost(Util.getRandomFloat());
-        course = restaurantController.addCourse(course);
+        course = courseController.addCourse(course);
 
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course,
-                restaurantController.findCourseByName(course.getName())));
+                courseController.findCourseByName(course.getName())));
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course,
-                restaurantController.findCourseById(course.getCourseId())));
+                courseController.findCourseById(course.getCourseId())));
 
-        restaurantController.delCourse(name);
-        assertTrue(restaurantController.findCourseByName(name) == null);
+        courseController.delCourse(name);
+        assertTrue(courseController.findCourseByName(name) == null);
         // Test delete by "the whole object"
-        course = restaurantController.addCourse(course);
+        course = courseController.addCourse(course);
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course,
-                restaurantController.findCourseByName(name)));
-        restaurantController.delCourse(course);
-        assertTrue(restaurantController.findCourseByName(name) == null);
+                courseController.findCourseByName(name)));
+        courseController.delCourse(course);
+        assertTrue(courseController.findCourseByName(name) == null);
         // Test delete of non-existent data
-        restaurantController.delCourse(name);
+        courseController.delCourse(name);
 
         // Whole course list
-        restaurantController.findAllCourses();
+        courseController.findAllCourses();
     }
 
     @Test(timeout = 2000)
@@ -250,7 +252,7 @@ public class RestaurantControllerTest {
         course1.setName(courseName1);
         course1.setWeight(Util.getRandomFloat());
         course1.setCost(Util.getRandomFloat());
-        course1 = restaurantController.addCourse(course1);
+        course1 = courseController.addCourse(course1);
 
         String courseName2 = Util.getRandomString();
         Course course2 = new Course();
@@ -258,7 +260,7 @@ public class RestaurantControllerTest {
         course2.setName(courseName2);
         course2.setWeight(Util.getRandomFloat());
         course2.setCost(Util.getRandomFloat());
-        course2 = restaurantController.addCourse(course2);
+        course2 = courseController.addCourse(course2);
 
         restaurantController.addCourseToMenu(menu, course1);
         restaurantController.addCourseToMenu(menu, course2);
@@ -272,8 +274,8 @@ public class RestaurantControllerTest {
         restaurantController.delCourseFromMenu(menu, course1);
         restaurantController.delCourseFromMenu(menu, course2);
 
-        restaurantController.delCourse(courseName1);
-        restaurantController.delCourse(courseName2);
+        courseController.delCourse(courseName1);
+        courseController.delCourse(courseName2);
         // ----------------------------
 
         for (Menu m : restaurantController.findAllMenus()) {
@@ -321,7 +323,7 @@ public class RestaurantControllerTest {
         course1.setName(courseName1);
         course1.setWeight(Util.getRandomFloat());
         course1.setCost(Util.getRandomFloat());
-        course1 = restaurantController.addCourse(course1);
+        course1 = courseController.addCourse(course1);
 
         String courseName2 = Util.getRandomString();
         Course course2 = new Course();
@@ -329,7 +331,7 @@ public class RestaurantControllerTest {
         course2.setName(courseName2);
         course2.setWeight(Util.getRandomFloat());
         course2.setCost(Util.getRandomFloat());
-        course2 = restaurantController.addCourse(course2);
+        course2 = courseController.addCourse(course2);
 
         orderController.addCourseToOrder(order, course1, 3);
         orderController.addCourseToOrder(order, course2, 2);
@@ -343,8 +345,8 @@ public class RestaurantControllerTest {
         orderController.takeCourseFromOrder(order, course1);
         orderController.takeCourseFromOrder(order, course2, 2);
 
-        restaurantController.delCourse(courseName1);
-        restaurantController.delCourse(courseName2);
+        courseController.delCourse(courseName1);
+        courseController.delCourse(courseName2);
         // ----------------------------
 
         for (Order o : orderController.findAllOrders()) {

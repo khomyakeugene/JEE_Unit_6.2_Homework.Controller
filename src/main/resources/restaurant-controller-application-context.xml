@@ -89,8 +89,6 @@
     </bean>
 
     <bean class="com.company.restaurant.controllers.RestaurantController" id="restaurantController">
-        <property name="courseCategoryDao" ref="courseCategoryDicDao"/>
-        <property name="courseDao" ref="courseDao"/>
         <property name="menuDao" ref="menuDao"/>
         <property name="tableDao" ref="tableDao"/>
     </bean>
@@ -99,6 +97,11 @@
         <property name="txManager" ref="txManager"/>
         <property name="jobPositionDao" ref="jobPositionDao"/>
         <property name="employeeDao" ref="employeeDao"/>
+    </bean>
+
+    <bean class="com.company.restaurant.controllers.CourseController" id="courseController">
+        <property name="courseCategoryDao" ref="courseCategoryDicDao"/>
+        <property name="courseDao" ref="courseDao"/>
     </bean>
 
     <bean class="com.company.restaurant.controllers.OrderController" id="orderController">
