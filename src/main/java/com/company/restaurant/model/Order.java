@@ -1,7 +1,6 @@
 package com.company.restaurant.model;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * Created by Yevhen on 22.05.2016.

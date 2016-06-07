@@ -4,11 +4,11 @@ package com.company.restaurant.model;
  * Created by Yevhen on 22.05.2016.
  */
 public class StateGraph {
-    String initStateType;
-    String finiteStateType;
-    String actionType;
-    String entityName;
-    String comment;
+    private String initStateType;
+    private String finiteStateType;
+    private String actionType;
+    private String entityName;
+    private String comment;
 
     public String getInitStateType() {
         return initStateType;
