@@ -19,6 +19,7 @@ public class RestaurantControllerTest {
     private final static String APPLICATION_CONTEXT_NAME = "restaurant-controller-application-context.xml";
 
     private static RestaurantController restaurantController;
+    private static TableController tableController;
     private static EmployeeController employeeController;
     private static WarehouseController warehouseController;
     private static KitchenController kitchenController;
@@ -50,11 +51,11 @@ public class RestaurantControllerTest {
     }
 
     private static int tableId() {
-        return restaurantController.findAllTables().get(0).getTableId();
+        return tableController.findAllTables().get(0).getTableId();
     }
 
     private static int lastTableId() {
-        List<Table> tableList = restaurantController.findAllTables();
+        List<Table> tableList = tableController.findAllTables();
 
         return tableList.get(tableList.size()-1).getTableId();
     }
@@ -123,6 +124,7 @@ public class RestaurantControllerTest {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_NAME);
 
         restaurantController = applicationContext.getBean(RestaurantController.class);
+        tableController = applicationContext.getBean(TableController.class);
         employeeController = applicationContext.getBean(EmployeeController.class);
         warehouseController = applicationContext.getBean(WarehouseController.class);
         kitchenController = applicationContext.getBean(KitchenController.class);
@@ -299,17 +301,17 @@ public class RestaurantControllerTest {
     @Test(timeout = 2000)
     public void addFindDelTableTest() throws Exception {
         Table table = new Table();
-        table.setNumber(restaurantController.findTableById(lastTableId()).getNumber() + Util.getRandomInteger());
+        table.setNumber(tableController.findTableById(lastTableId()).getNumber() + Util.getRandomInteger());
         table.setDescription(Util.getRandomString());
-        table = restaurantController.addTable(table);
+        table = tableController.addTable(table);
 
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(table,
-                restaurantController.findTableByNumber(table.getNumber())));
+                tableController.findTableByNumber(table.getNumber())));
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(table,
-                restaurantController.findTableById(table.getTableId())));
+                tableController.findTableById(table.getTableId())));
 
-        restaurantController.delTable(table);
-        assertTrue(restaurantController.findTableByNumber(table.getNumber()) == null);
+        tableController.delTable(table);
+        assertTrue(tableController.findTableByNumber(table.getNumber()) == null);
     }
 
     @Test (timeout = 2000)

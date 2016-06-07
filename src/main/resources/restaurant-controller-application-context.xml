@@ -90,11 +90,14 @@
 
     <bean class="com.company.restaurant.controllers.RestaurantController" id="restaurantController">
         <property name="menuDao" ref="menuDao"/>
+    </bean>
+
+    <bean class="com.company.restaurant.controllers.TableController" id="tableController">
+        <property name="txManager" ref="txManager"/>
         <property name="tableDao" ref="tableDao"/>
     </bean>
 
     <bean class="com.company.restaurant.controllers.EmployeeController" id="employeeController">
-        <property name="txManager" ref="txManager"/>
         <property name="jobPositionDao" ref="jobPositionDao"/>
         <property name="employeeDao" ref="employeeDao"/>
     </bean>
