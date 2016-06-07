@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.List;
+
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -49,6 +51,12 @@ public class RestaurantControllerTest {
 
     private static int tableId() {
         return restaurantController.findAllTables().get(0).getTableId();
+    }
+
+    private static int lastTableId() {
+        List<Table> tableList = restaurantController.findAllTables();
+
+        return tableList.get(tableList.size()-1).getTableId();
     }
 
     private static Course prepareTestCourse() {
@@ -291,16 +299,17 @@ public class RestaurantControllerTest {
     @Test(timeout = 2000)
     public void addFindDelTableTest() throws Exception {
         Table table = new Table();
-        int number = Util.getRandomInteger();
-        table.setNumber(number);
+        table.setNumber(restaurantController.findTableById(lastTableId()).getNumber() + Util.getRandomInteger());
         table.setDescription(Util.getRandomString());
         table = restaurantController.addTable(table);
 
-        Table tableByNumber = restaurantController.findTableByNumber(number);
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(table, tableByNumber));
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(table,
+                restaurantController.findTableByNumber(table.getNumber())));
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(table,
+                restaurantController.findTableById(table.getTableId())));
 
         restaurantController.delTable(table);
-        assertTrue(restaurantController.findTableByNumber(number) == null);
+        assertTrue(restaurantController.findTableByNumber(table.getNumber()) == null);
     }
 
     @Test (timeout = 2000)
