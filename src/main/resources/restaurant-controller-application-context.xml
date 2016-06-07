@@ -60,18 +60,12 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.adapters.StateGraphRules" id="stateGraphRules">
+    <bean class="com.company.restaurant.rules.StateGraphRules" id="stateGraphRules">
         <property name="stateGraphDao" ref="stateGraphDao"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.jdbc.JdbcOrderDao" id="orderDao">
         <property name="dataSource" ref="dataSource"/>
-    </bean>
-
-    <bean class="com.company.restaurant.adapters.OrderAdapter" id="orderAdapter">
-        <property name="orderDao" ref="orderDao"/>
-        <property name="stateGraphRules" ref="stateGraphRules"/>
-        <property name="orderCourseDao" ref="orderCourseDao"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.jdbc.JdbcOrderCourseDao" id="orderCourseDao">
@@ -80,10 +74,6 @@
 
     <bean class="com.company.restaurant.dao.jdbc.JdbcCookedCourseDao" id="cookedCourseDao">
         <property name="dataSource" ref="dataSource"/>
-    </bean>
-
-    <bean class="com.company.restaurant.adapters.KitchenAdapter" id="kitchenAdapter">
-        <property name="cookedCourseDao" ref="cookedCourseDao"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.jdbc.JdbcIngredientDao" id="ingredientDao">
@@ -98,12 +88,6 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean class="com.company.restaurant.adapters.WarehouseAdapter" id="warehouseAdapter">
-        <property name="warehouseDao" ref="warehouseDao"/>
-        <property name="ingredientDao" ref="ingredientDao"/>
-        <property name="portionDao" ref="portionDao"/>
-    </bean>
-
     <bean class="com.company.restaurant.controllers.RestaurantController" id="restaurantController">
         <property name="txManager" ref="txManager"/>
         <property name="jobPositionDao" ref="jobPositionDao"/>
@@ -112,9 +96,25 @@
         <property name="courseDao" ref="courseDao"/>
         <property name="menuDao" ref="menuDao"/>
         <property name="tableDao" ref="tableDao"/>
-        <property name="orderAdapter" ref="orderAdapter"/>
-        <property name="kitchenAdapter" ref="kitchenAdapter"/>
-        <property name="warehouseAdapter" ref="warehouseAdapter"/>
+    </bean>
+
+    <bean class="com.company.restaurant.controllers.OrderController" id="orderController">
+        <property name="txManager" ref="txManager"/>
+        <property name="orderDao" ref="orderDao"/>
+        <property name="stateGraphRules" ref="stateGraphRules"/>
+        <property name="orderCourseDao" ref="orderCourseDao"/>
+    </bean>
+
+    <bean class="com.company.restaurant.controllers.WarehouseController" id="warehouseController">
+        <property name="txManager" ref="txManager"/>
+        <property name="ingredientDao" ref="ingredientDao"/>
+        <property name="portionDao" ref="portionDao"/>
+        <property name="warehouseDao" ref="warehouseDao"/>
+    </bean>
+
+    <bean class="com.company.restaurant.controllers.KitchenController" id="kitchenController">
+        <property name="txManager" ref="txManager"/>
+        <property name="cookedCourseDao" ref="cookedCourseDao"/>
     </bean>
     <!-- END OF DB-CONTEXT -->
 </beans>

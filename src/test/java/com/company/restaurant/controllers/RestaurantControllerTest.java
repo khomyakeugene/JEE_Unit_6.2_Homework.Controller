@@ -1,6 +1,5 @@
 package com.company.restaurant.controllers;
 
-import com.company.restaurant.dao.OrderDao;
 import com.company.restaurant.model.*;
 import com.company.util.ObjectService;
 import org.junit.AfterClass;
@@ -14,6 +13,10 @@ import static org.junit.Assert.assertTrue;
  */
 public class RestaurantControllerTest {
     private static RestaurantController restaurantController;
+    private static WarehouseController warehouseController;
+    private static KitchenController kitchenController;
+    private static OrderController orderController;
+
     private static int closedOrderId;
     private static Order closedOrder;
     private static String closedOrderCourseName1;
@@ -63,7 +66,7 @@ public class RestaurantControllerTest {
         order.setTableId(tableId());
         order.setEmployeeId(employeeId());
         order.setOrderNumber(Util.getRandomString());
-        closedOrderId = restaurantController.addOrder(order).getOrderId();
+        closedOrderId = orderController.addOrder(order).getOrderId();
 
         // Courses for closed order ----------------------------
         closedOrderCourseName1 = Util.getRandomString();
@@ -83,19 +86,18 @@ public class RestaurantControllerTest {
         closedOrderCourse2 = restaurantController.addCourse(closedOrderCourse2);
         // ----------
 
-        restaurantController.addCourseToOrder(order, closedOrderCourse1, 1);
+        orderController.addCourseToOrder(order, closedOrderCourse1, 1);
 
-        closedOrder = restaurantController.closeOrder(order);
+        closedOrder = orderController.closeOrder(order);
     }
 
     private static void clearClosedOrder() throws Exception {
-        OrderDao orderDao = restaurantController.getOrderAdapter().getOrderDao();
-        Order order = orderDao.findOrderById(closedOrderId);
+        Order order = orderController.findOrderById(closedOrderId);
         // Manually change order state to "open"
-        order = orderDao.updOrderState(order, "A");
+        order = orderController.updOrderState(order, "A");
 
         // Delete "open" order
-        orderDao.delOrder(order);
+        orderController.delOrder(order);
 
         // Delete course for closed order
         restaurantController.delCourse(closedOrderCourseName1);
@@ -105,6 +107,9 @@ public class RestaurantControllerTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
         restaurantController = RestaurantController.getInstance();
+        warehouseController = WarehouseController.getInstance();
+        kitchenController = KitchenController.getInstance();
+        orderController = OrderController.getInstance();
 
         prepareTestCourse();
         prepareClosedOrder();
@@ -221,6 +226,8 @@ public class RestaurantControllerTest {
 
         Menu menuByName = restaurantController.findMenuByName(name);
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(menu, menuByName));
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(menu,
+                restaurantController.findMenuById(menu.getId())));
 
         // Courses in menu ----------------------------
         String courseName1 = Util.getRandomString();
@@ -255,10 +262,14 @@ public class RestaurantControllerTest {
         restaurantController.delCourse(courseName2);
         // ----------------------------
 
+        for (Menu m : restaurantController.findAllMenus()) {
+            System.out.println("menu_id: " + m.getId() + ", name: " + m.getName());
+        }
+
         restaurantController.delMenu(name);
         assertTrue(restaurantController.findMenuByName(name) == null);
         // Test delete of non-existent data
-        restaurantController.delMenu(name);
+        restaurantController.delMenu(menu);
     }
 
     @Test(timeout = 2000)
@@ -282,9 +293,9 @@ public class RestaurantControllerTest {
         order.setTableId(tableId());
         order.setEmployeeId(employeeId());
         order.setOrderNumber(Util.getRandomString());
-        int orderId = restaurantController.addOrder(order).getOrderId();
+        int orderId = orderController.addOrder(order).getOrderId();
 
-        Order orderById = restaurantController.findOrderById(orderId);
+        Order orderById = orderController.findOrderById(orderId);
         // Just check of successful retrieving from database,  without "full comparing"!!!
         // Because, at least field <order_datetime> is filling by default (as a current timestamp) on the database level
         assertTrue(orderById != null);
@@ -306,93 +317,93 @@ public class RestaurantControllerTest {
         course2.setCost(Util.getRandomFloat());
         course2 = restaurantController.addCourse(course2);
 
-        restaurantController.addCourseToOrder(order, course1, 3);
-        restaurantController.addCourseToOrder(order, course2, 2);
+        orderController.addCourseToOrder(order, course1, 3);
+        orderController.addCourseToOrder(order, course2, 2);
 
-        for (OrderCourse orderCourse : restaurantController.findAllOrderCourses(order)) {
-            restaurantController.findOrderCourseByCourseId(order, orderCourse.getCourseId());
+        for (OrderCourse orderCourse : orderController.findAllOrderCourses(order)) {
+            orderController.findOrderCourseByCourseId(order, orderCourse.getCourseId());
             System.out.println(orderCourse.getCourseName() + " : " + orderCourse.getCourseCost());
         }
 
-        restaurantController.takeCourseFromOrder(order, course1, 2);
-        restaurantController.takeCourseFromOrder(order, course1);
-        restaurantController.takeCourseFromOrder(order, course2, 2);
+        orderController.takeCourseFromOrder(order, course1, 2);
+        orderController.takeCourseFromOrder(order, course1);
+        orderController.takeCourseFromOrder(order, course2, 2);
 
         restaurantController.delCourse(courseName1);
         restaurantController.delCourse(courseName2);
         // ----------------------------
 
-        for (Order o : restaurantController.findAllOrders()) {
+        for (Order o : orderController.findAllOrders()) {
             System.out.println("Order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
         }
 
-        for (Order o : restaurantController.findAllOpenOrders()) {
+        for (Order o : orderController.findAllOpenOrders()) {
             System.out.println("Open order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
         }
 
-        for (Order o : restaurantController.findAllClosedOrders()) {
+        for (Order o : orderController.findAllClosedOrders()) {
             System.out.println("Closed order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
         }
 
-        restaurantController.delOrder(order);
-        assertTrue(restaurantController.findOrderById(orderId) == null);
+        orderController.delOrder(order);
+        assertTrue(orderController.findOrderById(orderId) == null);
     }
 
     @Test(timeout = 2000)
     public void closedOrderTest_1() throws Exception {
         // <DataIntegrityException> should be generated next
-        restaurantController.delOrder(closedOrder);
+        orderController.delOrder(closedOrder);
     }
 
     @Test(timeout = 2000)
     public void closedOrderTest_2() throws Exception {
         // <DataIntegrityException> should be generated next
-        restaurantController.addCourseToOrder(closedOrder, closedOrderCourse2, 1);
+        orderController.addCourseToOrder(closedOrder, closedOrderCourse2, 1);
     }
 
     @Test(timeout = 2000)
     public void closedOrderTest_3() throws Exception {
         // <DataIntegrityException> should be generated next
-        restaurantController.takeCourseFromOrder(closedOrder, closedOrderCourse1, 1);
+        orderController.takeCourseFromOrder(closedOrder, closedOrderCourse1, 1);
     }
 
     @Test(timeout = 2000)
     public void addCookedCourse() throws Exception {
-        restaurantController.addCookedCourse(testCourse, employee(), Util.getRandomFloat());
+        kitchenController.addCookedCourse(testCourse, employee(), Util.getRandomFloat());
 
-        for (CookedCourse cookedCourse : restaurantController.findAllCookedCourses()) {
+        for (CookedCourse cookedCourse : kitchenController.findAllCookedCourses()) {
             System.out.println(cookedCourse.getCourseName() + " : " + cookedCourse.getCookDatetime());
         }
     }
 
     @Test(timeout = 10000)
     public void addFindDelWarehouseTest() throws Exception {
-        for (Ingredient ingredient: restaurantController.findAllIngredients()) {
-            for (Portion portion : restaurantController.findAllPortions()) {
-                restaurantController.addIngredientToWarehouse(ingredient, portion, Util.getRandomFloat());
-                restaurantController.takeIngredientFromWarehouse(ingredient, portion, Util.getRandomFloat());
+        for (Ingredient ingredient: warehouseController.findAllIngredients()) {
+            for (Portion portion : warehouseController.findAllPortions()) {
+                warehouseController.addIngredientToWarehouse(ingredient, portion, Util.getRandomFloat());
+                warehouseController.takeIngredientFromWarehouse(ingredient, portion, Util.getRandomFloat());
 
                 System.out.println("restaurantController.findPortionById(" + portion.getPortionId() + ") test ...");
                 assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(portion,
-                        restaurantController.findPortionById(portion.getPortionId())));
+                        warehouseController.findPortionById(portion.getPortionId())));
             }
 
             System.out.println("restaurantController.findIngredientById(" + ingredient.getId() + ") test ...");
             assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(ingredient,
-                    restaurantController.findIngredientById(ingredient.getId())));
+                    warehouseController.findIngredientById(ingredient.getId())));
 
             System.out.println("Warehouse: " + ingredient.getName() + " : ");
-            for (Warehouse warehouse : restaurantController.findIngredientInWarehouseByName(ingredient.getName())) {
+            for (Warehouse warehouse : warehouseController.findIngredientInWarehouseByName(ingredient.getName())) {
                 System.out.println(warehouse.getPortionDescription() + ": " + warehouse.getAmount());
             }
         }
 
         System.out.println("Warehouse all ingredients:");
-        for (Warehouse warehouse : restaurantController.findAllWarehouseIngredients()) {
+        for (Warehouse warehouse : warehouseController.findAllWarehouseIngredients()) {
             System.out.println(warehouse.getIngredientName() + ": " + warehouse.getAmount());
         }
         System.out.println("Warehouse elapsing ingredients:");
-        for (Warehouse warehouse : restaurantController.findAllElapsingWarehouseIngredients((float)500.0)) {
+        for (Warehouse warehouse : warehouseController.findAllElapsingWarehouseIngredients((float)500.0)) {
             System.out.println(warehouse.getIngredientName() + ": " + warehouse.getPortionDescription() + ": " +
                     warehouse.getAmount());
         }

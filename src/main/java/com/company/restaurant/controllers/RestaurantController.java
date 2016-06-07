@@ -1,40 +1,23 @@
 package com.company.restaurant.controllers;
 
-import com.company.restaurant.adapters.KitchenAdapter;
-import com.company.restaurant.adapters.OrderAdapter;
-import com.company.restaurant.adapters.WarehouseAdapter;
 import com.company.restaurant.dao.*;
 import com.company.restaurant.model.*;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import java.util.List;
 
 /**
  * Created by Yevhen on 19.05.2016.
  */
-public class RestaurantController {
-    private final static String APPLICATION_CONTEXT_NAME = "restaurant-controller-application-context.xml";
-
-    private PlatformTransactionManager txManager;
+public class RestaurantController extends BasicTransactionManagerController {
     private JobPositionDao jobPositionDao;
     private EmployeeDao employeeDao;
     private CourseCategoryDao courseCategoryDao;
     private CourseDao courseDao;
     private MenuDao menuDao;
     private TableDao tableDao;
-    private OrderAdapter orderAdapter;
-    private KitchenAdapter kitchenAdapter;
-    private WarehouseAdapter warehouseAdapter;
 
     public static RestaurantController getInstance() {
-        ApplicationContext context = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_NAME);
-        return context.getBean(RestaurantController.class);
-    }
-
-    public void setTxManager(PlatformTransactionManager txManager) {
-        this.txManager = txManager;
+        return applicationContext.getBean(RestaurantController.class);
     }
 
     public void setJobPositionDao(JobPositionDao jobPositionDao) {
@@ -59,22 +42,6 @@ public class RestaurantController {
 
     public void setTableDao(TableDao tableDao) {
         this.tableDao = tableDao;
-    }
-
-    public void setOrderAdapter(OrderAdapter orderAdapter) {
-        this.orderAdapter = orderAdapter;
-    }
-
-    public void setKitchenAdapter(KitchenAdapter kitchenAdapter) {
-        this.kitchenAdapter = kitchenAdapter;
-    }
-
-    public OrderAdapter getOrderAdapter() {
-        return orderAdapter;
-    }
-
-    public void setWarehouseAdapter(WarehouseAdapter warehouseAdapter) {
-        this.warehouseAdapter = warehouseAdapter;
     }
 
     public JobPosition addJobPosition(String name) {
@@ -227,109 +194,5 @@ public class RestaurantController {
 
     public List<Table> findAllTables() {
         return tableDao.findAllTables();
-    }
-
-    public Order addOrder(Order order) {
-        return orderAdapter.addOrder(order);
-    }
-
-    public String delOrder(Order order) {
-        return orderAdapter.delOrder(order);
-    }
-
-    public Order findOrderById(int id) {
-        return orderAdapter.findOrderById(id);
-    }
-
-    public List<Order> findOrderByNumber(String orderNumber) {
-        return orderAdapter.findOrderByNumber(orderNumber);
-    }
-
-    public Order closeOrder(Order order) {
-        return orderAdapter.closeOrder(order);
-    }
-
-    public List<Order> findAllOrders() {
-        return orderAdapter.findAllOrders();
-    }
-
-    public List<Order> findAllOrders(String stateType) {
-        return orderAdapter.findAllOrders(stateType);
-    }
-
-    public List<Order> findAllOpenOrders() {
-        return orderAdapter.findAllOpenOrders();
-    }
-
-    public List<Order> findAllClosedOrders() {
-        return orderAdapter.findAllClosedOrders();
-    }
-
-    public String addCourseToOrder(Order order, Course course, int quantity) {
-        return orderAdapter.addCourseToOrder(order, course, quantity);
-    }
-
-    public String takeCourseFromOrder(Order order, Course course, int quantity) {
-        return orderAdapter.takeCourseFromOrder(order, course, quantity);
-    }
-
-    void takeCourseFromOrder(Order order, Course course) {
-        orderAdapter.takeCourseFromOrder(order, course);
-    }
-
-    public List<OrderCourse> findAllOrderCourses(Order order) {
-        return orderAdapter.findAllOrderCourses(order);
-    }
-
-    public OrderCourse findOrderCourseByCourseId(Order order, int courseId) {
-        return orderAdapter.findOrderCourseByCourseId(order, courseId);
-    }
-
-    public void addCookedCourse(Course course, Employee employee, Float weight) {
-        kitchenAdapter.addCookedCourse(course, employee, weight);
-    }
-
-    public List<CookedCourse> findAllCookedCourses() {
-        return kitchenAdapter.findAllCookedCourses();
-    }
-
-    public void addIngredientToWarehouse(Ingredient ingredient, Portion portion, float amount) {
-        warehouseAdapter.addIngredientToWarehouse(ingredient, portion, amount);
-    }
-
-    public void takeIngredientFromWarehouse(Ingredient ingredient, Portion portion, float amount) {
-        warehouseAdapter.takeIngredientFromWarehouse(ingredient, portion, amount);
-    }
-
-    public List<Warehouse> findIngredientInWarehouseByName(String name) {
-        return warehouseAdapter.findIngredientInWarehouseByName(name);
-    }
-
-    public List<Warehouse> findIngredientInWarehouseById(int ingredientId) {
-        return warehouseAdapter.findIngredientInWarehouseById(ingredientId);
-    }
-
-    public List<Warehouse> findAllWarehouseIngredients() {
-        return warehouseAdapter.findAllWarehouseIngredients();
-    }
-
-    public List<Warehouse> findAllElapsingWarehouseIngredients(float limit) {
-        return warehouseAdapter.findAllElapsingWarehouseIngredients(limit);
-    }
-
-    public List<Ingredient> findAllIngredients() {
-        return warehouseAdapter.findAllIngredients();
-    }
-
-    public Ingredient findIngredientById(int ingredientId) {
-        return warehouseAdapter.findIngredientById(ingredientId);
-    }
-
-    public List<Portion> findAllPortions() {
-        return warehouseAdapter.findAllPortions();
-    }
-
-    public Portion findPortionById(int portionId) {
-        return warehouseAdapter.findPortionById(portionId);
     }
 }

@@ -1,5 +1,6 @@
-package com.company.restaurant.adapters;
+package com.company.restaurant.controllers;
 
+import com.company.restaurant.rules.StateGraphRules;
 import com.company.restaurant.dao.OrderCourseDao;
 import com.company.restaurant.dao.OrderDao;
 import com.company.restaurant.model.*;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by Yevhen on 22.05.2016.
  */
-public class OrderAdapter {
+public class OrderController extends BasicTransactionManagerController  {
     private static final String IMPOSSIBLE_TO_DELETE_ORDER_PATTERN =
             "It is impossible to delete order in <%s> state (<order_id> = %d)!";
     private static final String IMPOSSIBLE_TO_ADD_COURSE_TO_ORDER_PATTERN =
@@ -22,10 +23,6 @@ public class OrderAdapter {
     private StateGraphRules stateGraphRules;
     private OrderCourseDao orderCourseDao;
 
-    public OrderDao getOrderDao() {
-        return orderDao;
-    }
-
     public void setOrderDao(OrderDao orderDao) {
         this.orderDao = orderDao;
     }
@@ -36,6 +33,10 @@ public class OrderAdapter {
 
     public void setOrderCourseDao(OrderCourseDao orderCourseDao) {
         this.orderCourseDao = orderCourseDao;
+    }
+
+    public static OrderController getInstance() {
+        return applicationContext.getBean(OrderController.class);
     }
 
     private String orderCreationState() {
@@ -73,7 +74,6 @@ public class OrderAdapter {
         String result = null;
 
         try {
-
             try {
                 // Check if it is possible to delete (if <deleted state> is presented for this order)
                 if (orderDeletedState(order) != null) {
@@ -133,7 +133,6 @@ public class OrderAdapter {
                 errorMessage(String.format(
                         IMPOSSIBLE_TO_ADD_COURSE_TO_ORDER_PATTERN, order.getStateTypeName(), order.getOrderId()));
             }
-
         } catch (Exception e) {
             result = e.getMessage();
         }
@@ -176,5 +175,9 @@ public class OrderAdapter {
 
     public OrderCourse findOrderCourseByCourseId(Order order, int courseId) {
         return orderCourseDao.findOrderCourseByCourseId(order, courseId);
+    }
+
+    public Order updOrderState(Order order, String stateType) {
+        return orderDao.updOrderState(order, stateType);
     }
 }

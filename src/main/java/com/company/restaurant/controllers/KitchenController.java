@@ -1,4 +1,4 @@
-package com.company.restaurant.adapters;
+package com.company.restaurant.controllers;
 
 import com.company.restaurant.dao.CookedCourseDao;
 import com.company.restaurant.model.CookedCourse;
@@ -7,14 +7,15 @@ import com.company.restaurant.model.Employee;
 
 import java.util.List;
 
-/**
- * Created by Yevhen on 23.05.2016.
- */
-public class KitchenAdapter {
+public class KitchenController extends BasicTransactionManagerController {
     private CookedCourseDao cookedCourseDao;
 
     public void setCookedCourseDao(CookedCourseDao cookedCourseDao) {
         this.cookedCourseDao = cookedCourseDao;
+    }
+
+    public static KitchenController getInstance() {
+        return applicationContext.getBean(KitchenController.class);
     }
 
     public void addCookedCourse(Course course, Employee employee, Float weight) {

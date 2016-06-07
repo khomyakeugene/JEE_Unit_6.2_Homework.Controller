@@ -1,4 +1,4 @@
-package com.company.restaurant.adapters;
+package com.company.restaurant.rules;
 
 import com.company.restaurant.dao.StateGraphDao;
 import com.company.restaurant.model.StateGraph;

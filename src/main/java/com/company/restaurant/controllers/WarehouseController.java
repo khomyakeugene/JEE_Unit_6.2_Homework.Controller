@@ -1,4 +1,4 @@
-package com.company.restaurant.adapters;
+package com.company.restaurant.controllers;
 
 import com.company.restaurant.dao.IngredientDao;
 import com.company.restaurant.dao.PortionDao;
@@ -9,10 +9,7 @@ import com.company.restaurant.model.Warehouse;
 
 import java.util.List;
 
-/**
- * Created by Yevhen on 24.05.2016.
- */
-public class WarehouseAdapter {
+public class WarehouseController extends BasicTransactionManagerController {
     private WarehouseDao warehouseDao;
     private IngredientDao ingredientDao;
     private PortionDao portionDao;
@@ -27,6 +24,10 @@ public class WarehouseAdapter {
 
     public void setPortionDao(PortionDao portionDao) {
         this.portionDao = portionDao;
+    }
+
+    public static WarehouseController getInstance() {
+        return applicationContext.getBean(WarehouseController.class);
     }
 
     public void addIngredientToWarehouse(Ingredient ingredient, Portion portion, float amount) {
