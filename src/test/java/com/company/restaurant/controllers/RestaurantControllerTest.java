@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 public class RestaurantControllerTest {
     private final static String APPLICATION_CONTEXT_NAME = "restaurant-controller-application-context.xml";
 
-    private static RestaurantController restaurantController;
+    private static MenuController menuController;
     private static TableController tableController;
     private static EmployeeController employeeController;
     private static WarehouseController warehouseController;
@@ -123,7 +123,7 @@ public class RestaurantControllerTest {
     public static void setUpClass() throws Exception {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_NAME);
 
-        restaurantController = applicationContext.getBean(RestaurantController.class);
+        menuController = applicationContext.getBean(MenuController.class);
         tableController = applicationContext.getBean(TableController.class);
         employeeController = applicationContext.getBean(EmployeeController.class);
         warehouseController = applicationContext.getBean(WarehouseController.class);
@@ -248,12 +248,12 @@ public class RestaurantControllerTest {
     @Test(timeout = 2000)
     public void addFindDelMenuTest() throws Exception {
         String name = Util.getRandomString();
-        Menu menu = restaurantController.addMenu(name);
+        Menu menu = menuController.addMenu(name);
 
-        Menu menuByName = restaurantController.findMenuByName(name);
+        Menu menuByName = menuController.findMenuByName(name);
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(menu, menuByName));
         assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(menu,
-                restaurantController.findMenuById(menu.getId())));
+                menuController.findMenuById(menu.getId())));
 
         // Courses in menu ----------------------------
         String courseName1 = Util.getRandomString();
@@ -272,30 +272,30 @@ public class RestaurantControllerTest {
         course2.setCost(Util.getRandomFloat());
         course2 = courseController.addCourse(course2);
 
-        restaurantController.addCourseToMenu(menu, course1);
-        restaurantController.addCourseToMenu(menu, course2);
+        menuController.addCourseToMenu(menu, course1);
+        menuController.addCourseToMenu(menu, course2);
 
-        for (MenuCourseList menuCourseList : restaurantController.findMenuCourses(menu)) {
-            restaurantController.findMenuCourseByCourseId(menu, menuCourseList.getCourseId());
+        for (MenuCourseList menuCourseList : menuController.findMenuCourses(menu)) {
+            menuController.findMenuCourseByCourseId(menu, menuCourseList.getCourseId());
             System.out.println(menuCourseList.getCourseName() + ": " + menuCourseList.getCourseCategoryName());
         }
 
 
-        restaurantController.delCourseFromMenu(menu, course1);
-        restaurantController.delCourseFromMenu(menu, course2);
+        menuController.delCourseFromMenu(menu, course1);
+        menuController.delCourseFromMenu(menu, course2);
 
         courseController.delCourse(courseName1);
         courseController.delCourse(courseName2);
         // ----------------------------
 
-        for (Menu m : restaurantController.findAllMenus()) {
+        for (Menu m : menuController.findAllMenus()) {
             System.out.println("menu_id: " + m.getId() + ", name: " + m.getName());
         }
 
-        restaurantController.delMenu(name);
-        assertTrue(restaurantController.findMenuByName(name) == null);
+        menuController.delMenu(name);
+        assertTrue(menuController.findMenuByName(name) == null);
         // Test delete of non-existent data
-        restaurantController.delMenu(menu);
+        menuController.delMenu(menu);
     }
 
     @Test(timeout = 2000)
@@ -410,12 +410,12 @@ public class RestaurantControllerTest {
                 warehouseController.addIngredientToWarehouse(ingredient, portion, Util.getRandomFloat());
                 warehouseController.takeIngredientFromWarehouse(ingredient, portion, Util.getRandomFloat());
 
-                System.out.println("restaurantController.findPortionById(" + portion.getPortionId() + ") test ...");
+                System.out.println("menuController.findPortionById(" + portion.getPortionId() + ") test ...");
                 assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(portion,
                         warehouseController.findPortionById(portion.getPortionId())));
             }
 
-            System.out.println("restaurantController.findIngredientById(" + ingredient.getId() + ") test ...");
+            System.out.println("menuController.findIngredientById(" + ingredient.getId() + ") test ...");
             assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(ingredient,
                     warehouseController.findIngredientById(ingredient.getId())));
 
