@@ -97,5 +97,16 @@
             <version>0.9.5.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.company</groupId>
+            <artifactId>Restaurant.Model.Dao.Jdbc</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.company</groupId>
+            <artifactId>Restaurant.Controller</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>
