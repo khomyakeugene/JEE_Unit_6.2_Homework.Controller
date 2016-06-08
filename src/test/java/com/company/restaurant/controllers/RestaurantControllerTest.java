@@ -1,7 +1,6 @@
 package com.company.restaurant.controllers;
 
 import com.company.restaurant.model.*;
-import com.company.util.ObjectService;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;

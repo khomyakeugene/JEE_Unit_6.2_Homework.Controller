@@ -1,9 +1,8 @@
-package com.company.util;
+package com.company.restaurant.controllers;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by Yevgen on 10.01.2016.
