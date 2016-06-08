@@ -379,19 +379,16 @@ public class RestaurantControllerTest {
 
     @Test(timeout = 2000)
     public void closedOrderTest_1() throws Exception {
-        // <DataIntegrityException> should be generated next
         orderController.delOrder(closedOrder);
     }
 
     @Test(timeout = 2000)
     public void closedOrderTest_2() throws Exception {
-        // <DataIntegrityException> should be generated next
         orderController.addCourseToOrder(closedOrder, closedOrderCourse2, 1);
     }
 
     @Test(timeout = 2000)
     public void closedOrderTest_3() throws Exception {
-        // <DataIntegrityException> should be generated next
         orderController.takeCourseFromOrder(closedOrder, closedOrderCourse1, 1);
     }
 
