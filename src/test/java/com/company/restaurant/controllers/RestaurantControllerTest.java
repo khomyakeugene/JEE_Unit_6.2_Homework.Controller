@@ -14,9 +14,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Yevhen on 20.05.2016.
  */
-public class RestaurantControllerTest {
-    private final static String APPLICATION_CONTEXT_NAME = "restaurant-controller-context.xml";
-
+public abstract class RestaurantControllerTest {
     private static MenuController menuController;
     private static TableController tableController;
     private static EmployeeController employeeController;
@@ -118,9 +116,18 @@ public class RestaurantControllerTest {
         courseController.delCourse(closedOrderCourseName2);
     }
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_NAME);
+    public static void initEnvironment() throws Exception {
+        prepareTestCourse();
+        prepareClosedOrder();
+    }
+
+    private static void tearDownEnvironment() throws Exception {
+        delTestCourse();
+        clearClosedOrder();
+    }
+
+    protected static void initDataSource(String configLocation) throws Exception {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(configLocation);
 
         menuController = applicationContext.getBean(MenuController.class);
         tableController = applicationContext.getBean(TableController.class);
@@ -129,17 +136,19 @@ public class RestaurantControllerTest {
         kitchenController = applicationContext.getBean(KitchenController.class);
         orderController = applicationContext.getBean(OrderController.class);
         courseController = applicationContext.getBean(CourseController.class);
+    }
 
-        prepareTestCourse();
-        prepareClosedOrder();
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        initDataSource(null); // intentionally, to generate exception if use this code directly
+
+        initEnvironment();
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
-        delTestCourse();
-        clearClosedOrder();
-
-        System.out.println("tearDownClass finished!");
+        tearDownEnvironment();
     }
 
     @Test(timeout = 2000)
