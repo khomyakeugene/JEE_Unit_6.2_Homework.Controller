@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
  * Created by Yevhen on 20.05.2016.
  */
 public class RestaurantControllerTest {
-    private final static String APPLICATION_CONTEXT_NAME = "restaurant-controller-application-context.xml";
+    private final static String APPLICATION_CONTEXT_NAME = "restaurant-controller-context.xml";
 
     private static MenuController menuController;
     private static TableController tableController;
