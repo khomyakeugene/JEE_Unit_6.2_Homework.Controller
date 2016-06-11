@@ -285,7 +285,7 @@ public abstract class RestaurantControllerTest {
         menuController.addCourseToMenu(menu, course1);
         menuController.addCourseToMenu(menu, course2);
 
-        for (MenuCourseList menuCourseList : menuController.findMenuCourses(menu)) {
+        for (MenuCourseView menuCourseList : menuController.findMenuCourses(menu)) {
             menuController.findMenuCourseByCourseId(menu, menuCourseList.getCourseId());
             System.out.println(menuCourseList.getCourseName() + ": " + menuCourseList.getCourseCategoryName());
         }
