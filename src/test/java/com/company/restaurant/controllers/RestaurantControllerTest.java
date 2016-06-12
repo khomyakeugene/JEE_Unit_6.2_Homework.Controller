@@ -26,7 +26,7 @@ public abstract class RestaurantControllerTest {
     private static CourseController courseController;
 
     private static int closedOrderId;
-    private static Order closedOrder;
+    private static OrderView closedOrder;
     private static String closedOrderCourseName1;
     private static Course closedOrderCourse1;
     private static String closedOrderCourseName2;
@@ -76,11 +76,11 @@ public abstract class RestaurantControllerTest {
     }
 
     private static void prepareClosedOrder() throws Exception {
-        Order order = new Order();
-        order.setTableId(tableId());
-        order.setEmployeeId(employeeId());
-        order.setOrderNumber(Util.getRandomString());
-        closedOrderId = orderController.addOrder(order).getOrderId();
+        OrderView orderView = new OrderView();
+        orderView.setTableId(tableId());
+        orderView.setEmployeeId(employeeId());
+        orderView.setOrderNumber(Util.getRandomString());
+        closedOrderId = orderController.addOrder(orderView).getOrderId();
 
         // Courses for closed order ----------------------------
         closedOrderCourseName1 = Util.getRandomString();
@@ -100,18 +100,18 @@ public abstract class RestaurantControllerTest {
         closedOrderCourse2 = courseController.addCourse(closedOrderCourse2);
         // ----------
 
-        orderController.addCourseToOrder(order, closedOrderCourse1, 1);
+        orderController.addCourseToOrder(orderView, closedOrderCourse1, 1);
 
-        closedOrder = orderController.closeOrder(order);
+        closedOrder = orderController.closeOrder(orderView);
     }
 
     private static void clearClosedOrder() throws Exception {
-        Order order = orderController.findOrderById(closedOrderId);
+        OrderView orderView = orderController.findOrderById(closedOrderId);
         // Manually change order state to "open"
-        order = orderController.updOrderState(order, "A");
+        orderView = orderController.updOrderState(orderView, "A");
 
         // Delete "open" order
-        orderController.delOrder(order);
+        orderController.delOrder(orderView);
 
         // Delete course for closed order
         courseController.delCourse(closedOrderCourseName1);
@@ -338,13 +338,13 @@ public abstract class RestaurantControllerTest {
 
     @Test (timeout = 2000)
     public void addFindDelOrderTest() throws Exception {
-        Order order = new Order();
-        order.setTableId(tableId());
-        order.setEmployeeId(employeeId());
-        order.setOrderNumber(Util.getRandomString());
-        int orderId = orderController.addOrder(order).getOrderId();
+        OrderView orderView = new OrderView();
+        orderView.setTableId(tableId());
+        orderView.setEmployeeId(employeeId());
+        orderView.setOrderNumber(Util.getRandomString());
+        int orderId = orderController.addOrder(orderView).getOrderId();
 
-        Order orderById = orderController.findOrderById(orderId);
+        OrderView orderById = orderController.findOrderById(orderId);
         // Just check of successful retrieving from database,  without "full comparing"!!!
         // Because, at least field <order_datetime> is filling by default (as a current timestamp) on the database level
         assertTrue(orderById != null);
@@ -366,35 +366,35 @@ public abstract class RestaurantControllerTest {
         course2.setCost(Util.getRandomFloat());
         course2 = courseController.addCourse(course2);
 
-        orderController.addCourseToOrder(order, course1, 3);
-        orderController.addCourseToOrder(order, course2, 2);
+        orderController.addCourseToOrder(orderView, course1, 3);
+        orderController.addCourseToOrder(orderView, course2, 2);
 
-        for (OrderCourse orderCourse : orderController.findAllOrderCourses(order)) {
-            orderController.findOrderCourseByCourseId(order, orderCourse.getCourseId());
+        for (OrderCourse orderCourse : orderController.findAllOrderCourses(orderView)) {
+            orderController.findOrderCourseByCourseId(orderView, orderCourse.getCourseId());
             System.out.println(orderCourse.getCourseName() + " : " + orderCourse.getCourseCost());
         }
 
-        orderController.takeCourseFromOrder(order, course1, 2);
-        orderController.takeCourseFromOrder(order, course1);
-        orderController.takeCourseFromOrder(order, course2, 2);
+        orderController.takeCourseFromOrder(orderView, course1, 2);
+        orderController.takeCourseFromOrder(orderView, course1);
+        orderController.takeCourseFromOrder(orderView, course2, 2);
 
         courseController.delCourse(courseName1);
         courseController.delCourse(courseName2);
         // ----------------------------
 
-        for (Order o : orderController.findAllOrders()) {
+        for (OrderView o : orderController.findAllOrders()) {
             System.out.println("Order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
         }
 
-        for (Order o : orderController.findAllOpenOrders()) {
+        for (OrderView o : orderController.findAllOpenOrders()) {
             System.out.println("Open order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
         }
 
-        for (Order o : orderController.findAllClosedOrders()) {
+        for (OrderView o : orderController.findAllClosedOrders()) {
             System.out.println("Closed order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
         }
 
-        orderController.delOrder(order);
+        orderController.delOrder(orderView);
         assertTrue(orderController.findOrderById(orderId) == null);
     }
 
