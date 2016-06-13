@@ -342,7 +342,8 @@ public abstract class RestaurantControllerTest {
         orderView.setTableId(tableId());
         orderView.setEmployeeId(employeeId());
         orderView.setOrderNumber(Util.getRandomString());
-        int orderId = orderController.addOrder(orderView).getOrderId();
+        orderView = orderController.addOrder(orderView);
+        int orderId = orderView.getOrderId();
 
         OrderView orderById = orderController.findOrderById(orderId);
         // Just check of successful retrieving from database,  without "full comparing"!!!
