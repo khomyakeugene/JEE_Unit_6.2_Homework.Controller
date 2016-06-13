@@ -369,9 +369,9 @@ public abstract class RestaurantControllerTest {
         orderController.addCourseToOrder(orderView, course1, 3);
         orderController.addCourseToOrder(orderView, course2, 2);
 
-        for (OrderCourse orderCourse : orderController.findAllOrderCourses(orderView)) {
-            orderController.findOrderCourseByCourseId(orderView, orderCourse.getCourseId());
-            System.out.println(orderCourse.getCourseName() + " : " + orderCourse.getCourseCost());
+        for (OrderCourseView orderCourseView : orderController.findAllOrderCourses(orderView)) {
+            orderController.findOrderCourseByCourseId(orderView, orderCourseView.getCourseId());
+            System.out.println(orderCourseView.getCourseName() + " : " + orderCourseView.getCourseCost());
         }
 
         orderController.takeCourseFromOrder(orderView, course1, 2);

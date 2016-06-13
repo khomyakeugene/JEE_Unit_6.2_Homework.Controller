@@ -43,7 +43,7 @@
         <property name="txManager" ref="txManager"/>
         <property name="orderViewDao" ref="orderViewDao"/>
         <property name="stateGraphRules" ref="stateGraphRules"/>
-        <property name="orderCourseDao" ref="orderCourseDao"/>
+        <property name="orderCourseViewDao" ref="orderCourseViewDao"/>
     </bean>
 
     <bean class="com.company.restaurant.controllers.WarehouseController" id="warehouseController">
