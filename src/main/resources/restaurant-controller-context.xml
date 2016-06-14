@@ -55,7 +55,7 @@
 
     <bean class="com.company.restaurant.controllers.KitchenController" id="kitchenController">
         <property name="txManager" ref="txManager"/>
-        <property name="cookedCourseDao" ref="cookedCourseDao"/>
+        <property name="cookedCourseViewDao" ref="cookedCourseViewDao"/>
     </bean>
     <!-- END OF DB-CONTEXT -->
 </beans>

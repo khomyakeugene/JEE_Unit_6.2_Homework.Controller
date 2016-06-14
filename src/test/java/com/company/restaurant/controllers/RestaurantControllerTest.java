@@ -418,10 +418,32 @@ public abstract class RestaurantControllerTest {
     public void addCookedCourse() throws Exception {
         kitchenController.addCookedCourse(testCourse, employee(), Util.getRandomFloat());
 
-        for (CookedCourse cookedCourse : kitchenController.findAllCookedCourses()) {
-            System.out.println(cookedCourse.getCourseName() + " : " + cookedCourse.getCookDatetime());
+        for (CookedCourseView cookedCourseView : kitchenController.findAllCookedCourses()) {
+            System.out.println(cookedCourseView.getCourseName() + " : " + cookedCourseView.getCookDatetime());
         }
     }
+
+    @Test(timeout = 2000)
+    public void addDelCookedCourse() throws Exception {
+        Course testCourse = new Course();
+        testCourse.setCategoryId(courseCategoryId());
+        testCourse.setName(Util.getRandomString());
+        testCourse.setWeight(Util.getRandomFloat());
+        testCourse.setCost(Util.getRandomFloat());
+
+        testCourse = courseController.addCourse(testCourse);
+
+        CookedCourseView cookedCourseView = kitchenController.addCookedCourse(testCourse, employee(),
+                Util.getRandomFloat());
+
+        for (CookedCourseView cCV : kitchenController.findAllCookedCourses()) {
+            System.out.println(cCV.getCourseName() + " : " + cCV.getCookDatetime());
+        }
+
+        kitchenController.delCookedCourse(cookedCourseView);
+        courseController.delCourse(testCourse);
+    }
+
 
     @Test(timeout = 10000)
     public void addFindDelWarehouseTest() throws Exception {
