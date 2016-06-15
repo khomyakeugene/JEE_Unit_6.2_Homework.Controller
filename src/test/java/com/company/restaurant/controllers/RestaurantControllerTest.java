@@ -462,19 +462,19 @@ public abstract class RestaurantControllerTest {
                     warehouseController.findIngredientById(ingredient.getId())));
 
             System.out.println("Warehouse: " + ingredient.getName() + " : ");
-            for (Warehouse warehouse : warehouseController.findIngredientInWarehouseByName(ingredient.getName())) {
-                System.out.println(warehouse.getPortionDescription() + ": " + warehouse.getAmount());
+            for (WarehouseView warehouseView : warehouseController.findIngredientInWarehouseByName(ingredient.getName())) {
+                System.out.println(warehouseView.getPortionDescription() + ": " + warehouseView.getAmount());
             }
         }
 
         System.out.println("Warehouse all ingredients:");
-        for (Warehouse warehouse : warehouseController.findAllWarehouseIngredients()) {
-            System.out.println(warehouse.getIngredientName() + ": " + warehouse.getAmount());
+        for (WarehouseView warehouseView : warehouseController.findAllWarehouseIngredients()) {
+            System.out.println(warehouseView.getIngredientName() + ": " + warehouseView.getAmount());
         }
         System.out.println("Warehouse elapsing ingredients:");
-        for (Warehouse warehouse : warehouseController.findAllElapsingWarehouseIngredients((float)500.0)) {
-            System.out.println(warehouse.getIngredientName() + ": " + warehouse.getPortionDescription() + ": " +
-                    warehouse.getAmount());
+        for (WarehouseView warehouseView : warehouseController.findAllElapsingWarehouseIngredients((float)500.0)) {
+            System.out.println(warehouseView.getIngredientName() + ": " + warehouseView.getPortionDescription() + ": " +
+                    warehouseView.getAmount());
         }
     }
 }

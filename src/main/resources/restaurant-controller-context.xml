@@ -50,7 +50,7 @@
         <property name="txManager" ref="txManager"/>
         <property name="ingredientDao" ref="ingredientDao"/>
         <property name="portionDao" ref="portionDao"/>
-        <property name="warehouseDao" ref="warehouseDao"/>
+        <property name="warehouseViewDao" ref="warehouseViewDao"/>
     </bean>
 
     <bean class="com.company.restaurant.controllers.KitchenController" id="kitchenController">
