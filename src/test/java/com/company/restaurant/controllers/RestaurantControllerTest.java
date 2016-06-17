@@ -1,6 +1,7 @@
 package com.company.restaurant.controllers;
 
 import com.company.restaurant.model.*;
+import com.company.util.DataIntegrityException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -399,7 +400,7 @@ public abstract class RestaurantControllerTest {
         assertTrue(orderController.findOrderById(orderId) == null);
     }
 
-    @Test(timeout = 2000)
+    @Test(timeout = 2000, expected = DataIntegrityException.class)
     public void closedOrderTest_1() throws Exception {
         orderController.delOrder(closedOrder);
     }
@@ -452,12 +453,12 @@ public abstract class RestaurantControllerTest {
                 warehouseController.addIngredientToWarehouse(ingredient, portion, Util.getRandomFloat());
                 warehouseController.takeIngredientFromWarehouse(ingredient, portion, Util.getRandomFloat());
 
-                System.out.println("menuController.findPortionById(" + portion.getPortionId() + ") test ...");
+                System.out.println("warehouseController.findPortionById(" + portion.getPortionId() + ") test ...");
                 assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(portion,
                         warehouseController.findPortionById(portion.getPortionId())));
             }
 
-            System.out.println("menuController.findIngredientById(" + ingredient.getId() + ") test ...");
+            System.out.println("warehouseController.findIngredientById(" + ingredient.getId() + ") test ...");
             assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(ingredient,
                     warehouseController.findIngredientById(ingredient.getId())));
 
