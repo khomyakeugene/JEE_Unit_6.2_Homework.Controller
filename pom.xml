@@ -105,7 +105,7 @@
 
         <dependency>
             <groupId>com.company</groupId>
-            <artifactId>Restaurant.Controller</artifactId>
+            <artifactId>Restaurant.Controller.Implementation</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>
