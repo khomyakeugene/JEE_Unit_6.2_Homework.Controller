@@ -25,7 +25,6 @@
     </bean>
 
     <bean class="com.company.restaurant.controllers.TableControllerImpl" id="tableController">
-        <property name="txManager" ref="txManager"/>
         <property name="tableDao" ref="tableDao"/>
     </bean>
 
@@ -40,21 +39,18 @@
     </bean>
 
     <bean class="com.company.restaurant.controllers.OrderControllerImpl" id="orderController">
-        <property name="txManager" ref="txManager"/>
         <property name="orderViewDao" ref="orderViewDao"/>
         <property name="stateGraphRules" ref="stateGraphRules"/>
         <property name="orderCourseViewDao" ref="orderCourseViewDao"/>
     </bean>
 
     <bean class="com.company.restaurant.controllers.WarehouseControllerImpl" id="warehouseController">
-        <property name="txManager" ref="txManager"/>
         <property name="ingredientDao" ref="ingredientDao"/>
         <property name="portionDao" ref="portionDao"/>
         <property name="warehouseViewDao" ref="warehouseViewDao"/>
     </bean>
 
     <bean class="com.company.restaurant.controllers.KitchenControllerImpl" id="kitchenController">
-        <property name="txManager" ref="txManager"/>
         <property name="cookedCourseViewDao" ref="cookedCourseViewDao"/>
     </bean>
     <!-- END OF DB-CONTEXT -->
