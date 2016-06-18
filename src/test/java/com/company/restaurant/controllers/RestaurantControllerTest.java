@@ -120,7 +120,7 @@ public abstract class RestaurantControllerTest {
         courseController.delCourse(closedOrderCourseName2);
     }
 
-    public static void initEnvironment() throws Exception {
+    protected static void initEnvironment() throws Exception {
         prepareTestCourse();
         prepareClosedOrder();
     }
