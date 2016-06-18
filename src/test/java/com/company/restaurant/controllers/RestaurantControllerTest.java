@@ -420,7 +420,7 @@ public abstract class RestaurantControllerTest {
         }
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addDelCookedCourse() throws Exception {
         Course testCourse = new Course();
         testCourse.setCategoryId(courseCategoryId());
