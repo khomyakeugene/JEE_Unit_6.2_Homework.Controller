@@ -81,7 +81,8 @@ public abstract class RestaurantControllerTest {
         orderView.setTableId(tableId());
         orderView.setEmployeeId(employeeId());
         orderView.setOrderNumber(Util.getRandomString());
-        closedOrderId = orderController.addOrder(orderView).getOrderId();
+        orderView = orderController.addOrder(orderView);
+        closedOrderId = orderView.getOrderId();
 
         // Courses for closed order ----------------------------
         closedOrderCourseName1 = Util.getRandomString();
