@@ -102,7 +102,7 @@ public abstract class RestaurantControllerTest {
         closedOrderCourse2 = courseController.addCourse(closedOrderCourse2);
         // ----------
 
-        orderController.addCourseToOrder(orderView, closedOrderCourse1, 1);
+        orderController.addCourseToOrder(orderView, closedOrderCourse1);
 
         closedOrder = orderController.closeOrder(orderView);
     }
@@ -342,10 +342,9 @@ public abstract class RestaurantControllerTest {
         orderView = orderController.addOrder(orderView);
         int orderId = orderView.getOrderId();
 
-        OrderView orderById = orderController.findOrderById(orderId);
         // Just check of successful retrieving from database,  without "full comparing"!!!
         // Because, at least field <order_datetime> is filling by default (as a current timestamp) on the database level
-        assertTrue(orderById != null);
+        assertTrue(orderController.findOrderById(orderId) != null);
 
         // Courses in order ----------------------------
         String courseName1 = Util.getRandomString();
@@ -364,17 +363,17 @@ public abstract class RestaurantControllerTest {
         course2.setCost(Util.getRandomFloat());
         course2 = courseController.addCourse(course2);
 
-        orderController.addCourseToOrder(orderView, course1, 3);
-        orderController.addCourseToOrder(orderView, course2, 2);
+        orderController.addCourseToOrder(orderView, course1);
+        orderController.addCourseToOrder(orderView, course2);
 
         for (OrderCourseView orderCourseView : orderController.findAllOrderCourses(orderView)) {
             orderController.findOrderCourseByCourseId(orderView, orderCourseView.getCourseId());
             System.out.println(orderCourseView.getCourseName() + " : " + orderCourseView.getCourseCost());
         }
 
-        orderController.takeCourseFromOrder(orderView, course1, 2);
         orderController.takeCourseFromOrder(orderView, course1);
-        orderController.takeCourseFromOrder(orderView, course2, 2);
+        orderController.takeCourseFromOrder(orderView, course1);
+        orderController.takeCourseFromOrder(orderView, course2);
 
         courseController.delCourse(courseName1);
         courseController.delCourse(courseName2);
@@ -403,12 +402,12 @@ public abstract class RestaurantControllerTest {
 
     @Test(timeout = 2000)
     public void closedOrderTest_2() throws Exception {
-        orderController.addCourseToOrder(closedOrder, closedOrderCourse2, 1);
+        orderController.addCourseToOrder(closedOrder, closedOrderCourse2);
     }
 
     @Test(timeout = 2000)
     public void closedOrderTest_3() throws Exception {
-        orderController.takeCourseFromOrder(closedOrder, closedOrderCourse1, 1);
+        orderController.takeCourseFromOrder(closedOrder, closedOrderCourse1);
     }
 
     @Test(timeout = 2000)

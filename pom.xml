@@ -7,7 +7,7 @@
     <groupId>com.company</groupId>
     <artifactId>Restaurant.Controller.Jdbc</artifactId>
     <packaging>jar</packaging>
-    <version>1.0</version>
+    <version>1.1</version>
 
     <build>
         <defaultGoal>install</defaultGoal>
@@ -90,12 +90,12 @@
         <dependency>
             <groupId>com.company</groupId>
             <artifactId>Restaurant.Model.Dao.Jdbc</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
         </dependency>
         <dependency>
             <groupId>com.company</groupId>
             <artifactId>Restaurant.Controller.Implementation</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
         </dependency>
     </dependencies>
 </project>
