@@ -39,7 +39,7 @@
     </bean>
 
     <bean class="com.company.restaurant.controllers.OrderControllerImpl" id="orderController">
-        <property name="orderViewDao" ref="orderViewDao"/>
+        <property name="orderDao" ref="orderDao"/>
         <property name="stateGraphRules" ref="stateGraphRules"/>
     </bean>
 

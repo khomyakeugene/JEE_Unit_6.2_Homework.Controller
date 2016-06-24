@@ -27,7 +27,7 @@ public abstract class RestaurantControllerTest {
     private static CourseController courseController;
 
     private static int closedOrderId;
-    private static OrderView closedOrder;
+    private static Order closedOrder;
     private static String closedOrderCourseName1;
     private static Course closedOrderCourse1;
     private static String closedOrderCourseName2;
@@ -77,12 +77,12 @@ public abstract class RestaurantControllerTest {
     }
 
     private static void prepareClosedOrder() throws Exception {
-        OrderView orderView = new OrderView();
-        orderView.setTableId(tableId());
-        orderView.setEmployeeId(employeeId());
-        orderView.setOrderNumber(Util.getRandomString());
-        orderView = orderController.addOrder(orderView);
-        closedOrderId = orderView.getOrderId();
+        Order order = new Order();
+        order.setTableId(tableId());
+        order.setEmployeeId(employeeId());
+        order.setOrderNumber(Util.getRandomString());
+        order = orderController.addOrder(order);
+        closedOrderId = order.getOrderId();
 
         // Courses for closed order ----------------------------
         closedOrderCourseName1 = Util.getRandomString();
@@ -102,13 +102,13 @@ public abstract class RestaurantControllerTest {
         closedOrderCourse2 = courseController.addCourse(closedOrderCourse2);
         // ----------
 
-        orderController.addCourseToOrder(orderView, closedOrderCourse1);
+        orderController.addCourseToOrder(order, closedOrderCourse1);
 
-        closedOrder = orderController.closeOrder(orderView);
+        closedOrder = orderController.closeOrder(order);
     }
 
     private static void clearClosedOrder() throws Exception {
-        OrderView orderView = orderController.findOrderById(closedOrderId);
+        Order orderView = orderController.findOrderById(closedOrderId);
         // Manually change order state to "open"
         orderView = orderController.updOrderState(orderView, "A");
 
@@ -160,10 +160,8 @@ public abstract class RestaurantControllerTest {
         String name = Util.getRandomString();
         JobPosition jobPosition = employeeController.addJobPosition(name);
 
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(jobPosition,
-                employeeController.findJobPositionByName(jobPosition.getName())));
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(jobPosition,
-                employeeController.findJobPositionById(jobPosition.getId())));
+        assertTrue(jobPosition.equals(employeeController.findJobPositionByName(jobPosition.getName())));
+        assertTrue(jobPosition.equals(employeeController.findJobPositionById(jobPosition.getId())));
 
         employeeController.delJobPosition(name);
         assertTrue(employeeController.findJobPositionByName(name) == null);
@@ -191,18 +189,13 @@ public abstract class RestaurantControllerTest {
         int employeeId = employee.getEmployeeId();
 
         // Select test <employee> and check
-        Employee employeeByFirstName = employeeController.findEmployeeByFirstName(firstName).get(0);
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(employee, employeeByFirstName));
-
-        Employee employeeBySecondName = employeeController.findEmployeeBySecondName(secondName).get(0);
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(employee, employeeBySecondName));
-
-        Employee employeeByFirstAndSecondName =
-                employeeController.findEmployeeByFirstAndSecondName(firstName, secondName).get(0);
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(employee, employeeByFirstAndSecondName));
+        assertTrue(employee.equals(employeeController.findEmployeeByFirstName(firstName).get(0)));
+        assertTrue(employee.equals(employeeController.findEmployeeBySecondName(secondName).get(0)));
+        assertTrue(employee.equals(employeeController.findEmployeeByFirstAndSecondName(
+                firstName, secondName).get(0)));
 
         Employee employeeById = employeeController.findEmployeeById(employeeId);
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(employee, employeeById));
+        assertTrue(employee.equals(employeeById));
 
         employeeController.delEmployee(employee);
         assertTrue(employeeController.findEmployeeById(employeeId) == null);
@@ -213,10 +206,8 @@ public abstract class RestaurantControllerTest {
         String name = Util.getRandomString();
         CourseCategory courseCategory = courseController.addCourseCategory(name);
 
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(courseCategory,
-                courseController.findCourseCategoryByName(courseCategory.getName())));
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(courseCategory,
-                courseController.findCourseCategoryById(courseCategory.getId())));
+        assertTrue(courseCategory.equals(courseController.findCourseCategoryByName(courseCategory.getName())));
+        assertTrue(courseCategory.equals(courseController.findCourseCategoryById(courseCategory.getId())));
 
         courseController.delCourseCategory(name);
         assertTrue(courseController.findCourseCategoryByName(name) == null);
@@ -234,17 +225,14 @@ public abstract class RestaurantControllerTest {
         course.setCost(Util.getRandomFloat());
         course = courseController.addCourse(course);
 
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course,
-                courseController.findCourseByName(course.getName())));
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course,
-                courseController.findCourseById(course.getCourseId())));
+        assertTrue(course.equals(courseController.findCourseByName(course.getName())));
+        assertTrue(course.equals(courseController.findCourseById(course.getCourseId())));
 
         courseController.delCourse(name);
         assertTrue(courseController.findCourseByName(name) == null);
         // Test delete by "the whole object"
         course = courseController.addCourse(course);
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course,
-                courseController.findCourseByName(name)));
+        assertTrue(course.equals(courseController.findCourseByName(name)));
         courseController.delCourse(course);
         assertTrue(courseController.findCourseByName(name) == null);
         // Test delete of non-existent data
@@ -259,10 +247,8 @@ public abstract class RestaurantControllerTest {
         String name = Util.getRandomString();
         Menu menu = menuController.addMenu(name);
 
-        Menu menuByName = menuController.findMenuByName(name);
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(menu, menuByName));
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(menu,
-                menuController.findMenuById(menu.getId())));
+        assertTrue(menu.equals(menuController.findMenuByName(name)));
+        assertTrue(menu.equals(menuController.findMenuById(menu.getId())));
 
         // Courses in menu ----------------------------
         String courseName1 = Util.getRandomString();
@@ -324,10 +310,8 @@ public abstract class RestaurantControllerTest {
             }
         } while (tableWasNotAdded);
 
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(table,
-                tableController.findTableByNumber(table.getNumber())));
-        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(table,
-                tableController.findTableById(table.getTableId())));
+        assertTrue(table.equals(tableController.findTableByNumber(table.getNumber())));
+        assertTrue(table.equals(tableController.findTableById(table.getTableId())));
 
         tableController.delTable(table);
         assertTrue(tableController.findTableByNumber(table.getNumber()) == null);
@@ -335,7 +319,7 @@ public abstract class RestaurantControllerTest {
 
     @Test (timeout = 2000)
     public void addFindDelOrderTest() throws Exception {
-        OrderView orderView = new OrderView();
+        Order orderView = new Order();
         orderView.setTableId(tableId());
         orderView.setEmployeeId(employeeId());
         orderView.setOrderNumber(Util.getRandomString());
@@ -379,15 +363,15 @@ public abstract class RestaurantControllerTest {
         courseController.delCourse(courseName2);
         // ----------------------------
 
-        for (OrderView o : orderController.findAllOrders()) {
+        for (Order o : orderController.findAllOrders()) {
             System.out.println("Order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
         }
 
-        for (OrderView o : orderController.findAllOpenOrders()) {
+        for (Order o : orderController.findAllOpenOrders()) {
             System.out.println("Open order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
         }
 
-        for (OrderView o : orderController.findAllClosedOrders()) {
+        for (Order o : orderController.findAllClosedOrders()) {
             System.out.println("Closed order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
         }
 
@@ -451,16 +435,14 @@ public abstract class RestaurantControllerTest {
                 warehouseController.takeIngredientFromWarehouse(ingredient, portion, amountToTake);
 
                 System.out.println("warehouseController.findPortionById(" + portion.getPortionId() + ") test ...");
-                assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(portion,
-                        warehouseController.findPortionById(portion.getPortionId())));
+                assertTrue(portion.equals(warehouseController.findPortionById(portion.getPortionId())));
 
                 // "Clear" warehouse position
                 warehouseController.takeIngredientFromWarehouse(ingredient, portion, amountToAdd - amountToTake);
             }
 
             System.out.println("warehouseController.findIngredientById(" + ingredient.getId() + ") test ...");
-            assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(ingredient,
-                    warehouseController.findIngredientById(ingredient.getId())));
+            assertTrue(ingredient.equals(warehouseController.findIngredientById(ingredient.getId())));
 
             System.out.println("Warehouse: " + ingredient.getName() + " : ");
             for (WarehouseView warehouseView : warehouseController.findIngredientInWarehouseByName(ingredient.getName())) {
