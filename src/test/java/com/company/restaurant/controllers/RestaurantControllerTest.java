@@ -1,5 +1,6 @@
 package com.company.restaurant.controllers;
 
+import com.company.restaurant.dao.CourseCategoryDao;
 import com.company.restaurant.model.*;
 import com.company.util.DataIntegrityException;
 import org.junit.AfterClass;
@@ -18,6 +19,7 @@ import static org.junit.Assert.assertTrue;
 public abstract class RestaurantControllerTest {
     private final static String DUPLICATE_KEY_VALUE_VIOLATES_MESSAGE = "duplicate key value violates";
 
+    private static CourseCategoryDao courseCategoryDao;
     private static MenuController menuController;
     private static TableController tableController;
     private static EmployeeController employeeController;
@@ -28,9 +30,7 @@ public abstract class RestaurantControllerTest {
 
     private static int closedOrderId;
     private static Order closedOrder;
-    private static String closedOrderCourseName1;
     private static Course closedOrderCourse1;
-    private static String closedOrderCourseName2;
     private static Course closedOrderCourse2;
     private static Course testCourse;
 
@@ -62,10 +62,10 @@ public abstract class RestaurantControllerTest {
 
     private static Course prepareTestCourse() {
         testCourse = new Course();
-        testCourse.setCategoryId(courseCategoryId());
         testCourse.setName(Util.getRandomString());
         testCourse.setWeight(Util.getRandomFloat());
         testCourse.setCost(Util.getRandomFloat());
+        testCourse.setCourseCategory(courseCategoryDao.findCourseCategoryById(courseCategoryId()));
 
         testCourse = courseController.addCourse(testCourse);
 
@@ -85,20 +85,18 @@ public abstract class RestaurantControllerTest {
         closedOrderId = order.getOrderId();
 
         // Courses for closed order ----------------------------
-        closedOrderCourseName1 = Util.getRandomString();
         closedOrderCourse1 = new Course();
-        closedOrderCourse1.setCategoryId(courseCategoryId());
-        closedOrderCourse1.setName(closedOrderCourseName1);
+        closedOrderCourse1.setName(Util.getRandomString());
         closedOrderCourse1.setWeight(Util.getRandomFloat());
         closedOrderCourse1.setCost(Util.getRandomFloat());
+        closedOrderCourse1.setCourseCategory(courseCategoryDao.findCourseCategoryById(courseCategoryId()));
         closedOrderCourse1 = courseController.addCourse(closedOrderCourse1);
 
-        closedOrderCourseName2 = Util.getRandomString();
         closedOrderCourse2 = new Course();
-        closedOrderCourse2.setCategoryId(courseCategoryId());
-        closedOrderCourse2.setName(closedOrderCourseName2);
+        closedOrderCourse2.setName(Util.getRandomString());
         closedOrderCourse2.setWeight(Util.getRandomFloat());
         closedOrderCourse2.setCost(Util.getRandomFloat());
+        closedOrderCourse2.setCourseCategory(courseCategoryDao.findCourseCategoryById(courseCategoryId()));
         closedOrderCourse2 = courseController.addCourse(closedOrderCourse2);
         // ----------
 
@@ -116,8 +114,8 @@ public abstract class RestaurantControllerTest {
         orderController.delOrder(orderView);
 
         // Delete course for closed order
-        courseController.delCourse(closedOrderCourseName1);
-        courseController.delCourse(closedOrderCourseName2);
+        courseController.delCourse(closedOrderCourse1);
+        courseController.delCourse(closedOrderCourse2);
     }
 
     protected static void initEnvironment() throws Exception {
@@ -133,6 +131,7 @@ public abstract class RestaurantControllerTest {
     protected static void initDataSource(String configLocation) throws Exception {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(configLocation);
 
+        courseCategoryDao = applicationContext.getBean(CourseCategoryDao.class);
         menuController = applicationContext.getBean(MenuController.class);
         tableController = applicationContext.getBean(TableController.class);
         employeeController = applicationContext.getBean(EmployeeController.class);
@@ -219,10 +218,10 @@ public abstract class RestaurantControllerTest {
     public void addFindDelCourseTest() throws Exception {
         String name = Util.getRandomString();
         Course course = new Course();
-        course.setCategoryId(courseCategoryId());
         course.setName(name);
         course.setWeight(Util.getRandomFloat());
         course.setCost(Util.getRandomFloat());
+        course.setCourseCategory(courseCategoryDao.findCourseCategoryById(courseCategoryId()));
         course = courseController.addCourse(course);
 
         assertTrue(course.equals(courseController.findCourseByName(course.getName())));
@@ -251,20 +250,18 @@ public abstract class RestaurantControllerTest {
         assertTrue(menu.equals(menuController.findMenuById(menu.getId())));
 
         // Courses in menu ----------------------------
-        String courseName1 = Util.getRandomString();
         Course course1 = new Course();
-        course1.setCategoryId(courseCategoryId());
-        course1.setName(courseName1);
+        course1.setName(Util.getRandomString());
         course1.setWeight(Util.getRandomFloat());
         course1.setCost(Util.getRandomFloat());
+        course1.setCourseCategory(courseCategoryDao.findCourseCategoryById(courseCategoryId()));
         course1 = courseController.addCourse(course1);
 
-        String courseName2 = Util.getRandomString();
         Course course2 = new Course();
-        course2.setCategoryId(courseCategoryId());
-        course2.setName(courseName2);
+        course2.setName(Util.getRandomString());
         course2.setWeight(Util.getRandomFloat());
         course2.setCost(Util.getRandomFloat());
+        course2.setCourseCategory(courseCategoryDao.findCourseCategoryById(courseCategoryId()));
         course2 = courseController.addCourse(course2);
 
         menuController.addCourseToMenu(menu, course1);
@@ -275,12 +272,11 @@ public abstract class RestaurantControllerTest {
             System.out.println(menuCourseList.getCourseName() + ": " + menuCourseList.getCourseCategoryName());
         }
 
-
         menuController.delCourseFromMenu(menu, course1);
         menuController.delCourseFromMenu(menu, course2);
 
-        courseController.delCourse(courseName1);
-        courseController.delCourse(courseName2);
+        courseController.delCourse(course1);
+        courseController.delCourse(course2);
         // ----------------------------
 
         for (Menu m : menuController.findAllMenus()) {
@@ -331,20 +327,18 @@ public abstract class RestaurantControllerTest {
         assertTrue(orderController.findOrderById(orderId) != null);
 
         // Courses in order ----------------------------
-        String courseName1 = Util.getRandomString();
         Course course1 = new Course();
-        course1.setCategoryId(courseCategoryId());
-        course1.setName(courseName1);
+        course1.setName(Util.getRandomString());
         course1.setWeight(Util.getRandomFloat());
         course1.setCost(Util.getRandomFloat());
+        course1.setCourseCategory(courseCategoryDao.findCourseCategoryById(courseCategoryId()));
         course1 = courseController.addCourse(course1);
 
-        String courseName2 = Util.getRandomString();
         Course course2 = new Course();
-        course2.setCategoryId(courseCategoryId());
-        course2.setName(courseName2);
+        course2.setName(Util.getRandomString());
         course2.setWeight(Util.getRandomFloat());
         course2.setCost(Util.getRandomFloat());
+        course2.setCourseCategory(courseCategoryDao.findCourseCategoryById(courseCategoryId()));
         course2 = courseController.addCourse(course2);
 
         orderController.addCourseToOrder(orderView, course1);
@@ -359,8 +353,8 @@ public abstract class RestaurantControllerTest {
         orderController.takeCourseFromOrder(orderView, course1);
         orderController.takeCourseFromOrder(orderView, course2);
 
-        courseController.delCourse(courseName1);
-        courseController.delCourse(courseName2);
+        courseController.delCourse(course1);
+        courseController.delCourse(course2);
         // ----------------------------
 
         for (Order o : orderController.findAllOrders()) {
@@ -406,11 +400,10 @@ public abstract class RestaurantControllerTest {
     @Test(timeout = 2000)
     public void addDelCookedCourse() throws Exception {
         Course testCourse = new Course();
-        testCourse.setCategoryId(courseCategoryId());
         testCourse.setName(Util.getRandomString());
         testCourse.setWeight(Util.getRandomFloat());
         testCourse.setCost(Util.getRandomFloat());
-
+        testCourse.setCourseCategory(courseCategoryDao.findCourseCategoryById(courseCategoryId()));
         testCourse = courseController.addCourse(testCourse);
 
         CookedCourseView cookedCourseView = kitchenController.addCookedCourse(testCourse, employee(),
