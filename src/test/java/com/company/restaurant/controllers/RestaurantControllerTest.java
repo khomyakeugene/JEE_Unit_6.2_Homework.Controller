@@ -1,6 +1,6 @@
 package com.company.restaurant.controllers;
 
-import com.company.restaurant.dao.CourseCategoryDao;
+import com.company.restaurant.dao.*;
 import com.company.restaurant.model.*;
 import com.company.util.DataIntegrityException;
 import org.junit.AfterClass;
@@ -20,6 +20,11 @@ public abstract class RestaurantControllerTest {
     private final static String DUPLICATE_KEY_VALUE_VIOLATES_MESSAGE = "duplicate key value violates";
 
     private static CourseCategoryDao courseCategoryDao;
+    private static JobPositionDao jobPositionDao;
+    private static EmployeeDao employeeDao;
+    private static TableDao tableDao;
+    private static StateDao stateDao;
+
     private static MenuController menuController;
     private static TableController tableController;
     private static EmployeeController employeeController;
@@ -78,9 +83,10 @@ public abstract class RestaurantControllerTest {
 
     private static void prepareClosedOrder() throws Exception {
         Order order = new Order();
-        order.setTableId(tableId());
-        order.setEmployeeId(employeeId());
         order.setOrderNumber(Util.getRandomString());
+        order.setTable(tableDao.findTableById(tableId()));
+        order.setWaiter(employeeDao.findEmployeeById(employeeId()));
+        order.setState(stateDao.findStateByType("A"));
         order = orderController.addOrder(order);
         closedOrderId = order.getOrderId();
 
@@ -106,12 +112,12 @@ public abstract class RestaurantControllerTest {
     }
 
     private static void clearClosedOrder() throws Exception {
-        Order orderView = orderController.findOrderById(closedOrderId);
+        Order order = orderController.findOrderById(closedOrderId);
         // Manually change order state to "open"
-        orderView = orderController.updOrderState(orderView, "A");
+        order = orderController.updOrderState(order, "A");
 
         // Delete "open" order
-        orderController.delOrder(orderView);
+        orderController.delOrder(order);
 
         // Delete course for closed order
         courseController.delCourse(closedOrderCourse1);
@@ -132,6 +138,11 @@ public abstract class RestaurantControllerTest {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(configLocation);
 
         courseCategoryDao = applicationContext.getBean(CourseCategoryDao.class);
+        tableDao = applicationContext.getBean(TableDao.class);
+        employeeDao = applicationContext.getBean(EmployeeDao.class);
+        jobPositionDao = applicationContext.getBean(JobPositionDao.class);
+        stateDao = applicationContext.getBean(StateDao.class);
+
         menuController = applicationContext.getBean(MenuController.class);
         tableController = applicationContext.getBean(TableController.class);
         employeeController = applicationContext.getBean(EmployeeController.class);
@@ -178,12 +189,11 @@ public abstract class RestaurantControllerTest {
         String firstName = Util.getRandomString();
         String secondName = Util.getRandomString();
         Employee employee = new Employee();
-        employee.setJobPositionId(jobPositionId());
         employee.setFirstName(firstName);
         employee.setSecondName(secondName);
         employee.setPhoneNumber(Util.getRandomString());
         employee.setSalary(Util.getRandomFloat());
-
+        employee.setJobPosition(jobPositionDao.findJobPositionById(jobPositionId()));
         employee = employeeController.addEmployee(employee);
         int employeeId = employee.getEmployeeId();
 
@@ -315,12 +325,13 @@ public abstract class RestaurantControllerTest {
 
     @Test (timeout = 2000)
     public void addFindDelOrderTest() throws Exception {
-        Order orderView = new Order();
-        orderView.setTableId(tableId());
-        orderView.setEmployeeId(employeeId());
-        orderView.setOrderNumber(Util.getRandomString());
-        orderView = orderController.addOrder(orderView);
-        int orderId = orderView.getOrderId();
+        Order order = new Order();
+        order.setOrderNumber(Util.getRandomString());
+        order.setTable(tableDao.findTableById(tableId()));
+        order.setWaiter(employeeDao.findEmployeeById(employeeId()));
+        order.setState(stateDao.findStateByType("A"));
+        order = orderController.addOrder(order);
+        int orderId = order.getOrderId();
 
         // Just check of successful retrieving from database,  without "full comparing"!!!
         // Because, at least field <order_datetime> is filling by default (as a current timestamp) on the database level
@@ -341,17 +352,17 @@ public abstract class RestaurantControllerTest {
         course2.setCourseCategory(courseCategoryDao.findCourseCategoryById(courseCategoryId()));
         course2 = courseController.addCourse(course2);
 
-        orderController.addCourseToOrder(orderView, course1);
-        orderController.addCourseToOrder(orderView, course2);
+        orderController.addCourseToOrder(order, course1);
+        orderController.addCourseToOrder(order, course2);
 
-        for (Course course : orderController.findAllOrderCourses(orderView)) {
-            orderController.findOrderCourseByCourseId(orderView, course.getCourseId());
+        for (Course course : orderController.findAllOrderCourses(order)) {
+            orderController.findOrderCourseByCourseId(order, course.getCourseId());
             System.out.println(course.getName() + " : " + course.getCost());
         }
 
-        orderController.takeCourseFromOrder(orderView, course1);
-        orderController.takeCourseFromOrder(orderView, course1);
-        orderController.takeCourseFromOrder(orderView, course2);
+        orderController.takeCourseFromOrder(order, course1);
+        orderController.takeCourseFromOrder(order, course1);
+        orderController.takeCourseFromOrder(order, course2);
 
         courseController.delCourse(course1);
         courseController.delCourse(course2);
@@ -369,7 +380,7 @@ public abstract class RestaurantControllerTest {
             System.out.println("Closed order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
         }
 
-        orderController.delOrder(orderView);
+        orderController.delOrder(order);
         assertTrue(orderController.findOrderById(orderId) == null);
     }
 
