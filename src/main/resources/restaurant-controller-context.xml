@@ -46,7 +46,7 @@
     <bean class="com.company.restaurant.controllers.WarehouseControllerImpl" id="warehouseController">
         <property name="ingredientDao" ref="ingredientDao"/>
         <property name="portionDao" ref="portionDao"/>
-        <property name="warehouseViewDao" ref="warehouseViewDao"/>
+        <property name="warehouseDao" ref="warehouseDao"/>
     </bean>
 
     <bean class="com.company.restaurant.controllers.KitchenControllerImpl" id="kitchenController">
