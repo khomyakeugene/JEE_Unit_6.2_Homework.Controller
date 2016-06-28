@@ -50,7 +50,7 @@
     </bean>
 
     <bean class="com.company.restaurant.controllers.KitchenControllerImpl" id="kitchenController">
-        <property name="cookedCourseViewDao" ref="cookedCourseViewDao"/>
+        <property name="cookedCourseDao" ref="cookedCourseDao"/>
     </bean>
     <!-- END OF DB-CONTEXT -->
 </beans>
