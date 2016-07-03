@@ -178,10 +178,7 @@ public abstract class RestaurantControllerTest {
         // Test delete of non-existent data
         employeeController.delJobPosition(name);
 
-        for (JobPosition jP : employeeController.findAllJobPositions()) {
-            System.out.println("Job position Id :" + jP.getId() +
-                    ", Job position name :" + jP.getName());
-        }
+        employeeController.findAllJobPositions().forEach(System.out::println);
     }
 
     @Test(timeout = 2000)
@@ -279,7 +276,7 @@ public abstract class RestaurantControllerTest {
 
         for (Course course : menuController.findMenuCourses(menu)) {
             menuController.findMenuCourseByCourseId(menu, course.getCourseId());
-            System.out.println(course.getName() + ": " + course.getCourseCategory().getName());
+            System.out.println(course);
         }
 
         menuController.delCourseFromMenu(menu, course1);
@@ -289,9 +286,7 @@ public abstract class RestaurantControllerTest {
         courseController.delCourse(course2);
         // ----------------------------
 
-        for (Menu m : menuController.findAllMenus()) {
-            System.out.println("menu_id: " + m.getId() + ", name: " + m.getName());
-        }
+        menuController.findAllMenus().forEach(System.out::println);
 
         menuController.delMenu(name);
         assertTrue(menuController.findMenuByName(name) == null);
@@ -357,7 +352,7 @@ public abstract class RestaurantControllerTest {
 
         for (Course course : orderController.findOrderCourses(order)) {
             orderController.findOrderCourseByCourseId(order, course.getCourseId());
-            System.out.println(course.getName() + " : " + course.getCost());
+            System.out.println(course);
         }
 
         orderController.takeCourseFromOrder(order, course1);
@@ -368,17 +363,9 @@ public abstract class RestaurantControllerTest {
         courseController.delCourse(course2);
         // ----------------------------
 
-        for (Order o : orderController.findAllOrders()) {
-            System.out.println("Order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
-        }
-
-        for (Order o : orderController.findAllOpenOrders()) {
-            System.out.println("Open order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
-        }
-
-        for (Order o : orderController.findAllClosedOrders()) {
-            System.out.println("Closed order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
-        }
+        orderController.findAllOrders().forEach(System.out::println);
+        orderController.findAllOpenOrders().forEach(System.out::println);
+        orderController.findAllClosedOrders().forEach(System.out::println);
 
         orderController.delOrder(order);
         assertTrue(orderController.findOrderById(orderId) == null);
@@ -411,16 +398,14 @@ public abstract class RestaurantControllerTest {
         CookedCourse cookedCourse = kitchenController.addCookedCourse(testCourse, employee(),
                 Util.getRandomFloat());
 
-        for (CookedCourse cC : kitchenController.findAllCookedCourses()) {
-            System.out.println(cC.getCourse().getName() + " : " + cC.getCookDatetime());
-        }
+        kitchenController.findAllCookedCourses().forEach(System.out::println);
 
         kitchenController.delCookedCourse(cookedCourse);
         courseController.delCourse(testCourse);
     }
 
 
-    @Test(timeout = 10000)
+    @Test(timeout = 30000)
     public void addFindDelWarehouseTest() throws Exception {
         for (Ingredient ingredient: warehouseController.findAllIngredients()) {
             for (Portion portion : warehouseController.findAllPortions()) {
@@ -429,31 +414,22 @@ public abstract class RestaurantControllerTest {
                 float amountToTake = Util.getRandomFloat();
                 warehouseController.takeIngredientFromWarehouse(ingredient, portion, amountToTake);
 
-                System.out.println("warehouseController.findPortionById(" + portion.getPortionId() + ") test ...");
                 assertTrue(portion.equals(warehouseController.findPortionById(portion.getPortionId())));
-
                 // "Clear" warehouse position
                 warehouseController.takeIngredientFromWarehouse(ingredient, portion, amountToAdd - amountToTake);
             }
 
-            System.out.println("warehouseController.findIngredientById(" + ingredient.getId() + ") test ...");
             assertTrue(ingredient.equals(warehouseController.findIngredientById(ingredient.getId())));
 
-            System.out.println("Warehouse: " + ingredient.getName() + " : ");
             for (Warehouse warehouse : warehouseController.findIngredientInWarehouseByName(ingredient.getName())) {
-                System.out.println(warehouse.getPortion().getDescription() + ": " + warehouse.getAmount());
+                System.out.println(warehouse);
             }
         }
 
         System.out.println("Warehouse all ingredients:");
-        for (Warehouse warehouse : warehouseController.findAllWarehouseIngredients()) {
-            System.out.println(warehouse.getIngredient().getName() + ": " + warehouse.getAmount());
-        }
+        warehouseController.findAllWarehouseIngredients().forEach(System.out::println);
+
         System.out.println("Warehouse elapsing ingredients:");
-        for (Warehouse warehouse : warehouseController.findAllElapsingWarehouseIngredients((float)500.0)) {
-            System.out.println(warehouse.getIngredient().getName() + ": " +
-                    warehouse.getPortion().getDescription() + ": " +
-                    warehouse.getAmount());
-        }
+        warehouseController.findAllElapsingWarehouseIngredients((float) 500.0).forEach(System.out::println);
     }
 }
